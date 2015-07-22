@@ -7,6 +7,14 @@
 import blessed from 'blessed';
 import camelcase from 'lodash.camelcase';
 
+/**
+ * Blessed node cache.
+ */
+const nodeCache = {};
+
+/**
+ * React Blessed Component.
+ */
 export default class ReactBlessedComponent {
 
   /**
@@ -39,10 +47,8 @@ export default class ReactBlessedComponent {
   mountComponent(rootID, transaction, context) {
     this._rootNodeID = rootID;
 
-    const {type, props} = this._currentElement;
-
     // Mounting recursively
-    this.mountNode(this._screen, type, props);
+    this.mountNode(this._screen, this._currentElement);
 
     // Rendering the screen
     this._screen.render();
@@ -51,8 +57,9 @@ export default class ReactBlessedComponent {
   /**
    * Mounting a blessed node and its children.
    */
-  mountNode(parent, type, props) {
-    const {children, ...options} = props;
+  mountNode(parent, element) {
+    const {props, type} = element,
+          {children, ...options} = props;
 
     const node = blessed[camelcase(type)](options);
 
@@ -61,7 +68,7 @@ export default class ReactBlessedComponent {
     // Dealing with children
     if (children)
       [].concat(children).forEach((child) => {
-        this.mountNode(node, child.type, child.props)
+        this.mountNode(node, child);
       });
   }
 
@@ -69,6 +76,21 @@ export default class ReactBlessedComponent {
    * Receiving a component's update.
    */
   receiveComponent(nextElement, transaction, context) {
+    const {props: {children, ...options}} = nextElement;
+
+    // for (let k in options)
+
+    // Dealing with children
+    if (children)
+      [].concat(children).forEach((child) => {
+        this.updateNode(child.props);
+      });
+  }
+
+  /**
+   * Updating a blessed node.
+   */
+  updateNode(props) {
 
   }
 
