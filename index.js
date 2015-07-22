@@ -38,8 +38,15 @@ function render(element, opts={}) {
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled(),
         component = instantiateReactComponent(element);
 
-  transaction.perform(() => component.mountComponent(id, transaction, {}));
+  // DIRTY: find another way, replicate instantiateReactComponent
+  global.screen = screen;
 
+  transaction.perform(() => {
+    component.mountComponent(id, transaction, {});
+    delete global.screen;
+  });
+
+  // Returning the screen so the user can use it
   return screen;
 }
 
