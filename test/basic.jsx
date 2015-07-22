@@ -12,6 +12,7 @@ class App extends Component {
 
     setTimeout(() => this.setState({left: 'kebbe'}), 1000);
     setTimeout(() => this.setState({display: false}), 2000);
+    setTimeout(() => this.setState({display: true}), 3000);
   }
 
   render() {

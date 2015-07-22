@@ -5,7 +5,6 @@
  * React component abstraction for the blessed library.
  */
 import blessed from 'blessed';
-import camelcase from 'lodash.camelcase';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
 import assign from 'object-assign';
 
@@ -81,7 +80,7 @@ export default class ReactBlessedComponent {
     const {props, type} = element,
           {children, ...options} = props;
 
-    this._blessedNode = blessed[camelcase(type)](options);
+    this._blessedNode = blessed[type](options);
 
     parent.append(this._blessedNode);
   }
@@ -97,6 +96,9 @@ export default class ReactBlessedComponent {
 
       if (key === 'content')
         this._blessedNode.setContent(value);
+
+      if (key === 'filled')
+        this._blessedNode.setProgress(value);
     }
 
     // Updating children

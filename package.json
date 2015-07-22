@@ -4,6 +4,7 @@
   "description": "A react renderer for blessed.",
   "main": "index.js",
   "scripts": {
+    "demo": "babel-node ./test/demo.jsx",
     "test": "babel-node ./test/basic.jsx"
   },
   "repository": {
@@ -29,7 +30,6 @@
     "react": "^0.14.0-beta1"
   },
   "dependencies": {
-    "lodash.camelcase": "^3.0.1",
     "object-assign": "^3.0.0"
   }
 }

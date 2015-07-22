@@ -5,7 +5,6 @@
  * React component abstraction for the rendered text nodes.
  */
 import blessed from 'blessed';
-import camelcase from 'lodash.camelcase';
 
 /**
  * React Blessed Text Component.
