@@ -1,0 +1,34 @@
+{
+  "name": "react-blessed",
+  "version": "0.0.1",
+  "description": "A react renderer for blessed.",
+  "main": "index.js",
+  "scripts": {
+    "test": "babel-node ./test/basic.jsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yomguithereal/blessed.git"
+  },
+  "keywords": [
+    "blessed",
+    "react",
+    "renderer",
+    "cli",
+    "interface"
+  ],
+  "author": "yomguithereal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yomguithereal/blessed/issues"
+  },
+  "homepage": "https://github.com/yomguithereal/blessed#readme",
+  "devDependencies": {
+    "babel": "^5.8.3",
+    "blessed": "^0.1.14",
+    "react": "^0.14.0-beta1"
+  },
+  "dependencies": {
+    "object-assign": "^3.0.0"
+  }
+}
