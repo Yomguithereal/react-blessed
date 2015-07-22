@@ -39,7 +39,7 @@ function render(element, opts={}) {
         component = instantiateReactComponent(element);
 
   // DIRTY: find another way, replicate instantiateReactComponent
-  global.screen = screen;
+  global.REACT_BLESSED_SCREEN = screen;
 
   transaction.perform(() => {
     component.mountComponent(id, transaction, {});

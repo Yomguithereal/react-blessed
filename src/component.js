@@ -6,11 +6,8 @@
  */
 import blessed from 'blessed';
 import camelcase from 'lodash.camelcase';
-
-/**
- * Blessed node cache.
- */
-const nodeCache = {};
+import ReactMultiChild from 'react/lib/ReactMultiChild';
+import assign from 'object-assign';
 
 /**
  * React Blessed Component.
@@ -37,8 +34,18 @@ export default class ReactBlessedComponent {
   construct(element) {
 
     // Setting some properties
-    this._screen = global.screen;
     this._currentElement = element;
+    this._blessedNode = null;
+  }
+
+  /**
+   * Retrieving the parent node.
+   *
+   * NOTE: dirty!
+   */
+  _getParentNode() {
+    return this._currentElement._owner._renderedComponent._blessedNode ||
+           REACT_BLESSED_SCREEN;
   }
 
   /**
@@ -47,11 +54,24 @@ export default class ReactBlessedComponent {
   mountComponent(rootID, transaction, context) {
     this._rootNodeID = rootID;
 
-    // Mounting recursively
-    this.mountNode(this._screen, this._currentElement);
+    // Mounting blessed node
+    this.mountNode(
+      this._getParentNode(),
+      this._currentElement
+    );
+
+    // Mounting children
+    const childrenToUse = [].concat(this._currentElement.props.children || []);
+
+    this.mountChildren(
+      childrenToUse,
+      transaction,
+      context
+    );
 
     // Rendering the screen
-    this._screen.render();
+    // TODO: do this only once
+    REACT_BLESSED_SCREEN.render();
   }
 
   /**
@@ -61,15 +81,9 @@ export default class ReactBlessedComponent {
     const {props, type} = element,
           {children, ...options} = props;
 
-    const node = blessed[camelcase(type)](options);
+    this._blessedNode = blessed[camelcase(type)](options);
 
-    parent.append(node);
-
-    // Dealing with children
-    if (children)
-      [].concat(children).forEach((child) => {
-        this.mountNode(node, child);
-      });
+    parent.append(this._blessedNode);
   }
 
   /**
@@ -78,26 +92,32 @@ export default class ReactBlessedComponent {
   receiveComponent(nextElement, transaction, context) {
     const {props: {children, ...options}} = nextElement;
 
-    // for (let k in options)
+    for (let key in options) {
+      let value = options[key];
 
-    // Dealing with children
-    if (children)
-      [].concat(children).forEach((child) => {
-        this.updateNode(child.props);
-      });
-  }
+      if (key === 'content')
+        this._blessedNode.setContent(value);
+    }
 
-  /**
-   * Updating a blessed node.
-   */
-  updateNode(props) {
+    // Updating children
+    const childrenToUse = [].concat(children || []);
 
+    this.updateChildren(childrenToUse, transaction, context);
+
+    REACT_BLESSED_SCREEN.render();
   }
 
   /**
    * Dropping a component.
    */
   unmountComponent() {
-
+    this.unmountChildren();
+    this._rootNodeID = null;
+    this._getParentNode().remove(this._blessedNode);
   }
 }
+
+assign(
+  ReactBlessedComponent.prototype,
+  ReactMultiChild.Mixin
+);

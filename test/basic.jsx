@@ -6,10 +6,12 @@ class App extends Component {
     super(props, context);
 
     this.state = {
-      left: 'shawarma'
+      left: 'shawarma',
+      display: true
     };
 
     setTimeout(() => this.setState({left: 'kebbe'}), 1000);
+    setTimeout(() => this.setState({display: false}), 2000);
   }
 
   render() {
@@ -26,12 +28,13 @@ class App extends Component {
              width="40%"
              height="50%"
              border={{type: 'line'}} />
-        <box content="falafel"
-             top="center"
-             left="50%"
-             width="40%"
-             height="50%"
-             border={{type: 'line'}} />
+        {this.state.display &&
+          <box content="falafel"
+               top="center"
+               left="50%"
+               width="40%"
+               height="50%"
+               border={{type: 'line'}} />}
       </box>
     );
   }
