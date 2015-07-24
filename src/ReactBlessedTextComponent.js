@@ -14,22 +14,33 @@ export default class ReactBlessedTextComponent {
   /**
    * Actual constructor.
    */
-  constructor(tag) {
-
-  }
+  constructor(props) {console.log(arguments)}
 
   /**
    * React constructor.
    */
-  construct(element) {
+  construct(text) {
+    this._currentElement = text;
+    this._rootNodeID = null;
+    this._stringText = '' + text;
+  }
 
+  /**
+   * Retrieving the parent node.
+   *
+   * NOTE: dirty! replace this nonsense by some kind of cache index later.
+   */
+  _getParentNode() {
+    return this._currentElement._owner._renderedComponent._blessedNode;
   }
 
   /**
    * Mounting the root component.
    */
   mountComponent(rootID, transaction, context) {
-
+    this._rootNodeID = rootID;
+    console.log(rootID)
+    this._getParentNode().setContent(this._stringText);
   }
 
   /**

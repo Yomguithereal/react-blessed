@@ -28,7 +28,8 @@ class InnerBox extends Component {
            height="70%"
            top="10%"
            border={{type: 'line'}}
-           style={{border: {fg: 'green'}}} />
+           style={{border: {fg: 'green'}}}>
+      </box>
     );
   }
 }

@@ -7,9 +7,10 @@
 import ReactInstanceHandles from 'react/lib/ReactInstanceHandles';
 import ReactElement from 'react/lib/ReactElement';
 import ReactUpdates from 'react/lib/ReactUpdates';
+import ReactBlessedIDOperations from './src/ReactBlessedIDOperations';
 import invariant from 'react/lib/invariant';
 import instantiateReactComponent from 'react/lib/instantiateReactComponent';
-import inject from './src/injection';
+import inject from './src/ReactBlessedInjection';
 import blessed from 'blessed';
 
 // Injecting dependencies
@@ -38,15 +39,14 @@ function render(element, opts={}) {
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled(),
         component = instantiateReactComponent(element);
 
-  // DIRTY: find another way, replicate instantiateReactComponent
-  global.REACT_BLESSED_SCREEN = screen;
+  // Injecting the screen
+  ReactBlessedIDOperations.setScreen(screen);
 
   transaction.perform(() => {
     component.mountComponent(id, transaction, {});
-    delete global.screen;
   });
 
-  // Returning the screen so the user can use it
+  // Returning the screen so the user can handle it properly
   return screen;
 }
 

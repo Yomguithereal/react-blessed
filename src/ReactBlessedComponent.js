@@ -6,6 +6,7 @@
  */
 import blessed from 'blessed';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
+import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import assign from 'object-assign';
 
 /**
@@ -34,17 +35,6 @@ export default class ReactBlessedComponent {
 
     // Setting some properties
     this._currentElement = element;
-    this._blessedNode = null;
-  }
-
-  /**
-   * Retrieving the parent node.
-   *
-   * NOTE: dirty!
-   */
-  _getParentNode() {
-    return this._currentElement._owner._renderedComponent._blessedNode ||
-           REACT_BLESSED_SCREEN;
   }
 
   /**
@@ -54,10 +44,12 @@ export default class ReactBlessedComponent {
     this._rootNodeID = rootID;
 
     // Mounting blessed node
-    this.mountNode(
-      this._getParentNode(),
+    const node = this.mountNode(
+      ReactBlessedIDOperations.getParent(rootID),
       this._currentElement
     );
+
+    ReactBlessedIDOperations.add(rootID, node);
 
     // Mounting children
     const childrenToUse = [].concat(this._currentElement.props.children || []);
@@ -70,7 +62,7 @@ export default class ReactBlessedComponent {
 
     // Rendering the screen
     // TODO: do this only once
-    REACT_BLESSED_SCREEN.render();
+    ReactBlessedIDOperations.screen.render();
   }
 
   /**
@@ -80,25 +72,28 @@ export default class ReactBlessedComponent {
     const {props, type} = element,
           {children, ...options} = props;
 
-    this._blessedNode = blessed[type](options);
+    const node = blessed[type](options);
 
-    parent.append(this._blessedNode);
+    parent.append(node);
+
+    return node;
   }
 
   /**
    * Receiving a component's update.
    */
   receiveComponent(nextElement, transaction, context) {
-    const {props: {children, ...options}} = nextElement;
+    const {props: {children, ...options}} = nextElement,
+          node = ReactBlessedIDOperations.get(this._rootNodeID);
 
     for (let key in options) {
       let value = options[key];
 
       if (key === 'content')
-        this._blessedNode.setContent(value);
+        node.setContent(value);
 
       if (key === 'filled')
-        this._blessedNode.setProgress(value);
+        node.setProgress(value);
     }
 
     // Updating children
@@ -106,7 +101,7 @@ export default class ReactBlessedComponent {
 
     this.updateChildren(childrenToUse, transaction, context);
 
-    REACT_BLESSED_SCREEN.render();
+    ReactBlessedIDOperations.screen.render();
   }
 
   /**
@@ -114,8 +109,15 @@ export default class ReactBlessedComponent {
    */
   unmountComponent() {
     this.unmountChildren();
+
+    const parent = ReactBlessedIDOperations.getParent(this._rootNodeID),
+          node = ReactBlessedIDOperations.get(this._rootNodeID);
+
+    parent.remove(node);
+
+    ReactBlessedIDOperations.drop(this._rootNodeID);
+
     this._rootNodeID = null;
-    this._getParentNode().remove(this._blessedNode);
   }
 }
 

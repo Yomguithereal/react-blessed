@@ -6,9 +6,9 @@
  */
 import ReactInjection from 'react/lib/ReactInjection';
 import ReactComponentEnvironment from 'react/lib/ReactComponentEnvironment';
-import ReactBlessedReconcileTransaction from './transaction';
-import ReactBlessedComponent from './component';
-import ReactBlessedTextComponent from './text';
+import ReactBlessedReconcileTransaction from './ReactBlessedReconcileTransaction';
+import ReactBlessedComponent from './ReactBlessedComponent';
+import ReactBlessedTextComponent from './ReactBlessedTextComponent';
 
 export default function inject() {
   ReactInjection.NativeComponent.injectGenericComponentClass(
