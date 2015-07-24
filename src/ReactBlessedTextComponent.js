@@ -5,6 +5,7 @@
  * React component abstraction for the rendered text nodes.
  */
 import blessed from 'blessed';
+import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 
 /**
  * React Blessed Text Component.
@@ -14,7 +15,7 @@ export default class ReactBlessedTextComponent {
   /**
    * Actual constructor.
    */
-  constructor(props) {console.log(arguments)}
+  constructor(props) {}
 
   /**
    * React constructor.
@@ -26,41 +27,42 @@ export default class ReactBlessedTextComponent {
   }
 
   /**
-   * Retrieving the parent node.
-   *
-   * NOTE: dirty! replace this nonsense by some kind of cache index later.
-   */
-  _getParentNode() {
-    return this._currentElement._owner._renderedComponent._blessedNode;
-  }
-
-  /**
    * Mounting the root component.
    */
   mountComponent(rootID, transaction, context) {
     this._rootNodeID = rootID;
-    console.log(rootID)
-    this._getParentNode().setContent(this._stringText);
-  }
 
-  /**
-   * Mounting a blessed node and its children.
-   */
-  mountNode(parent, element) {
+    const parent = ReactBlessedIDOperations.getParent(rootID);
 
+    // Setting content of parent
+    parent.setContent(this._stringText);
   }
 
   /**
    * Receiving a component's update.
    */
-  receiveComponent(nextElement, transaction, context) {
+  receiveComponent(nextText, transaction, context) {
+    this._currentElement = nextText;
+    const nextStringText = '' + nextText;
 
+    if (nextStringText !== this._stringText) {
+
+      this._stringText = nextStringText;
+
+      const parent = ReactBlessedIDOperations.getParent(this._rootNodeID);
+
+      // Setting content of parent
+      parent.setContent(this._stringText);
+    }
   }
 
   /**
    * Dropping a component.
    */
   unmountComponent() {
+    const parent = ReactBlessedIDOperations.getParent(this._rootNodeID);
 
+    // Setting content of parent
+    parent.setContent('');
   }
 }

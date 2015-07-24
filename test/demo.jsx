@@ -10,12 +10,25 @@ class App extends Component {
         <InnerBox position="left" />
         <InnerBox position="right" />
         <ProgressBar />
+        Random text here...
       </box>
     );
   }
 }
 
 class InnerBox extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hey: true
+    };
+
+    setInterval(() => {
+      this.setState({hey: !this.state.hey});
+    }, 1000);
+  }
+
   render() {
     const position = this.props.position;
 
@@ -29,6 +42,7 @@ class InnerBox extends Component {
            top="10%"
            border={{type: 'line'}}
            style={{border: {fg: 'green'}}}>
+        {this.state.hey ? 'Hey...' : 'Ho...'}
       </box>
     );
   }
