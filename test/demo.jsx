@@ -36,6 +36,7 @@ class InnerBox extends Component {
 
     return (
       <box label={position}
+           ref="box"
            left={left}
            width='45%'
            height="70%"

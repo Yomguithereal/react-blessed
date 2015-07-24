@@ -13,6 +13,15 @@ import Transaction from 'react/lib/Transaction';
 
 import assign from 'object-assign';
 
+const ON_BLESSED_READY_QUEUEING = {
+  initialize: function () {
+    this.reactMountReady.reset();
+  },
+  close: function () {
+    this.reactMountReady.notifyAll();
+  }
+};
+
 function ReactBlessedReconcileTransaction() {
   this.reinitializeTransaction();
   this.reactMountReady = CallbackQueue.getPooled(null);
@@ -20,7 +29,7 @@ function ReactBlessedReconcileTransaction() {
 
 const Mixin = {
   getTransactionWrappers: function() {
-    return [];
+    return [ON_BLESSED_READY_QUEUEING];
   },
   getReactMountReady: function() {
     return this.reactMountReady;

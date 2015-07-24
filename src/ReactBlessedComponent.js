@@ -119,6 +119,13 @@ export default class ReactBlessedComponent {
 
     this._rootNodeID = null;
   }
+
+  /**
+   * Getting a public instance of the component for refs.
+   */
+  getPublicInstance() {
+    return ReactBlessedIDOperations.get(this._rootNodeID);
+  }
 }
 
 assign(
