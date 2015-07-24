@@ -32,6 +32,7 @@
     "react": "^0.14.0-beta1"
   },
   "dependencies": {
+    "lodash": "^3.6.0",
     "object-assign": "^3.0.0"
   }
 }

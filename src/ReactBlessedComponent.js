@@ -10,6 +10,7 @@ import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import invariant from 'react/lib/invariant';
 import assign from 'object-assign';
 import update from './update';
+import solveClass from './solveClass';
 
 /**
  * Renders the given react element with blessed.
@@ -85,7 +86,7 @@ export default class ReactBlessedComponent {
       `Invalid blessed element "${type}".`
     );
 
-    const node = blessed[type](options);
+    const node = blessed[type](solveClass(options));
 
     parent.append(node);
 
@@ -106,7 +107,7 @@ export default class ReactBlessedComponent {
     const {props: {children, ...options}} = nextElement,
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
-    update(node, options);
+    update(node, solveClass(options));
 
     // Updating children
     const childrenToUse = [].concat(children || []);
