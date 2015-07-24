@@ -9,12 +9,16 @@ export default function update(node, options) {
   for (let key in options) {
     let value = options[key];
 
+    // Setting label
+    if (key === 'label')
+      node.setLabel(value);
+
     // Setting content
-    if (key === 'content')
+    else if (key === 'content')
       node.setContent(value);
 
     // Progress bar
-    if (key === 'filled')
+    else if (key === 'filled')
       node.setProgress(value);
   }
 }

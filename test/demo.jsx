@@ -35,7 +35,7 @@ class InnerBox extends Component {
     const left = position === 'left' ? '2%' : '53%';
 
     return (
-      <box label={position}
+      <box label={this.state.hey ? 'First step' : 'Second step'}
            ref="box"
            left={left}
            width='45%'
@@ -78,5 +78,6 @@ class ProgressBar extends Component {
 
 const screen = render(<App />, {
   autoPadding: true,
-  smartCSR: true
+  smartCSR: true,
+  title: 'react-blessed demo app'
 });
