@@ -27,6 +27,9 @@ class Dashboard extends Component {
         <Log />
         <Request />
         <Response />
+        <Jobs />
+        <Progress />
+        <Stats />
       </element>
     );
   }
@@ -66,6 +69,65 @@ class Response extends Component {
                 top="70%"
                 left="30%"
                 width="30%" />;
+  }
+}
+
+/**
+ * Jobs component.
+ */
+class Jobs extends Component {
+  render() {
+    return <box label="Jobs"
+                class={stylesheet.bordered}
+                left="60%"
+                width="40%"
+                height="60%" />;
+  }
+}
+
+/**
+ * Progress component.
+ */
+class Progress extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {progress: 0};
+
+    const interval = setInterval(() => {
+      if (this.state.progress >= 100)
+        return clearInterval(interval);
+
+      this.setState({progress: this.state.progress + 1});
+    }, 500);
+  }
+
+  render() {
+    const {progress} = this.state,
+          label = `Progress - ${progress}%`;
+
+    return <progressbar label={label}
+                        class={stylesheet.bordered}
+                        filled={progress}
+                        top="60%"
+                        left="60%"
+                        width="40%"
+                        height="10%"
+                        style={{bar: {bg: 'blue'}}} />;
+  }
+}
+
+/**
+ * Stats component.
+ */
+class Stats extends Component {
+  render() {
+    return <box label="Stats"
+                class={stylesheet.bordered}
+                top="70%"
+                left="60%"
+                width="40%"
+                height="31%" />;
   }
 }
 
