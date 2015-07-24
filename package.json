@@ -4,8 +4,9 @@
   "description": "A react renderer for blessed.",
   "main": "index.js",
   "scripts": {
-    "demo": "babel-node ./test/demo.jsx",
-    "test": "babel-node ./test/basic.jsx"
+    "dashboard": "babel-node ./examples/dashboard.jsx",
+    "demo": "babel-node ./examples/demo.jsx",
+    "test": "mocha -R spec --compilers js:babel/register ./test/endpoint.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "babel": "^5.8.3",
     "blessed": "^0.1.14",
+    "mocha": "^2.0.1",
     "react": "^0.14.0-beta1"
   },
   "dependencies": {

@@ -12,13 +12,12 @@ import assign from 'object-assign';
 import update from './update';
 
 /**
- * React Blessed Component.
+ * Renders the given react element with blessed.
+ *
+ * @constructor ReactBlessedComponent
+ * @extends ReactMultiChild
  */
 export default class ReactBlessedComponent {
-
-  /**
-   * Actual constructor.
-   */
   constructor(tag) {
     this._tag = tag.toLowerCase();
     this._renderedChildren = null;
@@ -30,9 +29,6 @@ export default class ReactBlessedComponent {
     this._nodeWithLegacyProperties = null;
   }
 
-  /**
-   * React constructor.
-   */
   construct(element) {
 
     // Setting some properties
@@ -41,6 +37,11 @@ export default class ReactBlessedComponent {
 
   /**
    * Mounting the root component.
+   *
+   * @internal
+   * @param  {string} rootID - The root blessed ID for this node.
+   * @param  {ReactBlessedReconcileTransaction} transaction
+   * @param  {object} context
    */
   mountComponent(rootID, transaction, context) {
     this._rootNodeID = rootID;
@@ -68,7 +69,11 @@ export default class ReactBlessedComponent {
   }
 
   /**
-   * Mounting a blessed node and its children.
+   * Mounting the blessed node itself.
+   *
+   * @param   {BlessedNode|BlessedScreen} parent  - The parent node.
+   * @param   {ReactElement}              element - The element to mount.
+   * @return  {BlessedNode}                       - The mounted node.
    */
   mountNode(parent, element) {
     const {props, type} = element,
@@ -88,9 +93,16 @@ export default class ReactBlessedComponent {
   }
 
   /**
-   * Receiving a component's update.
+   * Receive a component update.
+   *
+   * @param {ReactReconcileTransaction} transaction
+   * @param {ReactElement}              prevElement
+   * @param {ReactElement}              nextElement
+   * @param {object}                    context
+   * @internal
+   * @overridable
    */
-  receiveComponent(nextElement, transaction, context) {
+  receiveComponent(nextElement, prevElement, transaction, context) {
     const {props: {children, ...options}} = nextElement,
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
@@ -105,7 +117,7 @@ export default class ReactBlessedComponent {
   }
 
   /**
-   * Dropping a component.
+   * Dropping the component.
    */
   unmountComponent() {
     this.unmountChildren();
@@ -122,12 +134,17 @@ export default class ReactBlessedComponent {
 
   /**
    * Getting a public instance of the component for refs.
+   *
+   * @return {BlessedNode} - The instance's node.
    */
   getPublicInstance() {
     return ReactBlessedIDOperations.get(this._rootNodeID);
   }
 }
 
+/**
+ * Extending the component with the MultiChild mixin.
+ */
 assign(
   ReactBlessedComponent.prototype,
   ReactMultiChild.Mixin

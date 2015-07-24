@@ -81,3 +81,8 @@ const screen = render(<App />, {
   smartCSR: true,
   title: 'react-blessed demo app'
 });
+
+screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+  return process.exit(0);
+});
+

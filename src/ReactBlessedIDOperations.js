@@ -2,21 +2,29 @@
  * React Blessed ID Operations
  * ============================
  *
- * Cache register for blessed element stored by ID.
+ * Cache register for blessed nodes stored by ID.
  */
-const blessedElements = {};
 
+/**
+ * The blessed nodes internal index;
+ */
+const blessedNodes = {};
+
+/**
+ * Backend for blessed ID operations.
+ *
+ * @constructor ReactBlessedIDOperations
+ */
 class ReactBlessedIDOperations {
-
-  /**
-   * Constructor.
-   */
   constructor() {
     this.screen = null;
   }
 
   /**
-   * Set the current screen
+   * Set the current screen.
+   *
+   * @param  {BlessedScreen} screen     - The screen to attach.
+   * @return {ReactBlessedIDOperations} - Returns itself.
    */
   setScreen(screen) {
     this.screen = screen;
@@ -24,26 +32,36 @@ class ReactBlessedIDOperations {
   }
 
   /**
-   * Add a new element to the index.
+   * Add a new node to the index.
+   *
+   * @param  {string}      ID           - The node's id.
+   * @param  {BlessedNode} node         - The node itself.
+   * @return {ReactBlessedIDOperations} - Returns itself.
    */
-  add(ID, element) {
-    blessedElements[ID] = element;
+  add(ID, node) {
+    blessedNodes[ID] = node;
     return this;
   }
 
   /**
-   * Get an element from the index.
+   * Get a node from the index.
+   *
+   * @param  {string}      ID - The node's id.
+   * @return {BlessedNode}    - The node.
    */
   get(ID) {
-    return blessedElements[ID];
+    return blessedNodes[ID];
   }
 
   /**
-   * Get the parent of an element from the index.
+   * Get the parent of a node from the index.
+   *
+   * @param  {string}                    ID - The node's id.
+   * @return {BlessesScreen|BlessedNode}    - The node.
    */
   getParent(ID) {
 
-    // If the element is root, we return the screen itself
+    // If the node is root, we return the screen itself
     if (ID.match(/\./g).length === 1)
       return this.screen;
 
@@ -52,10 +70,13 @@ class ReactBlessedIDOperations {
   }
 
   /**
-   * Drop an element from the index.
+   * Drop a node from the index.
+   *
+   * @param  {string}                   ID - The node's id.
+   * @return {ReactBlessedIDOperations}    - Returns itself.
    */
   drop(ID) {
-    delete blessedElements[ID];
+    delete blessedNodes[ID];
     return this;
   }
 }

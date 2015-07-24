@@ -97,4 +97,4 @@ const screen = render(<App />, {
 * kind of classes
 * full support
 * react-blessed-contrib
-
+* distrib and release

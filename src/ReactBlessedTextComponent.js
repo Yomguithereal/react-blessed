@@ -8,17 +8,16 @@ import blessed from 'blessed';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 
 /**
- * React Blessed Text Component.
+ * Renders the given text element with blessed.
+ *
+ * @constructor ReactBlessedTextComponent
  */
 export default class ReactBlessedTextComponent {
-
-  /**
-   * Actual constructor.
-   */
   constructor(props) {}
 
   /**
-   * React constructor.
+   * @param {ReactText} text
+   * @internal
    */
   construct(text) {
     this._currentElement = text;
@@ -27,7 +26,12 @@ export default class ReactBlessedTextComponent {
   }
 
   /**
-   * Mounting the root component.
+   * Setting the content etc. of the parent node.
+   *
+   * @param {string} rootID - DOM ID of the root node.
+   * @param {ReactBlessedReconcileTransaction} transaction
+   * @param {object} context
+   * @internal
    */
   mountComponent(rootID, transaction, context) {
     this._rootNodeID = rootID;
@@ -39,9 +43,13 @@ export default class ReactBlessedTextComponent {
   }
 
   /**
-   * Receiving a component's update.
+   * Updates this component by updating the text content.
+   *
+   * @param {ReactText}                        nextText - The next text content.
+   * @param {ReactBlessedReconcileTransaction} transaction
+   * @internal
    */
-  receiveComponent(nextText, transaction, context) {
+  receiveComponent(nextText, transaction) {
     this._currentElement = nextText;
     const nextStringText = '' + nextText;
 
@@ -57,7 +65,7 @@ export default class ReactBlessedTextComponent {
   }
 
   /**
-   * Dropping a component.
+   * Dropping the text component.
    */
   unmountComponent() {
     const parent = ReactBlessedIDOperations.getParent(this._rootNodeID);

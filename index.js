@@ -16,6 +16,13 @@ import blessed from 'blessed';
 // Injecting dependencies
 inject();
 
+/**
+ * Renders the given react element with blessed.
+ *
+ * @param  {ReactElement}  element   - Node to update.
+ * @param  {object}        [opts={}] - Options to give to the blessed screen.
+ * @return {BlessedScreen}           - The created blessed screen.
+ */
 function render(element, opts={}) {
 
   // Is the given element valid?
@@ -24,16 +31,9 @@ function render(element, opts={}) {
     'render(): You must pass a valid ReactElement.'
   );
 
-  // Creating a root id
-  const id = ReactInstanceHandles.createReactRootID();
-
-  // Creating our screen
-  const screen = blessed.screen(opts);
-
-  // DEBUG: escaping the screen
-  screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-    return process.exit(0);
-  });
+  // Creating a root id & creating the screen
+  const id = ReactInstanceHandles.createReactRootID(),
+        screen = blessed.screen(opts);
 
   // Mounting the app
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled(),
@@ -46,7 +46,7 @@ function render(element, opts={}) {
     component.mountComponent(id, transaction, {});
   });
 
-  // Returning the screen so the user can handle it properly
+  // Returning the screen so the user can attach listeners etc.
   return screen;
 }
 
