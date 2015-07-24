@@ -1,5 +1,5 @@
 /**
- * react-blessed
+ * React Blessed
  * ==============
  *
  * Exposing the renderer's API.
@@ -13,7 +13,9 @@ import instantiateReactComponent from 'react/lib/instantiateReactComponent';
 import inject from './src/ReactBlessedInjection';
 import blessed from 'blessed';
 
-// Injecting dependencies
+/**
+ * Injecting dependencies.
+ */
 inject();
 
 /**
