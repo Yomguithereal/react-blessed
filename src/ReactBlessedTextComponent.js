@@ -1,5 +1,5 @@
 /**
- * react-blessed Text Component
+ * React Blessed Text Component
  * =============================
  *
  * React component abstraction for the rendered text nodes.

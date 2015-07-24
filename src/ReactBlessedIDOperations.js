@@ -1,5 +1,5 @@
 /**
- * react-blessed ID Operations
+ * React Blessed ID Operations
  * ============================
  *
  * Cache register for blessed element stored by ID.

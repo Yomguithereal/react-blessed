@@ -1,5 +1,5 @@
 /**
- * react-blessed Component
+ * React Blessed Component
  * ========================
  *
  * React component abstraction for the blessed library.
@@ -7,7 +7,9 @@
 import blessed from 'blessed';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
+import invariant from 'react/lib/invariant';
 import assign from 'object-assign';
+import update from './update';
 
 /**
  * React Blessed Component.
@@ -70,7 +72,13 @@ export default class ReactBlessedComponent {
    */
   mountNode(parent, element) {
     const {props, type} = element,
-          {children, ...options} = props;
+          {children, ...options} = props,
+          blessedElement = blessed[type];
+
+    invariant(
+      !!blessedElement,
+      `Invalid blessed element "${type}".`
+    );
 
     const node = blessed[type](options);
 
@@ -86,15 +94,7 @@ export default class ReactBlessedComponent {
     const {props: {children, ...options}} = nextElement,
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
-    for (let key in options) {
-      let value = options[key];
-
-      if (key === 'content')
-        node.setContent(value);
-
-      if (key === 'filled')
-        node.setProgress(value);
-    }
+    update(node, options);
 
     // Updating children
     const childrenToUse = [].concat(children || []);

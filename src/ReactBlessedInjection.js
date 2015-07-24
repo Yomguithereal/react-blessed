@@ -1,5 +1,5 @@
 /**
- * react-blessed Dependency Injection
+ * React Blessed Dependency Injection
  * ===================================
  *
  * Injecting the renderer's needed dependencies into React's internals.

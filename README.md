@@ -87,3 +87,14 @@ const screen = render(<App />, {
   smartCSR: true
 });
 ```
+
+## Roadmap
+
+* **Done**: text nodes
+* **Done**: refs
+* events
+* key mapping
+* kind of classes
+* full support
+* react-blessed-contrib
+

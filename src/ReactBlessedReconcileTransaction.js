@@ -1,5 +1,5 @@
 /**
- * react-blessed Specific React Transaction
+ * React Blessed Specific React Transaction
  * =========================================
  *
  * React custom reconcile transaction injected by the renderer to enable
