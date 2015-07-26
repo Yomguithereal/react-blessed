@@ -48,7 +48,6 @@ export default function inject() {
   };
 
   EventEmitter.prototype.offAny = function() {
-    EventEmitter.prototype.emit = originalEmit;
     delete this._any;
     return this;
   };

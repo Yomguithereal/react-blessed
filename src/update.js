@@ -4,6 +4,7 @@
  *
  * Applying updates to blessed nodes correctly.
  */
+import _ from 'lodash';
 
 /**
  * Updates the given blessed node.
@@ -12,6 +13,8 @@
  * @param {object}      options - Props of the component without children.
  */
 export default function update(node, options) {
+
+  // TODO: enforce some kind of shallow equality?
 
   for (let key in options) {
     let value = options[key];
@@ -24,8 +27,12 @@ export default function update(node, options) {
     else if (key === 'content')
       node.setContent(value);
 
+    // Updating style
+    else if (key === 'style')
+      node.style = _.merge({}, node.style, value);
+
     // Progress bar
-    else if (key === 'filled')
+    else if (key === 'filled' && node.filled !== value)
       node.setProgress(value);
   }
 }

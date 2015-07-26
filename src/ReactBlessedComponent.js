@@ -11,6 +11,7 @@ import invariant from 'react/lib/invariant';
 import assign from 'object-assign';
 import update from './update';
 import solveClass from './solveClass';
+import _ from 'lodash';
 
 /**
  * Renders the given react element with blessed.
@@ -89,11 +90,10 @@ export default class ReactBlessedComponent {
     const node = blessed[type](solveClass(options));
 
     node.onAny((type, ...args) => {
-      // TODO: titlecasing the event's name
-      // const handler = this._currentElement.props['on'];
+      const handler = this._currentElement.props['on' + _.startCase(type)];
 
-      // if (typeof handler === 'function')
-      //   handler.apply(null, args);
+      if (typeof handler === 'function')
+        handler.apply(null, args);
     });
 
     parent.append(node);
