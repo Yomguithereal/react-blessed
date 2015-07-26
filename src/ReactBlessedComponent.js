@@ -88,6 +88,14 @@ export default class ReactBlessedComponent {
 
     const node = blessed[type](solveClass(options));
 
+    node.onAny((type, ...args) => {
+      // TODO: titlecasing the event's name
+      // const handler = this._currentElement.props['on'];
+
+      // if (typeof handler === 'function')
+      //   handler.apply(null, args);
+    });
+
     parent.append(node);
 
     return node;
@@ -126,6 +134,7 @@ export default class ReactBlessedComponent {
     const parent = ReactBlessedIDOperations.getParent(this._rootNodeID),
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
+    node.offAny();
     parent.remove(node);
 
     ReactBlessedIDOperations.drop(this._rootNodeID);
