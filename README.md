@@ -92,9 +92,9 @@ const screen = render(<App />, {
 
 * **Done**: text nodes
 * **Done**: refs
-* events
+* **Done**: events
 * key mapping
-* kind of classes
+* **Nearly done**: kind of classes (lack some polymorphisms)
 * full support
-* react-blessed-contrib
+* react-blessed-contrib (prefix them or full fledged higher order?)
 * distrib and release
