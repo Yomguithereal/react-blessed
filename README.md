@@ -32,25 +32,41 @@ class App extends Component {
         <InnerBox position="left" />
         <InnerBox position="right" />
         <ProgressBar />
+        Random text here...
       </box>
     );
   }
 }
 
 class InnerBox extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hey: true
+    };
+
+    setInterval(() => {
+      this.setState({hey: !this.state.hey});
+    }, 1000);
+  }
+
   render() {
     const position = this.props.position;
 
     const left = position === 'left' ? '2%' : '53%';
 
     return (
-      <box label={position}
+      <box label={this.state.hey ? 'First step' : 'Second step'}
+           ref="box"
            left={left}
            width='45%'
            height="70%"
            top="10%"
            border={{type: 'line'}}
-           style={{border: {fg: 'green'}}} />
+           style={{border: {fg: 'green'}}}>
+        {this.state.hey ? 'Hey...' : 'Ho...'}
+      </box>
     );
   }
 }
@@ -84,7 +100,12 @@ class ProgressBar extends Component {
 
 const screen = render(<App />, {
   autoPadding: true,
-  smartCSR: true
+  smartCSR: true,
+  title: 'react-blessed demo app'
+});
+
+screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+  return process.exit(0);
 });
 ```
 
@@ -98,3 +119,7 @@ const screen = render(<App />, {
 * full support
 * react-blessed-contrib (prefix them or full fledged higher order?)
 * distrib and release
+
+## License
+
+MIT
