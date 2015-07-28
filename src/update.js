@@ -7,6 +7,17 @@
 import _ from 'lodash';
 
 const RAW_ATTRIBUTES = [
+
+  // Alignment & Orientation
+  'align',
+  'orientation',
+
+  // Font-related
+  'font',
+  'fontBold',
+  'fch',
+
+  // Position
   'left',
   'right',
   'top',
