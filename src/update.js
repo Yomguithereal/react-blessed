@@ -14,6 +14,7 @@ const RAW_ATTRIBUTES = [
   'orientation',
   'shrink',
   'padding',
+  'tags',
   'shadow',
 
   // Font-related
