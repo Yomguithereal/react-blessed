@@ -75,6 +75,10 @@ export default function update(node, options) {
     else if (key === 'style')
       node.style = _.merge({}, node.style, value);
 
+    // Updating items
+    else if (key === 'items')
+      node.setItems(value);
+
     // Border edge case
     else if (key === 'border')
       node.border = _.merge({}, node.border, value);
