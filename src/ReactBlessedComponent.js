@@ -8,10 +8,9 @@ import blessed from 'blessed';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import invariant from 'react/lib/invariant';
-import assign from 'object-assign';
 import update from './update';
 import solveClass from './solveClass';
-import _ from 'lodash';
+import {extend, startCase} from 'lodash';
 
 /**
  * Renders the given react element with blessed.
@@ -89,7 +88,7 @@ export default class ReactBlessedComponent {
     const node = blessed[type](solveClass(options));
 
     node.onAny((type, ...args) => {
-      const handler = this._currentElement.props['on' + _.startCase(type)];
+      const handler = this._currentElement.props['on' + startCase(type)];
 
       if (typeof handler === 'function')
         handler.apply(null, args);
@@ -154,7 +153,7 @@ export default class ReactBlessedComponent {
 /**
  * Extending the component with the MultiChild mixin.
  */
-assign(
+extend(
   ReactBlessedComponent.prototype,
   ReactMultiChild.Mixin
 );

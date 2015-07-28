@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {render} from '../index.js';
+import {render} from '../src/render.js';
 
 class AnimatedBox extends Component {
   constructor(props) {

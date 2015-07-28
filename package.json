@@ -2,11 +2,13 @@
   "name": "react-blessed",
   "version": "0.0.1",
   "description": "A react renderer for blessed.",
-  "main": "index.js",
+  "main": "./dist/render.js",
   "scripts": {
     "animation": "babel-node ./examples/animation.jsx",
+    "build": "babel ./src --out-dir ./dist",
     "dashboard": "babel-node ./examples/dashboard.jsx",
     "demo": "babel-node ./examples/demo.jsx",
+    "prepublish": "npm run build",
     "test": "mocha -R spec --compilers js:babel/register ./test/endpoint.js"
   },
   "repository": {
@@ -33,7 +35,6 @@
     "react": "^0.14.0-beta1"
   },
   "dependencies": {
-    "lodash": "^3.6.0",
-    "object-assign": "^3.0.0"
+    "lodash": "^3.6.0"
   }
 }

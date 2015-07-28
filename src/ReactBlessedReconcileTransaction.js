@@ -10,8 +10,7 @@
 import CallbackQueue from 'react/lib/CallbackQueue';
 import PooledClass from 'react/lib/PooledClass';
 import Transaction from 'react/lib/Transaction';
-
-import assign from 'object-assign';
+import {extend} from 'lodash';
 
 const ON_BLESSED_READY_QUEUEING = {
   initialize: function () {
@@ -40,7 +39,7 @@ const Mixin = {
   }
 };
 
-assign(
+extend(
   ReactBlessedReconcileTransaction.prototype,
   Transaction.Mixin,
   Mixin
