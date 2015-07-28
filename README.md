@@ -4,7 +4,7 @@ A [React](https://facebook.github.io/react/) custom renderer for the [blessed](h
 
 This renderer should currently be considered as experimental and is subject to change since it works on a beta version of React (`0.14.0-beta1`).
 
-![example](/example.png)
+![example](https://raw.githubusercontent.com/Yomguithereal/react-blessed/master/img/example.png)
 
 ## Summary
 
@@ -151,7 +151,7 @@ For convenience, `react-blessed` lets you handle classes looking like what [reac
 
 Just pass object or an array of objects as the class of your components likewise:
 
-```js
+```jsx
 // Let's say we want all our elements to have a fancy blue border
 const stylesheet = {
   bordered: {
@@ -183,7 +183,7 @@ class App extends Component {
 ```
 
 You can of course combine classes (note that the given array of classes will be compacted):
-```js
+```jsx
 // Let's say we want all our elements to have a fancy blue border
 const stylesheet = {
   bordered: {
