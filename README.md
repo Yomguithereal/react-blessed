@@ -267,7 +267,7 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 * **Done**: text nodes
 * **Done**: refs
 * **Done**: events
-* **Nearly done**: kind of classes à la `react-native` (lack some polymorphisms)
+* **Done**: kind of classes à la `react-native`
 * full support (handling every tags of the `blessed` library and updates)
 * [blessed-contrib](https://github.com/yaronn/blessed-contrib) support (probably through full-fledged components and not through basic tags).
 * Distribution and release

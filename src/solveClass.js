@@ -4,9 +4,7 @@
  *
  * Solving a component's classes to apply correct props to an element.
  */
-
-// TODO: fallback to lodash.merge
-import {merge} from 'lodash';
+import {merge, compact} from 'lodash';
 
 /**
  * Solves the given props by applying classes.
@@ -15,6 +13,10 @@ import {merge} from 'lodash';
  * @return {object}        - The solved props.
  */
 export default function solveClass(props) {
-  const {class: classes, ...rest} = props;
-  return merge({}, classes, rest);
+  let {class: classes, ...rest} = props;
+
+  // Coercing to array & compacting
+  classes = compact([].concat(classes));
+
+  return merge.apply(null, [{}].concat(classes).concat(rest));
 }
