@@ -34,6 +34,7 @@ const RAW_ATTRIBUTES = [
   'visible',
   'scrollable',
   'draggable',
+  'interactive',
 
   // Position
   'left',
