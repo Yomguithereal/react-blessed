@@ -2,7 +2,9 @@
 
 A [React](https://facebook.github.io/react/) custom renderer for the [blessed](https://github.com/chjj/blessed) library.
 
-This is only an experimental proof of concept for the time being.
+This renderer should currently be considered as experimental and subject to change since it works on a beta version of React (`0.14.0-beta1`).
+
+![example](/example.png)
 
 ## Demo
 
