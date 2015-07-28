@@ -2,7 +2,7 @@
 
 A [React](https://facebook.github.io/react/) custom renderer for the [blessed](https://github.com/chjj/blessed) library.
 
-This renderer should currently be considered as experimental and subject to change since it works on a beta version of React (`0.14.0-beta1`).
+This renderer should currently be considered as experimental and is subject to change since it works on a beta version of React (`0.14.0-beta1`).
 
 ![example](/example.png)
 
@@ -34,7 +34,7 @@ npm install react-blessed
 
 For a quick demo of what you could achieve with such a renderer you can clone this repository and check some of the examples:
 
-```
+```bash
 git clone git@github.com:Yomguithereal/react-blessed.git
 cd react-blessed
 npm install
@@ -94,7 +94,7 @@ As with React's DOM renderer, `react-blessed` lets you handle the original bless
 class CustomList extends Component {
   componentDidMount() {
 
-    // Focusing the first box
+    // Focus on the first box
     this.refs.first.focus();
   }
 
@@ -147,9 +147,9 @@ class Completion extends Component {
 
 ### Classes
 
-For convenience, `react-blessed` makes the use of à la [react-native](https://facebook.github.io/react-native/docs/style.html#content) classes.
+For convenience, `react-blessed` lets you handle classes looking like what [react-native](https://facebook.github.io/react-native/docs/style.html#content) proposes.
 
-Just pass object or an array of object as the class of your components likewise:
+Just pass object or an array of objects as the class of your components likewise:
 
 ```js
 // Let's say we want all our elements to have a fancy blue border
@@ -214,7 +214,10 @@ class App extends Component {
         <box class={[stylesheet.bordered, stylesheet.magentaBackground]}>
           First box.
         </box>
-        <box class={[stylesheet.bordered, backgroundForSecondBox && stylesheet.magentaBackground]}>
+        <box class={[
+          stylesheet.bordered,
+          backgroundForSecondBox && stylesheet.magentaBackground
+        ]}>
           Second box.
         </box>
       </element>
