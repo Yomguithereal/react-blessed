@@ -66,8 +66,7 @@ export default class ReactBlessedComponent {
     );
 
     // Rendering the screen
-    // TODO: do this only once
-    ReactBlessedIDOperations.screen.render();
+    ReactBlessedIDOperations.screen.debouncedRender();
   }
 
   /**
@@ -122,7 +121,7 @@ export default class ReactBlessedComponent {
 
     this.updateChildren(childrenToUse, transaction, context);
 
-    ReactBlessedIDOperations.screen.render();
+    ReactBlessedIDOperations.screen.debouncedRender();
   }
 
   /**

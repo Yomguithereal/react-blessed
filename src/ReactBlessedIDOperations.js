@@ -4,6 +4,7 @@
  *
  * Cache register for blessed nodes stored by ID.
  */
+import {debounce} from 'lodash';
 
 /**
  * The blessed nodes internal index;
@@ -28,6 +29,11 @@ class ReactBlessedIDOperations {
    */
   setScreen(screen) {
     this.screen = screen;
+
+    // Creating a debounced version of the render method so we won't render
+    // multiple time per frame, in vain.
+    screen.debouncedRender = debounce(() => screen.render(), 0);
+
     return this;
   }
 
