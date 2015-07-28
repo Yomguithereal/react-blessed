@@ -4,6 +4,7 @@
   "description": "A react renderer for blessed.",
   "main": "index.js",
   "scripts": {
+    "animation": "babel-node ./examples/animation.jsx",
     "dashboard": "babel-node ./examples/dashboard.jsx",
     "demo": "babel-node ./examples/demo.jsx",
     "test": "mocha -R spec --compilers js:babel/register ./test/endpoint.js"

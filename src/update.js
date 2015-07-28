@@ -6,6 +6,14 @@
  */
 import _ from 'lodash';
 
+const RAW_ATTRIBUTES = [
+  'left',
+  'right',
+  'top',
+  'bottom',
+  'aleft'
+];
+
 /**
  * Updates the given blessed node.
  *
@@ -34,5 +42,12 @@ export default function update(node, options) {
     // Progress bar
     else if (key === 'filled' && node.filled !== value)
       node.setProgress(value);
+
+    // Raw attributes
+    else
+      RAW_ATTRIBUTES.forEach(function(attr) {
+        if (key === attr)
+          node[attr] = value;
+      });
   }
 }
