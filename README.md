@@ -12,7 +12,7 @@ This renderer should currently be considered as experimental and subject to chan
 * [Demo](#demo)
 * [Usage](#usage)
   * [Rendering a simple application](#rendering-a-simple-application)
-  * [Text nodes](#text-nodes)
+  * [Nodes & text nodes](#nodes--text-nodes)
   * [Refs](#refs)
   * [Events](#events)
   * [Classes](#classes)
@@ -47,7 +47,7 @@ npm run animation
 
 ## Usage
 
-### Rendering a simple application
+### Rendering a basic application
 
 ```jsx
 import React, {Component} from 'react';
@@ -80,13 +80,148 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 });
 ```
 
-### Text nodes
+### Nodes & text nodes
+
+Any of the blessed [widgets](https://github.com/chjj/blessed#widgets) can be renderered through `react-blessed` by using a lowercased tag title.
+
+Text nodes, on the other hand, will be renderer by applying the `setContent` method with the given text on the parent node.
 
 ### Refs
 
+As with React's DOM renderer, `react-blessed` lets you handle the original blessed nodes, if you ever need them, through refs.
+
+```jsx
+class CustomList extends Component {
+  componentDidMount() {
+
+    // Focusing the first box
+    this.refs.first.focus();
+  }
+
+  render() {
+    return (
+      <element>
+        <box ref="first">
+          First box.
+        </box>
+        <box ref="second">
+          Second box.
+        </box>
+      </element>
+    );
+  }
+}
+```
+
 ### Events
 
+Any blessed node event can be caught through a `on`-prefixed listener:
+
+```jsx
+class Completion extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {progress: 0, color: 'blue'};
+
+    const interval = setInterval(() => {
+      if (this.state.progress >= 100)
+        return clearInterval(interval);
+
+      this.setState({progress: this.state.progress + 1});
+    }, 50);
+  }
+
+  render() {
+    const {progress} = this.state,
+          label = `Progress - ${progress}%`;
+
+    // See the `onComplete` prop
+    return <progressbar label={label}
+                        onComplete={() => this.setState({color: 'green'})}
+                        filled={progress}
+                        style={{bar: {bg: this.state.color}}} />;
+  }
+}
+```
+
 ### Classes
+
+For convenience, `react-blessed` makes the use of à la [react-native](https://facebook.github.io/react-native/docs/style.html#content) classes.
+
+Just pass object or an array of object as the class of your components likewise:
+
+```js
+// Let's say we want all our elements to have a fancy blue border
+const stylesheet = {
+  bordered: {
+    border: {
+      type: 'line'
+    },
+    style: {
+      border: {
+        fg: 'blue'
+      }
+    }
+  }
+};
+
+class App extends Component {
+  render() {
+    return (
+      <element>
+        <box class={stylesheet.bordered}>
+          First box.
+        </box>
+        <box class={stylesheet.bordered}>
+          Second box.
+        </box>
+      </element>
+    );
+  }
+}
+```
+
+You can of course combine classes (note that the given array of classes will be compacted):
+```js
+// Let's say we want all our elements to have a fancy blue border
+const stylesheet = {
+  bordered: {
+    border: {
+      type: 'line'
+    },
+    style: {
+      border: {
+        fg: 'blue'
+      }
+    }
+  },
+  magentaBackground: {
+    style: {
+      bg: 'magenta'
+    }
+  }
+};
+
+class App extends Component {
+  render() {
+
+    // If this flag is false, then the class won't apply to the second box
+    const backgroundForSecondBox = this.props.backgroundForSecondBox;
+
+    return (
+      <element>
+        <box class={[stylesheet.bordered, stylesheet.magentaBackground]}>
+          First box.
+        </box>
+        <box class={[stylesheet.bordered, backgroundForSecondBox && stylesheet.magentaBackground]}>
+          Second box.
+        </box>
+      </element>
+    );
+  }
+}
+```
 
 ## Roadmap
 
