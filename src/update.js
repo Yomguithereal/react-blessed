@@ -8,21 +8,45 @@ import _ from 'lodash';
 
 const RAW_ATTRIBUTES = [
 
-  // Alignment & Orientation
+  // Alignment, Orientation & Presentation
   'align',
+  'valign',
   'orientation',
+  'shrink',
+  'padding',
+  'shadow',
 
   // Font-related
   'font',
   'fontBold',
   'fch',
+  'ch',
+  'bold',
+  'underline',
+
+  // Flags
+  'clickable',
+  'input',
+  'keyable',
+  'focused',
+  'hidden',
+  'visible',
+  'scrollable',
+  'draggable',
 
   // Position
   'left',
   'right',
   'top',
   'bottom',
-  'aleft'
+  'aleft',
+  'aright',
+  'atop',
+  'abottom',
+
+  // Misc
+  'name',
+  'hoverText'
 ];
 
 /**
@@ -34,6 +58,7 @@ const RAW_ATTRIBUTES = [
 export default function update(node, options) {
 
   // TODO: enforce some kind of shallow equality?
+  // TODO: handle position
 
   for (let key in options) {
     let value = options[key];
@@ -50,15 +75,21 @@ export default function update(node, options) {
     else if (key === 'style')
       node.style = _.merge({}, node.style, value);
 
+    // Border edge case
+    else if (key === 'border')
+      node.border = _.merge({}, node.border, value);
+
     // Progress bar
     else if (key === 'filled' && node.filled !== value)
       node.setProgress(value);
 
     // Raw attributes
     else
-      RAW_ATTRIBUTES.forEach(function(attr) {
-        if (key === attr)
-          node[attr] = value;
-      });
+      for (let i = 0, l = RAW_ATTRIBUTES.length; i < l; i++) {
+        if (key === RAW_ATTRIBUTES[i]) {
+          node[key] = value;
+          break;
+        }
+      }
   }
 }

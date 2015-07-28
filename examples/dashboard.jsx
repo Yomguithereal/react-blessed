@@ -43,7 +43,8 @@ class Log extends Component {
     return <box label="Log"
                 class={stylesheet.bordered}
                 width="60%"
-                height="70%" />;
+                height="70%"
+                draggable={true} />;
   }
 }
 
