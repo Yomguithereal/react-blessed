@@ -6,273 +6,108 @@ This renderer should currently be considered as experimental and subject to chan
 
 ![example](/example.png)
 
+## Summary
+
+* [Installation](#installation)
+* [Demo](#demo)
+* [Usage](#usage)
+  * [Rendering a simple application](#rendering-a-simple-application)
+  * [Text nodes](#text-nodes)
+  * [Refs](#refs)
+  * [Events](#events)
+  * [Classes](#classes)
+* [Roadmap](#roadmap)
+* [Contribution](#contribution)
+* [License](#license)
+
+## Installation
+
+You can install `react-blessed` through npm:
+
+```bash
+# Be sure to install react>=0.14.0 & blessed>=0.1.15 before
+npm install react@0.14.0-beta1 blessed
+npm install react-blessed
+```
+
 ## Demo
+
+For a quick demo of what you could achieve with such a renderer you can clone this repository and check some of the examples:
 
 ```
 git clone git@github.com:Yomguithereal/react-blessed.git
 cd react-blessed
 npm install
+
+# Some examples (code is in `examples/`)
 npm run demo
-# or
 npm run dashboard
+npm run animation
 ```
 
-## Requirements & explanation
+## Usage
 
-Currently works only with `react@0.14.0-beta1`.
-
-The demo code looks like this:
+### Rendering a simple application
 
 ```jsx
 import React, {Component} from 'react';
 import {render} from 'react-blessed';
 
-class App extends Component {
+// Rendering a simple centered box
+class App extends Component {
   render() {
-    return (
-      <box label="react-blessed demo"
-           border={{type: 'line'}}
-           style={{border: {fg: 'cyan'}}}>
-        <InnerBox position="left" />
-        <InnerBox position="right" />
-        <ProgressBar />
-        Random text here...
-      </box>
-    );
+    return <box top="center"
+                left="center"
+                width="50%"
+                height="50%"
+                border={{type: 'line'}}
+                style={{border: {fg: 'blue'}}}>
+              Hello World!
+            </box>;
   }
 }
 
-class InnerBox extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hey: true
-    };
-
-    setInterval(() => {
-      this.setState({hey: !this.state.hey});
-    }, 1000);
-  }
-
-  render() {
-    const position = this.props.position;
-
-    const left = position === 'left' ? '2%' : '53%';
-
-    return (
-      <box label={this.state.hey ? 'First step' : 'Second step'}
-           ref="box"
-           left={left}
-           width='45%'
-           height="70%"
-           top="10%"
-           border={{type: 'line'}}
-           style={{border: {fg: 'green'}}}>
-        {this.state.hey ? 'Hey...' : 'Ho...'}
-      </box>
-    );
-  }
-}
-
-class ProgressBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {completion: 0};
-
-    const interval = setInterval(() => {
-      if (this.state.completion >= 100)
-        return clearInterval(interval);
-
-      this.setState({completion: this.state.completion + 10});
-    }, 1000);
-  }
-
-  render() {
-    return <progressbar orientation="horizontal"
-                        filled={this.state.completion}
-                        top="80%"
-                        left="center"
-                        height="15%"
-                        width="80%"
-                        label="progress"
-                        border={{type: 'line'}}
-                        style={{border: {fg: 'red'}, bar: {bg: 'red'}}} />
-  }
-}
-
+// Creating our screen
 const screen = render(<App />, {
   autoPadding: true,
   smartCSR: true,
-  title: 'react-blessed demo app'
+  title: 'react-blessed hello world'
 });
 
+// Adding a way to quit the program
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
 ```
 
-The dashboard's one:
+### Text nodes
 
-```jsx
-import React, {Component} from 'react';
-import {render} from 'react-blessed';
+### Refs
 
-/**
- * Stylesheet
- */
-const stylesheet = {
-  bordered: {
-    border: {
-      type: 'line'
-    },
-    style: {
-      border: {
-        fg: 'blue'
-      }
-    }
-  }
-};
+### Events
 
-/**
- * Top level component.
- */
-class Dashboard extends Component {
-  render() {
-    return (
-      <element>
-        <Log />
-        <Request />
-        <Response />
-        <Jobs />
-        <Progress />
-        <Stats />
-      </element>
-    );
-  }
-}
-
-/**
- * Log component.
- */
-class Log extends Component {
-  render() {
-    return <box label="Log"
-                class={stylesheet.bordered}
-                width="60%"
-                height="70%" />;
-  }
-}
-
-/**
- * Request component.
- */
-class Request extends Component {
-  render() {
-    return <box label="Request"
-                class={stylesheet.bordered}
-                top="70%"
-                width="30%" />;
-  }
-}
-
-/**
- * Response component.
- */
-class Response extends Component {
-  render() {
-    return <box label="Response"
-                class={stylesheet.bordered}
-                top="70%"
-                left="30%"
-                width="30%" />;
-  }
-}
-
-/**
- * Jobs component.
- */
-class Jobs extends Component {
-  render() {
-    return <box label="Jobs"
-                class={stylesheet.bordered}
-                left="60%"
-                width="40%"
-                height="60%" />;
-  }
-}
-
-/**
- * Progress component.
- */
-class Progress extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {progress: 0, color: 'blue'};
-
-    const interval = setInterval(() => {
-      if (this.state.progress >= 100)
-        return clearInterval(interval);
-
-      this.setState({progress: this.state.progress + 1});
-    }, 50);
-  }
-
-  render() {
-    const {progress} = this.state,
-          label = `Progress - ${progress}%`;
-
-    return <progressbar label={label}
-                        onComplete={() => this.setState({color: 'green'})}
-                        class={stylesheet.bordered}
-                        filled={progress}
-                        top="60%"
-                        left="60%"
-                        width="40%"
-                        height="10%"
-                        style={{bar: {bg: this.state.color}}} />;
-  }
-}
-
-/**
- * Stats component.
- */
-class Stats extends Component {
-  render() {
-    return <box label="Stats"
-                class={stylesheet.bordered}
-                top="70%"
-                left="60%"
-                width="40%"
-                height="31%" />;
-  }
-}
-
-/**
- * Rendering the screen.
- */
-const screen = render(<Dashboard />, {
-  autoPadding: true,
-  smartCSR: true,
-  title: 'react-blessed dashboard'
-});
-
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-  return process.exit(0);
-});
-```
+### Classes
 
 ## Roadmap
 
-* **Done**: text nodes
-* **Done**: refs
-* **Done**: events
-* **Done**: kind of classes à la `react-native`
-* full support (handling every tags of the `blessed` library and updates)
-* [blessed-contrib](https://github.com/yaronn/blessed-contrib) support (probably through full-fledged components and not through basic tags).
-* Distribution and release
+* Full support (meaning every tags and options should be handled by the renderer).
+* `react-blessed-contrib` to add some sugar over the [blessed-contrib](https://github.com/yaronn/blessed-contrib) library (probably through full-fledged components).
+
+## Contribution
+
+Contributions are obviously welcome.
+
+Be sure to add unit tests if relevant and pass them all before submitting your pull request.
+
+```bash
+# Installing the dev environment
+git clone git@github.com:Yomguithereal/react-blessed.git
+cd react-blessed
+npm install
+
+# Running the tests
+npm test
+```
 
 ## License
 
