@@ -8,7 +8,7 @@ import ReactInstanceHandles from 'react/lib/ReactInstanceHandles';
 import ReactElement from 'react/lib/ReactElement';
 import ReactUpdates from 'react/lib/ReactUpdates';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
-import invariant from 'react/lib/invariant';
+import invariant from 'invariant';
 import instantiateReactComponent from 'react/lib/instantiateReactComponent';
 import inject from './ReactBlessedInjection';
 import blessed from 'blessed';

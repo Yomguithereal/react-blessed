@@ -7,7 +7,7 @@
 import blessed from 'blessed';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
-import invariant from 'react/lib/invariant';
+import invariant from 'invariant';
 import update from './update';
 import solveClass from './solveClass';
 import {extend, startCase} from 'lodash';

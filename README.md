@@ -35,7 +35,7 @@ npm install react-blessed
 For a quick demo of what you could achieve with such a renderer you can clone this repository and check some of the examples:
 
 ```bash
-git clone git@github.com:Yomguithereal/react-blessed.git
+git clone https://github.com/Yomguithereal/react-blessed
 cd react-blessed
 npm install
 
