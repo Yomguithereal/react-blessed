@@ -63,7 +63,7 @@ class ReactBlessedIDOperations {
    * Get the parent of a node from the index.
    *
    * @param  {string}                    ID - The node's id.
-   * @return {BlessesScreen|BlessedNode}    - The node.
+   * @return {BlessedScreen|BlessedNode}    - The node.
    */
   getParent(ID) {
 
