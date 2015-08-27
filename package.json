@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yomguithereal/blessed.git"
+    "url": "git+https://github.com/yomguithereal/react-blessed.git"
   },
   "keywords": [
     "blessed",
@@ -25,9 +25,9 @@
   "author": "yomguithereal",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yomguithereal/blessed/issues"
+    "url": "https://github.com/yomguithereal/react-blessed/issues"
   },
-  "homepage": "https://github.com/yomguithereal/blessed#readme",
+  "homepage": "https://github.com/yomguithereal/react-blessed#readme",
   "devDependencies": {
     "babel": "^5.8.3",
     "blessed": "^0.1.14",
