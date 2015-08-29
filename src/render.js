@@ -49,7 +49,22 @@ function render(element, opts={}) {
   });
 
   // Returning the screen so the user can attach listeners etc.
+  screen._component = component;
   return screen;
 }
 
-export {render};
+/**
+ * Renders the given react element with blessed and returns ReactComponent.
+ *
+ * @param  {ReactElement}  element   - Node to update.
+ * @param  {object}        [opts={}] - Options to give to the blessed screen.
+ * @return {ReactComponent}          - The created component.
+ */
+function renderComponent(element, opts={}) {
+  const screen = render(element, opts);
+  // Add screen referrer from component
+  screen._component.screen = screen;
+  return screen._component;
+}
+
+export {render, renderComponent};
