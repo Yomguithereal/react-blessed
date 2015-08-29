@@ -49,7 +49,7 @@ function render(element, opts={}) {
   });
 
   // Returning the screen so the user can attach listeners etc.
-  screen._component = component;
+  screen._component = component._instance;
   return screen;
 }
 
