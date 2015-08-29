@@ -62,8 +62,6 @@ function render(element, opts={}) {
  */
 function renderComponent(element, opts={}) {
   const screen = render(element, opts);
-  // Add screen referrer from component
-  screen._component.screen = screen;
   return screen._component;
 }
 
