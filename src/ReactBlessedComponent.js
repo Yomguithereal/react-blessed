@@ -10,7 +10,12 @@ import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import invariant from 'invariant';
 import update from './update';
 import solveClass from './solveClass';
-import {extend, startCase} from 'lodash';
+import {extend, groupBy, startCase} from 'lodash';
+
+/**
+ * Variable types that must be solved as content rather than real children.
+ */
+const CONTENT_TYPES = {string: true, number: true};
 
 /**
  * Renders the given react element with blessed.
@@ -56,13 +61,27 @@ export default class ReactBlessedComponent {
     ReactBlessedIDOperations.add(rootID, node);
 
     // Mounting children
-    const childrenToUse = [].concat(this._currentElement.props.children || []);
+    let childrenToUse = this._currentElement.props.children;
+    childrenToUse = childrenToUse === null ? [] : [].concat(childrenToUse);
 
-    this.mountChildren(
-      childrenToUse,
-      transaction,
-      context
-    );
+    if (childrenToUse.length) {
+
+      // Discriminating content components from real children
+      const {content=null, realChildren=[]} = groupBy(childrenToUse, (c) => {
+        return CONTENT_TYPES[typeof c] ? 'content' : 'realChildren';
+      });
+
+      // Setting textual content
+      if (content)
+        node.setContent('' + content.join(''));
+
+      // Mounting real children
+      this.mountChildren(
+        realChildren,
+        transaction,
+        context
+      );
+    }
 
     // Rendering the screen
     ReactBlessedIDOperations.screen.debouncedRender();
@@ -116,9 +135,21 @@ export default class ReactBlessedComponent {
     update(node, solveClass(options));
 
     // Updating children
-    const childrenToUse = [].concat(children || []);
+    const childrenToUse = children === null ? [] : [].concat(children);
 
-    this.updateChildren(childrenToUse, transaction, context);
+    if (childrenToUse.length) {
+
+      // Discriminating content components from real children
+      const {content=null, realChildren=[]} = groupBy(childrenToUse, (c) => {
+        return CONTENT_TYPES[typeof c] ? 'content' : 'realChildren';
+      });
+
+      // Setting textual content
+      if (content)
+        node.setContent('' + content.join(''));
+
+      this.updateChildren(realChildren, transaction, context);
+    }
 
     ReactBlessedIDOperations.screen.debouncedRender();
   }

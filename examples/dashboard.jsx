@@ -40,11 +40,15 @@ class Dashboard extends Component {
  */
 class Log extends Component {
   render() {
-    return <box label="Log"
-                class={stylesheet.bordered}
-                width="60%"
-                height="70%"
-                draggable={true} />;
+    return (
+      <box label="Log"
+           class={stylesheet.bordered}
+           width="60%"
+           height="70%"
+           draggable={true}>
+        {'Hello'}, {0}, {'World'}
+      </box>
+    );
   }
 }
 
@@ -53,10 +57,14 @@ class Log extends Component {
  */
 class Request extends Component {
   render() {
-    return <box label="Request"
-                class={stylesheet.bordered}
-                top="70%"
-                width="30%" />;
+    return (
+      <box label="Request"
+           class={stylesheet.bordered}
+           top="70%"
+           width="30%">
+        {0}
+      </box>
+    );
   }
 }
 
@@ -124,12 +132,16 @@ class Progress extends Component {
  */
 class Stats extends Component {
   render() {
-    return <box label="Stats"
-                class={stylesheet.bordered}
-                top="70%"
-                left="60%"
-                width="40%"
-                height="31%" />;
+    return (
+      <box label="Stats"
+           class={stylesheet.bordered}
+           top="70%"
+           left="60%"
+           width="40%"
+           height="31%">
+        Some stats
+      </box>
+    );
   }
 }
 
