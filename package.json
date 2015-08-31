@@ -9,7 +9,7 @@
     "dashboard": "babel-node ./examples/dashboard.jsx",
     "demo": "babel-node ./examples/demo.jsx",
     "prepublish": "npm run build",
-    "test": "mocha -R spec --compilers js:babel/register ./test/endpoint.js"
+    "test": "$(npm bin)/mocha -R spec --compilers js:babel/register ./test/endpoint.js"
   },
   "repository": {
     "type": "git",
