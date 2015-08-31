@@ -160,11 +160,10 @@ export default class ReactBlessedComponent {
   unmountComponent() {
     this.unmountChildren();
 
-    const parent = ReactBlessedIDOperations.getParent(this._rootNodeID),
-          node = ReactBlessedIDOperations.get(this._rootNodeID);
+    const node = ReactBlessedIDOperations.get(this._rootNodeID);
 
     node.offAny();
-    parent.remove(node);
+    node.destroy();
 
     ReactBlessedIDOperations.drop(this._rootNodeID);
 
