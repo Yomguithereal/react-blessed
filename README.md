@@ -86,7 +86,7 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 
 Any of the blessed [widgets](https://github.com/chjj/blessed#widgets) can be renderered through `react-blessed` by using a lowercased tag title.
 
-Text nodes, on the other hand, will be renderer by applying the `setContent` method with the given text on the parent node.
+Text nodes, on the other hand, will be rendered by applying the `setContent` method with the given text on the parent node.
 
 ### Refs
 
