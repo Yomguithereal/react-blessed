@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import blessed from 'blessed';
 import {render} from '../src/render.js';
 
 /**
@@ -148,7 +149,7 @@ class Stats extends Component {
 /**
  * Rendering the screen.
  */
-const screen = render(<Dashboard />, {
+const screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
   title: 'react-blessed dashboard'
@@ -157,3 +158,5 @@ const screen = render(<Dashboard />, {
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
+
+render(<Dashboard />, screen);

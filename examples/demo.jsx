@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import blessed from 'blessed';
 import {render} from '../src/render.js';
 
 class App extends Component {
@@ -76,7 +77,7 @@ class ProgressBar extends Component {
   }
 }
 
-const screen = render(<App />, {
+const screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
   title: 'react-blessed demo app'
@@ -86,3 +87,4 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
 
+const component = render(<App />, screen);

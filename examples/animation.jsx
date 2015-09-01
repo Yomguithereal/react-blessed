@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import blessed from 'blessed';
 import {render} from '../src/render.js';
 
 class AnimatedBox extends Component {
@@ -38,7 +39,7 @@ class AnimatedBox extends Component {
   }
 }
 
-const screen = render(<AnimatedBox />, {
+const screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
   title: 'react-blessed box animation'
@@ -48,3 +49,4 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
 
+render(<AnimatedBox />, screen);

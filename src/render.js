@@ -11,7 +11,7 @@ import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import invariant from 'invariant';
 import instantiateReactComponent from 'react/lib/instantiateReactComponent';
 import inject from './ReactBlessedInjection';
-import blessed from 'blessed';
+import {Screen} from 'blessed';
 
 /**
  * Injecting dependencies.
@@ -21,11 +21,11 @@ inject();
 /**
  * Renders the given react element with blessed.
  *
- * @param  {ReactElement}  element   - Node to update.
- * @param  {object}        [opts={}] - Options to give to the blessed screen.
- * @return {BlessedScreen}           - The created blessed screen.
+ * @param  {ReactElement}   element   - Node to update.
+ * @param  {BlessedScreen}  screen    - The screen used to render the app.
+ * @return {ReactComponent}           - The rendered component instance.
  */
-function render(element, opts={}) {
+function render(element, screen) {
 
   // Is the given element valid?
   invariant(
@@ -33,9 +33,14 @@ function render(element, opts={}) {
     'render(): You must pass a valid ReactElement.'
   );
 
+  // Is the given screen valid?
+  invariant(
+    screen instanceof Screen,
+    'render(): You must pass a valid BlessedScreen.'
+  );
+
   // Creating a root id & creating the screen
-  const id = ReactInstanceHandles.createReactRootID(),
-        screen = blessed.screen(opts);
+  const id = ReactInstanceHandles.createReactRootID();
 
   // Mounting the app
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled(),
@@ -49,7 +54,7 @@ function render(element, opts={}) {
   });
 
   // Returning the screen so the user can attach listeners etc.
-  return screen;
+  return component._instance;
 }
 
 export {render};
