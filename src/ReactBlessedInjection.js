@@ -28,8 +28,12 @@ export default function inject() {
     ReactBlessedReconcileTransaction
   );
 
-  // NOTE: very dirty trick due to react@0.14-beta1's current state
-  ReactComponentEnvironment.processChildrenUpdates = Function.prototype;
+  // NOTE: we're monkeypatching ReactComponentEnvironment because
+  // ReactInjection.Component.injectEnvironment() currently throws,
+  // as it's already injected by ReactDOM for backward compat in 0.14 betas.
+  // Read more: https://github.com/Yomguithereal/react-blessed/issues/5
+  ReactComponentEnvironment.processChildrenUpdates = function () {};
+  ReactComponentEnvironment.replaceNodeWithMarkupByID = function () {};
 
   /**
    * Overriding blessed event emitter.
