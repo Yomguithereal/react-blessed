@@ -8,19 +8,11 @@ import ReactInjection from 'react/lib/ReactInjection';
 import ReactComponentEnvironment from 'react/lib/ReactComponentEnvironment';
 import ReactBlessedReconcileTransaction from './ReactBlessedReconcileTransaction';
 import ReactBlessedComponent from './ReactBlessedComponent';
-import ReactBlessedTextComponent from './ReactBlessedTextComponent';
 
 export default function inject() {
 
-  /**
-   * React-related injection.
-   */
   ReactInjection.NativeComponent.injectGenericComponentClass(
     ReactBlessedComponent
-  );
-
-  ReactInjection.NativeComponent.injectTextComponentClass(
-    ReactBlessedTextComponent
   );
 
   ReactInjection.Updates.injectReconcileTransaction(
