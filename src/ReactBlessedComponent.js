@@ -39,6 +39,12 @@ export default class ReactBlessedComponent {
 
     // Setting some properties
     this._currentElement = element;
+    this._eventListener = (type, ...args) => {
+      const handler = this._currentElement.props['on' + startCase(type)];
+
+      if (typeof handler === 'function')
+        handler.apply(null, args);
+    };
   }
 
   /**
@@ -106,13 +112,7 @@ export default class ReactBlessedComponent {
 
     const node = blessed[type](solveClass(options));
 
-    node.onAny((type, ...args) => {
-      const handler = this._currentElement.props['on' + startCase(type)];
-
-      if (typeof handler === 'function')
-        handler.apply(null, args);
-    });
-
+    node.on('event', this._eventListener);
     parent.append(node);
 
     return node;
@@ -162,7 +162,7 @@ export default class ReactBlessedComponent {
 
     const node = ReactBlessedIDOperations.get(this._rootNodeID);
 
-    node.offAny();
+    node.off('event', this._eventListener);
     node.destroy();
 
     ReactBlessedIDOperations.drop(this._rootNodeID);

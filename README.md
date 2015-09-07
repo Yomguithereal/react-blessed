@@ -25,7 +25,7 @@ This renderer should currently be considered as experimental and is subject to c
 You can install `react-blessed` through npm:
 
 ```bash
-# Be sure to install react>=0.14.0 & blessed>=0.1.15 before
+# Be sure to install react>=0.14.0 & blessed>=0.1.81 before
 npm install react@0.14.0-beta3 blessed
 npm install react-blessed
 ```
