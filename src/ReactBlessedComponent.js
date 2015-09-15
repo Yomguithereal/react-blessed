@@ -121,14 +121,13 @@ export default class ReactBlessedComponent {
   /**
    * Receive a component update.
    *
-   * @param {ReactReconcileTransaction} transaction
-   * @param {ReactElement}              prevElement
    * @param {ReactElement}              nextElement
+   * @param {ReactReconcileTransaction} transaction
    * @param {object}                    context
    * @internal
    * @overridable
    */
-  receiveComponent(nextElement, prevElement, transaction, context) {
+  receiveComponent(nextElement, transaction, context) {
     const {props: {children, ...options}} = nextElement,
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
