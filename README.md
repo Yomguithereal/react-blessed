@@ -45,7 +45,7 @@ npm run dashboard
 npm run animation
 ```
 
-You may also check out [react-blessed-hot-motion](https://github.com/gaearon/react-blessed-hot-motion) for a demo that uses [React Motion](https://github.com/chenglou/react-motion) for animation, and Webpack with [React Hot Loader](https://github.com/gaearon/react-hot-loader) for live editing.
+You may also check out [react-blessed-hot-motion](https://github.com/gaearon/react-blessed-hot-motion) for a demo that uses [React Motion](https://github.com/chenglou/react-motion) for animation, and Webpack with [React Transform Babel plugin](https://github.com/gaearon/babel-plugin-react-transform/) for live editing.
 
 ## Usage
 
