@@ -19,6 +19,8 @@ export default function inject() {
     ReactBlessedReconcileTransaction
   );
 
+  ReactInjection.EmptyComponent.injectEmptyComponent('element');
+
   // NOTE: we're monkeypatching ReactComponentEnvironment because
   // ReactInjection.Component.injectEnvironment() currently throws,
   // as it's already injected by ReactDOM for backward compat in 0.14 betas.
