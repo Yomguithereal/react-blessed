@@ -11,7 +11,7 @@ This renderer should currently be considered as experimental and is subject to c
 * [Installation](#installation)
 * [Demo](#demo)
 * [Usage](#usage)
-  * [Rendering a simple application](#rendering-a-simple-application)
+  * [Rendering a basic application](#rendering-a-basic-application)
   * [Nodes & text nodes](#nodes--text-nodes)
   * [Refs](#refs)
   * [Events](#events)
