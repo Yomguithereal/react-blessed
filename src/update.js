@@ -46,6 +46,10 @@ const RAW_ATTRIBUTES = [
   'atop',
   'abottom',
 
+  // Size
+  'width',
+  'height',
+
   // Misc
   'name',
   'hoverText'
