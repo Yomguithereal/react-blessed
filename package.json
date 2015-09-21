@@ -1,6 +1,6 @@
 {
   "name": "react-blessed",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A react renderer for blessed.",
   "main": "./dist/render.js",
   "scripts": {
