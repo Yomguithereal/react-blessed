@@ -89,6 +89,10 @@ export default function update(node, options) {
     else if (key === 'filled' && node.filled !== value)
       node.setProgress(value);
 
+    // Table / ListTable rows / data
+    else if ((key === 'rows' || key === 'data') && node.setData)
+      node.setData(value);
+
     // Raw attributes
     else
       for (let i = 0, l = RAW_ATTRIBUTES.length; i < l; i++) {
