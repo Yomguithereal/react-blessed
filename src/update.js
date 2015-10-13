@@ -89,6 +89,10 @@ export default function update(node, options) {
     else if (key === 'border')
       node.border = _.merge({}, node.border, value);
 
+    // Textarea value
+    else if (key === 'value' && node.setValue)
+      node.setValue(value);
+
     // Progress bar
     else if (key === 'filled' && node.filled !== value)
       node.setProgress(value);
