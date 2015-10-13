@@ -32,7 +32,7 @@
     "babel": "^5.8.3",
     "blessed": "^0.1.14",
     "mocha": "^2.0.1",
-    "react": "^0.14.0-rc1"
+    "react": "^0.14.0"
   },
   "dependencies": {
     "invariant": "^2.1.0",
