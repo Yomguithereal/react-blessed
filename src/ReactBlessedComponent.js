@@ -136,19 +136,16 @@ export default class ReactBlessedComponent {
     // Updating children
     const childrenToUse = children === null ? [] : [].concat(children);
 
-    if (childrenToUse.length) {
+    // Discriminating content components from real children
+    const {content=null, realChildren=[]} = groupBy(childrenToUse, (c) => {
+      return CONTENT_TYPES[typeof c] ? 'content' : 'realChildren';
+    });
 
-      // Discriminating content components from real children
-      const {content=null, realChildren=[]} = groupBy(childrenToUse, (c) => {
-        return CONTENT_TYPES[typeof c] ? 'content' : 'realChildren';
-      });
+    // Setting textual content
+    if (content)
+      node.setContent('' + content.join(''));
 
-      // Setting textual content
-      if (content)
-        node.setContent('' + content.join(''));
-
-      this.updateChildren(realChildren, transaction, context);
-    }
+    this.updateChildren(realChildren, transaction, context);
 
     ReactBlessedIDOperations.screen.debouncedRender();
   }
@@ -167,6 +164,8 @@ export default class ReactBlessedComponent {
     ReactBlessedIDOperations.drop(this._rootNodeID);
 
     this._rootNodeID = null;
+
+    ReactBlessedIDOperations.screen.debouncedRender();
   }
 
   /**
