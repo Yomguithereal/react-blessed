@@ -43,14 +43,21 @@ function render(element, screen) {
   const id = ReactInstanceHandles.createReactRootID();
 
   // Mounting the app
-  const transaction = ReactUpdates.ReactReconcileTransaction.getPooled(),
-        component = instantiateReactComponent(element);
+  const component = instantiateReactComponent(element);
 
   // Injecting the screen
   ReactBlessedIDOperations.setScreen(screen);
 
-  transaction.perform(() => {
-    component.mountComponent(id, transaction, {});
+  // The initial render is synchronous but any updates that happen during
+  // rendering, in componentWillMount or componentDidMount, will be batched
+  // according to the current batching strategy.
+  ReactUpdates.batchedUpdates(() => {
+    // Batched mount component
+    const transaction = ReactUpdates.ReactReconcileTransaction.getPooled();
+    transaction.perform(() => {
+      component.mountComponent(id, transaction, {});
+    });
+    ReactUpdates.ReactReconcileTransaction.release(transaction);
   });
 
   // Returning the screen so the user can attach listeners etc.
