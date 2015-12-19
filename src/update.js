@@ -29,7 +29,6 @@ const RAW_ATTRIBUTES = [
   'clickable',
   'input',
   'keyable',
-  'focused',
   'hidden',
   'visible',
   'scrollable',
@@ -100,6 +99,9 @@ export default function update(node, options) {
     // Table / ListTable rows / data
     else if ((key === 'rows' || key === 'data') && node.setData)
       node.setData(value);
+
+    else if (key === 'focused')
+      if (value && !node[key]) node.focus()
 
     // Raw attributes
     else
