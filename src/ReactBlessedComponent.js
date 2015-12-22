@@ -40,7 +40,7 @@ export default class ReactBlessedComponent {
     // Setting some properties
     this._currentElement = element;
     this._eventListener = (type, ...args) => {
-      const handler = this._currentElement.props['on' + startCase(type)];
+      const handler = this._currentElement.props['on' + startCase(type).replace(/ /g, '')];
 
       if (typeof handler === 'function')
         handler.apply(null, args);
