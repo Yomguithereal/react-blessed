@@ -42,8 +42,12 @@ export default class ReactBlessedComponent {
     this._eventListener = (type, ...args) => {
       const handler = this._currentElement.props['on' + startCase(type).replace(/ /g, '')];
 
-      if (typeof handler === 'function')
-        handler.apply(null, args);
+      if (typeof handler === 'function') {
+        if (type === 'focus' || type === 'blur') {
+          args[0] = ReactBlessedIDOperations.get(this._rootNodeID)
+        }
+        handler(...args);
+      }
     };
   }
 
