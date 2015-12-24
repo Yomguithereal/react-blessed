@@ -65,11 +65,19 @@ export default function update(node, options) {
   // TODO: enforce some kind of shallow equality?
   // TODO: handle position
 
+  const selectQue = []
+
   for (let key in options) {
     let value = options[key];
 
+    if (key === 'selected' && node.select)
+      selectQue.push({
+        node,
+        value: (typeof value === 'string' ? +value : value)
+      })
+    
     // Setting label
-    if (key === 'label')
+    else if (key === 'label')
       node.setLabel(value);
 
     // Setting content
@@ -112,4 +120,6 @@ export default function update(node, options) {
         }
       }
   }
+
+  selectQue.forEach(({node, value}) => node.select(value))
 }
