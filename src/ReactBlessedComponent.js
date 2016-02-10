@@ -136,6 +136,10 @@ export default class ReactBlessedComponent {
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
     update(node, solveClass(options));
+    
+    if (this._currentElement !== nextElement) {
+      this._currentElement = nextElement
+    }
 
     // Updating children
     const childrenToUse = children === null ? [] : [].concat(children);
