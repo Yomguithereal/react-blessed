@@ -26,6 +26,7 @@ const CONTENT_TYPES = {string: true, number: true};
 export default class ReactBlessedComponent {
   constructor(tag) {
     this._tag = tag.toLowerCase();
+    this._updating = false;
     this._renderedChildren = null;
     this._previousStyle = null;
     this._previousStyleCopy = null;
@@ -40,6 +41,8 @@ export default class ReactBlessedComponent {
     // Setting some properties
     this._currentElement = element;
     this._eventListener = (type, ...args) => {
+      if (this._updating) return;
+      
       const handler = this._currentElement.props['on' + startCase(type).replace(/ /g, '')];
 
       if (typeof handler === 'function') {
@@ -135,7 +138,9 @@ export default class ReactBlessedComponent {
     const {props: {children, ...options}} = nextElement,
           node = ReactBlessedIDOperations.get(this._rootNodeID);
 
+    this._updating = true;
     update(node, solveClass(options));
+    this._updating = false;
 
     // Updating children
     const childrenToUse = children === null ? [] : [].concat(children);
