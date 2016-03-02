@@ -9,7 +9,7 @@
     "dashboard": "babel-node ./examples/dashboard.jsx",
     "demo": "babel-node ./examples/demo.jsx",
     "prepublish": "npm run build",
-    "test": "mocha -R spec --compilers js:babel/register ./test/endpoint.js"
+    "test": "mocha -R spec --compilers js:babel-register ./test/endpoint.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/yomguithereal/react-blessed#readme",
   "devDependencies": {
+    "babel-register": "^6.6.0",
     "blessed": "^0.1.81",
     "mocha": "^2.4.5",
     "react": "^0.14.7"
