@@ -29,13 +29,12 @@
   },
   "homepage": "https://github.com/yomguithereal/react-blessed#readme",
   "devDependencies": {
-    "babel": "^5.8.3",
-    "blessed": "^0.1.14",
-    "mocha": "^2.0.1",
-    "react": "^0.14.0"
+    "blessed": "^0.1.81",
+    "mocha": "^2.4.5",
+    "react": "^0.14.7"
   },
   "dependencies": {
-    "invariant": "^2.1.0",
-    "lodash": "^3.6.0"
+    "invariant": "^2.2.0",
+    "lodash": "^4.5.1"
   }
 }
