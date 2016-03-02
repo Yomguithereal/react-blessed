@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "invariant": "^2.2.0",
-    "lodash": "^4.5.1"
+    "lodash": "^3.x"
   }
 }
