@@ -6,7 +6,7 @@
  */
 import _ from 'lodash';
 
-const RAW_ATTRIBUTES = [
+const RAW_ATTRIBUTES = new Set([
 
   // Alignment, Orientation & Presentation
   'align',
@@ -54,7 +54,7 @@ const RAW_ATTRIBUTES = [
 
   // Misc
   'name'
-];
+]);
 
 /**
  * Updates the given blessed node.
@@ -119,13 +119,8 @@ export default function update(node, options) {
     else if (key === 'focused' && value && !node[key]) node.focus()
 
     // Raw attributes
-    else
-      for (let i = 0, l = RAW_ATTRIBUTES.length; i < l; i++) {
-        if (key === RAW_ATTRIBUTES[i]) {
-          node[key] = value;
-          break;
-        }
-      }
+    else if (RAW_ATTRIBUTES.has(key))
+      node[key] = value;
   }
 
   selectQue.forEach(({node, value}) => node.select(value))
