@@ -49,6 +49,9 @@ const RAW_ATTRIBUTES = [
   'width',
   'height',
 
+  // Checkbox
+  'checked',
+
   // Misc
   'name'
 ];
