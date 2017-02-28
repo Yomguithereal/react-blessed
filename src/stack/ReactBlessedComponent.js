@@ -8,8 +8,8 @@ import blessed from 'blessed';
 import ReactMultiChild from 'react/lib/ReactMultiChild';
 import ReactBlessedIDOperations from './ReactBlessedIDOperations';
 import invariant from 'invariant';
-import update from './update';
-import solveClass from './solveClass';
+import update from '../shared/update';
+import solveClass from '../shared/solveClass';
 import {extend, groupBy, startCase} from 'lodash';
 
 /**

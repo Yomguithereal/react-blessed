@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import blessed from 'blessed';
-import {render} from '../src/render.js';
+import {render} from '../src/fiber';
 
 class AnimatedBox extends Component {
   constructor(props) {
@@ -49,4 +49,4 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
 
-render(<AnimatedBox />, screen);
+render(<AnimatedBox />, screen, (inst) => console.log('Rendered AnimatedBox!'));
