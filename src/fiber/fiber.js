@@ -1,6 +1,9 @@
 /* @flow */
 import type { HostConfig, Reconciler } from 'react-fiber-types';
 
+const {
+  debounce
+} = require('lodash');
 const blessed = require('blessed');
 const ReactFiberReconciler : (
   hostConfig: HostConfig<*, *, *, *, *, *, *, *>
@@ -87,6 +90,7 @@ const BlessedReconciler = ReactFiberReconciler({
     internalInstanceHandle : Object,
   ) : void {
     update(instance, updatePayload);
+    instance.screen.debouncedRender();
   },
 
   commitMount(
@@ -95,6 +99,8 @@ const BlessedReconciler = ReactFiberReconciler({
     newProps : Props,
     internalInstanceHandle : Object
   ) {
+    throw new Error('commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new');
+    instance.screen.debouncedRender();
     // noop
   },
 
@@ -131,25 +137,24 @@ const BlessedReconciler = ReactFiberReconciler({
     newText : string
   ) : void {
     textInstance.setContent(newText);
+    textInstance.screen.debouncedRender();
   },
 
   prepareForCommit() {
     // noop
   },
   resetAfterCommit() {
-    a.render();
     // noop
   },
   scheduleAnimationCallback() {
     throw new Error('Unimplemented');
   },
-  scheduleDeferredCallback() {
+  scheduleDeferredCallback(a) {
     throw new Error('Unimplemented');
   },
   useSyncScheduling: true,
 });
 
-let a = null;
 module.exports = {
   render(element, screen, callback) {
     let root = roots.get(screen);
@@ -157,8 +162,10 @@ module.exports = {
       root = BlessedReconciler.createContainer(screen);
       roots.set(screen, root);
     }
-    a = screen;
 
+    // render at most every 16ms. Should sync this with the screen refresh rate
+    // probably if possible
+    screen.debouncedRender = debounce(() => screen.render(), 16);
     BlessedReconciler.updateContainer((element : any), root, null, callback);
     return BlessedReconciler.getPublicRootInstance(root);
   }
