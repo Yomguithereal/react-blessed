@@ -6,6 +6,7 @@ const examples = [
   'animation',
   'dashboard',
   'demo',
+  'remove',
 ];
 
 if (examples.indexOf(example) === -1) {
