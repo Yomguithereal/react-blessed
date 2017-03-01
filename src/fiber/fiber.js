@@ -22,7 +22,8 @@ const BlessedReconciler = ReactFiberReconciler({
     hostContext : HostContext,
     internalInstanceHandle : Object
   ) {
-    return blessed[type](solveClass(props));
+    const {children, ...appliedProps} = solveClass(props);
+    return blessed[type](appliedProps);
   },
 
   appendInitialChild(
@@ -60,8 +61,8 @@ const BlessedReconciler = ReactFiberReconciler({
     props : Props,
     rootContainerInstance : Container
   ) : boolean {
-    update(instance, solveClass(props));
-    // setInitialProperties(instance, type, props, rootContainerInstance);
+    const {children, ...appliedProps} = solveClass(props);
+    update(instance, appliedProps);
     return false;
   },
 
@@ -111,7 +112,7 @@ const BlessedReconciler = ReactFiberReconciler({
   },
 
   resetTextContent(instance : Instance) : void {
-    // noop
+    instance.setContent('');
   },
 
   createTextInstance(
@@ -120,7 +121,7 @@ const BlessedReconciler = ReactFiberReconciler({
     hostContext : HostContext,
     internalInstanceHandle : OpaqueHandle
   ) : TextInstance {
-    return null;
+    return blessed.text({content: text});
   },
 
   commitTextUpdate(
@@ -128,8 +129,7 @@ const BlessedReconciler = ReactFiberReconciler({
     oldText : string,
     newText : string
   ) : void {
-    // noop
-    // throw new Error('commitTextUpdate should not be called');
+    textInstance.setContent(newText);
   },
 
   prepareForCommit() {
