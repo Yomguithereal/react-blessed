@@ -8,6 +8,10 @@ const ReactFiberReconciler : (
 
 const update = require('../shared/update').default;
 const solveClass = require('../shared/solveClass').default;
+const {
+  injectInternals
+} = require('react-dom/lib/ReactFiberDevToolsHook');
+
 const emptyObject = {};
 
 const BlessedReconciler = ReactFiberReconciler({
@@ -81,9 +85,6 @@ const BlessedReconciler = ReactFiberReconciler({
     internalInstanceHandle : Object,
   ) : void {
     update(instance, updatePayload);
-
-    // Apply the diff to the DOM node.
-    // updateProperties(instance, updatePayload, type, oldProps, newProps);
   },
 
   commitMount(
@@ -164,12 +165,9 @@ module.exports = {
 
 const roots = new Map();
 
-require('./devtools');
-var injectInternals = require('react-dom/lib/ReactFiberDevToolsHook').injectInternals;
-console.log('injectInternals', injectInternals);
 if (typeof injectInternals === 'function') {
   injectInternals({
-    findFiberByHostInstance: () => null,// ReactHardwareComponentTree.getClosestInstanceFromNode,
+    findFiberByHostInstance: () => null,// BlessedReconciler.getClosestInstanceFromNode,
     findHostInstanceByFiber: BlessedReconciler.findHostInstance,
   });
 }

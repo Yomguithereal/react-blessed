@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import blessed from 'blessed';
-import {render} from '../src/fiber';
+import {render} from '../src';
 
 class AnimatedBox extends Component {
   constructor(props) {

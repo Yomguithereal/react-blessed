@@ -9,7 +9,6 @@ defineProperty(global, 'window', {
 });
 
 const {connectToDevTools} = require('react-devtools-core');
-console.log('connectToDevTools')
 
 connectToDevTools({
   isAppActive() {

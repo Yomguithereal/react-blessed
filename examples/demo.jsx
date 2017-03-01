@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import blessed from 'blessed';
-import {render} from '../src/render.js';
+import {render} from '../src';
 
 class App extends Component {
   render() {
