@@ -5,6 +5,7 @@
  * Solving a component's classes to apply correct props to an element.
  */
 import {merge, compact} from 'lodash';
+const emptyArray = [];
 
 /**
  * Solves the given props by applying classes.
@@ -15,8 +16,10 @@ import {merge, compact} from 'lodash';
 export default function solveClass(props) {
   let {class: classes, ...rest} = props;
 
-  // Coercing to array & compacting
-  classes = compact([].concat(classes));
-
-  return merge.apply(null, [{}].concat(classes).concat(rest));
+  return merge(
+    {},
+    // Coercing to array & compacting, but only if there is work to do
+    classes ? compact(emptyArray.concat(classes)) : null,
+    rest
+  );
 }
