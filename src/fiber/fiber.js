@@ -52,7 +52,8 @@ const BlessedReconciler = ReactFiberReconciler({
     child : Instance | TextInstance,
     beforeChild : Instance | TextInstance
   ) : void {
-
+    // pretty sure everything is absolutely positioned so insertBefore ~= append
+    parentInstance.append(child);
   },
 
   finalizeInitialChildren(
