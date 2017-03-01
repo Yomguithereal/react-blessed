@@ -9,6 +9,7 @@ const ReactFiberReconciler : (
   hostConfig: HostConfig<*, *, *, *, *, *, *, *>
 ) => Reconciler<*, *, *> = require('react-dom/lib/ReactFiberReconciler');
 
+const eventListener = require('./events');
 const update = require('../shared/update').default;
 const solveClass = require('../shared/solveClass').default;
 const {
@@ -16,6 +17,14 @@ const {
 } = require('react-dom/lib/ReactFiberDevToolsHook');
 
 const emptyObject = {};
+
+type Instance = {
+  type: string,
+  props: Object,
+  _eventListener: Function,
+  _updating: boolean,
+  screen: typeof blessed.Screen,
+};
 
 const BlessedReconciler = ReactFiberReconciler({
   createInstance(
@@ -26,7 +35,12 @@ const BlessedReconciler = ReactFiberReconciler({
     internalInstanceHandle : Object
   ) {
     const {children, ...appliedProps} = solveClass(props);
-    return blessed[type](appliedProps);
+    const instance = blessed[type](appliedProps);
+    instance.props = props;
+    instance._eventListener = (...args) => eventListener(instance, ...args);
+    instance.on('event', instance._eventListener);
+
+    return instance;
   },
 
   appendInitialChild(
@@ -48,6 +62,8 @@ const BlessedReconciler = ReactFiberReconciler({
     child : Instance | TextInstance
   ) : void {
     parentInstance.remove(child);
+    child.off('event', child._eventListener);
+    child.destroy();
   },
 
   insertBefore(
@@ -67,6 +83,7 @@ const BlessedReconciler = ReactFiberReconciler({
   ) : boolean {
     const {children, ...appliedProps} = solveClass(props);
     update(instance, appliedProps);
+    instance.props = props;
     return false;
   },
 
@@ -89,7 +106,11 @@ const BlessedReconciler = ReactFiberReconciler({
     newProps : Props,
     internalInstanceHandle : Object,
   ) : void {
+    instance._updating = true;
     update(instance, updatePayload);
+    // update event handler pointers
+    instance.props = newProps;
+    instance._updating = false;
     instance.screen.debouncedRender();
   },
 
@@ -167,6 +188,7 @@ module.exports = {
     // probably if possible
     screen.debouncedRender = debounce(() => screen.render(), 16);
     BlessedReconciler.updateContainer((element : any), root, null, callback);
+    screen.debouncedRender();
     return BlessedReconciler.getPublicRootInstance(root);
   }
 };

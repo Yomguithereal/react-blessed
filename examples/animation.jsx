@@ -1,43 +1,7 @@
-import React, {Component} from 'react';
+import React} from 'react';
 import blessed from 'blessed';
+import AnimatedBox from './components/AnimatedBox';
 import {render} from '../src';
-
-class AnimatedBox extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      position: 0,
-      toRight: true
-    };
-
-    setInterval(() => {
-      const {position, toRight} = this.state,
-            newDirection = (position === (toRight ? 90 : 0)) ?
-              !toRight :
-              toRight,
-            newPosition = newDirection ? position + 1 : position - 1;
-
-
-      this.setState({
-        position: newPosition,
-        toRight: newDirection
-      });
-    }, 30);
-  }
-  render() {
-    const position = `${this.state.position}%`;
-
-    return (
-      <box top="center"
-           left={position}
-           width="10%"
-           height="20%"
-           border={{type: 'line'}}
-           style={{bg: 'cyan', border: {fg: 'blue'}}} />
-    );
-  }
-}
 
 const screen = blessed.screen({
   autoPadding: true,

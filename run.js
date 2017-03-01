@@ -6,6 +6,8 @@ const examples = [
   'animation',
   'dashboard',
   'demo',
+  'form',
+  'progressbar',
   'remove',
 ];
 
