@@ -1,7 +1,8 @@
 import React from 'react';
 import blessed from 'blessed';
 import {Motion, spring} from 'react-motion';
-import {render} from '../src/render';
+import {interpolateColor} from './utils/colors';
+import {render} from '../src';
 
 const range = n => Array.apply(0, Array(n)).map((_, i) => i);
 
@@ -49,7 +50,6 @@ const Demo = React.createClass({
   },
 
   handleMouseDown(pos, pressY, event) {
-      console.log('mousedown');
     if (this.state.isPressed === false) {
       const {y} = event;
       this.setState({
@@ -89,7 +89,7 @@ const Demo = React.createClass({
   },
 
   handleMouseUp() {
-    this.setState({isPressed: false, topDeltaY: 0});
+    // this.setState({isPressed: false, topDeltaY: 0});
   },
 
   render() {
@@ -112,12 +112,12 @@ const Demo = React.createClass({
           const style = originalPosOfLastPressed === i && isPressed
             ? {
                 scale: spring(1.1, springConfig),
-                shadow: spring(1, springConfig),
+                color: 3,
                 y: mouseY,
               }
             : {
                 scale: spring(1, springConfig),
-                shadow: spring(0, springConfig),
+                color: 0,
                 y: spring(order.indexOf(i) * 5, springConfig),
               };
           return (

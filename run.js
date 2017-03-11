@@ -7,6 +7,7 @@ const examples = [
   'dashboard',
   'demo',
   'form',
+  'framer',
   'progressbar',
   'remove',
 ];
@@ -15,7 +16,7 @@ if (examples.indexOf(example) === -1) {
   console.warn(
     'Invalid example "%s" provided. Must be one of:\n  * ',
     example,
-    examples.join('  * ')
+    examples.join('\n  * ')
   );
   process.exit(1);
 }
