@@ -1,4 +1,4 @@
-import React} from 'react';
+import React from 'react';
 import blessed from 'blessed';
 import AnimatedBox from './components/AnimatedBox';
 import {render} from '../src';

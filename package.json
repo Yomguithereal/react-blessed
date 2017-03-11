@@ -45,6 +45,8 @@
     "invariant": "^2.2.0",
     "lodash": "^3.x.x",
     "react-devtools": "^2.0.12",
-    "ws": "^1.1.0"
+    "react-motion": "^0.4.7",
+    "ws": "^1.1.0",
+    "yoga-layout": "^1.2.0"
   }
 }
