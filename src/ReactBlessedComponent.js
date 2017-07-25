@@ -12,6 +12,15 @@ import update from './update';
 import solveClass from './solveClass';
 import {extend, groupBy, startCase} from 'lodash';
 
+const mouseEvents = {
+  mousedown: 'onMouseDown',
+  mouseup: 'onMouseUp',
+  mousemove: 'onMouseMove',
+  mouse: 'mouse',
+  click: 'click',
+};
+const mouseEventNames = Object.keys(mouseEvents);
+
 /**
  * Variable types that must be solved as content rather than real children.
  */
@@ -42,7 +51,7 @@ export default class ReactBlessedComponent {
     this._currentElement = element;
     this._eventListener = (type, ...args) => {
       if (this._updating) return;
-      
+
       const handler = this._currentElement.props['on' + startCase(type).replace(/ /g, '')];
 
       if (typeof handler === 'function') {
@@ -52,6 +61,11 @@ export default class ReactBlessedComponent {
         handler(...args);
       }
     };
+    this._mouseEvents = mouseEventNames.reduce((output, eventName) => {
+      const propName = mouseEvents[eventName];
+      output[eventName] = this._handleMouseEvent.bind(this, propName);
+      return output;
+    }, {});
   }
 
   /**
@@ -120,6 +134,9 @@ export default class ReactBlessedComponent {
     const node = blessed[type](solveClass(options));
 
     node.on('event', this._eventListener);
+    mouseEventNames.forEach(eventName => {
+      node.on(eventName, this._mouseEvents[eventName]);
+    });
     parent.append(node);
 
     return node;
@@ -168,6 +185,9 @@ export default class ReactBlessedComponent {
     const node = ReactBlessedIDOperations.get(this._rootNodeID);
 
     node.off('event', this._eventListener);
+    mouseEventNames.forEach(eventName => {
+      node.on(eventName, this._mouseEvents[eventName]);
+    });
     node.destroy();
 
     ReactBlessedIDOperations.drop(this._rootNodeID);
@@ -184,6 +204,12 @@ export default class ReactBlessedComponent {
    */
   getPublicInstance() {
     return ReactBlessedIDOperations.get(this._rootNodeID);
+  }
+
+  _handleMouseEvent(propName, ...args) {
+    if (this._currentElement && this._currentElement.props[propName]) {
+      this._currentElement.props[propName](...args);
+    }
   }
 }
 
