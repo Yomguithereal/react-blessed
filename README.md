@@ -17,6 +17,7 @@ This renderer should currently be considered as experimental, is subject to chan
   * [Events](#events)
   * [Classes](#classes)
 * [Roadmap](#roadmap)
+* [FAQ](#faq)
 * [Contribution](#contribution)
 * [License](#license)
 
@@ -239,6 +240,10 @@ class App extends Component {
 * Full support (meaning every tags and options should be handled by the renderer).
 * `react-blessed-contrib` to add some sugar over the [blessed-contrib](https://github.com/yaronn/blessed-contrib) library (probably through full-fledged components).
 
+## Faq
+
+ * `<list/>` : To enable interactions, add `mouse={ true }` and/or `keys={ true }`
+ 
 ## Contribution
 
 Contributions are obviously welcome.
