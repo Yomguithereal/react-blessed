@@ -18,7 +18,6 @@ class ProgressBox extends Component {
               toRight,
             newPosition = newDirection ? position + 1 : position - 1;
 
-
       this.setState({
         position: newPosition,
         toRight: newDirection

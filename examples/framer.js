@@ -31,25 +31,23 @@ const styles = {
 };
 
 var lastY = null;
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      topDeltaY: 0,
-      mouseY: 0,
-      isPressed: false,
-      originalPosOfLastPressed: 0,
-      order: range(itemsCount),
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    topDeltaY: 0,
+    mouseY: 0,
+    isPressed: false,
+    originalPosOfLastPressed: 0,
+    order: range(itemsCount),
+  };
 
   componentDidMount() {
     /*
     window.addEventListener('mousemove', this.handleMouseMove);
     window.addEventListener('mouseup', this.handleMouseUp);
     */
-  },
+  }
 
-  handleMouseDown(pos, pressY, event) {
+  handleMouseDown = (pos, pressY, event) => {
     if (this.state.isPressed === false) {
       const {y} = event;
       this.setState({
@@ -64,9 +62,9 @@ const Demo = React.createClass({
         action: 'fake-mousemove',
       });
     }
-  },
+  };
 
-  handleMouseMove(event) {
+  handleMouseMove = (event) => {
     if (event.action !== 'fake-mousemove') {
       return;
     }
@@ -86,11 +84,11 @@ const Demo = React.createClass({
 
       this.setState({mouseY: mouseY, order: newOrder});
     }
-  },
+  };
 
-  handleMouseUp() {
+  handleMouseUp = () => {
     // this.setState({isPressed: false, topDeltaY: 0});
-  },
+  };
 
   render() {
     const {mouseY, isPressed, originalPosOfLastPressed, order} = this.state;
@@ -149,8 +147,8 @@ const Demo = React.createClass({
         })}
       </box>
     );
-  },
-});
+  }
+}
 
 const screen = blessed.screen({
   autoPadding: true,

@@ -7,14 +7,16 @@ const {
 const blessed = require('blessed');
 const ReactFiberReconciler : (
   hostConfig: HostConfig<*, *, *, *, *, *, *, *>
-) => Reconciler<*, *, *> = require('react-dom/lib/ReactFiberReconciler');
+) => Reconciler<*, *, *> = require('react-reconciler');
 
 const eventListener = require('./events');
 const update = require('../shared/update').default;
 const solveClass = require('../shared/solveClass').default;
+/*
 const {
   injectInternals
 } = require('react-dom/lib/ReactFiberDevToolsHook');
+*/
 
 const emptyObject = {};
 
@@ -27,6 +29,16 @@ type Instance = {
 };
 
 const BlessedReconciler = ReactFiberReconciler({
+  getRootHostContext(rootContainerInstance : Container) : HostContext {
+    return emptyObject;
+  },
+  getChildHostContext(parentHostContext : HostContext, type: string) : HostContext {
+    return emptyObject;
+  },
+  getPublicInstance(instance) {
+    return instance;
+  },
+
   createInstance(
     type : string,
     props : Props,
@@ -47,31 +59,6 @@ const BlessedReconciler = ReactFiberReconciler({
     parentInstance : Instance,
     child : Instance | TextInstance
   ) : void {
-    parentInstance.append(child);
-  },
-
-  appendChild(
-    parentInstance : Instance | Container,
-    child : Instance | TextInstance
-  ) : void {
-    parentInstance.append(child);
-  },
-
-  removeChild(
-    parentInstance : Instance | Container,
-    child : Instance | TextInstance
-  ) : void {
-    parentInstance.remove(child);
-    child.off('event', child._eventListener);
-    child.destroy();
-  },
-
-  insertBefore(
-    parentInstance : Instance | Container,
-    child : Instance | TextInstance,
-    beforeChild : Instance | TextInstance
-  ) : void {
-    // pretty sure everything is absolutely positioned so insertBefore ~= append
     parentInstance.append(child);
   },
 
@@ -98,50 +85,15 @@ const BlessedReconciler = ReactFiberReconciler({
     return solveClass(newProps);
   },
 
-  commitUpdate(
-    instance : Instance,
-    updatePayload : Array<mixed>,
-    type : string,
-    oldProps : Props,
-    newProps : Props,
-    internalInstanceHandle : Object,
-  ) : void {
-    instance._updating = true;
-    update(instance, updatePayload);
-    // update event handler pointers
-    instance.props = newProps;
-    instance._updating = false;
-    instance.screen.debouncedRender();
-  },
-
-  commitMount(
-    instance : Instance,
-    type : string,
-    newProps : Props,
-    internalInstanceHandle : Object
-  ) {
-    throw new Error('commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new');
-    instance.screen.debouncedRender();
-    // noop
-  },
-
-  getRootHostContext(rootContainerInstance : Container) : HostContext {
-    return emptyObject;
-  },
-  getChildHostContext(parentHostContext : HostContext, type: string) : HostContext {
-    return emptyObject;
-  },
-  getPublicInstance(instance) {
-    return instance;
-  },
-
   shouldSetTextContent(props : Props) : boolean {
     return false;
   },
 
-  resetTextContent(instance : Instance) : void {
-    instance.setContent('');
+  shouldDeprioritizeSubtree(type: string, props: Props): boolean {
+    return !!props.hidden;
   },
+
+  now: Date.now,
 
   createTextInstance(
     text : string,
@@ -152,27 +104,110 @@ const BlessedReconciler = ReactFiberReconciler({
     return blessed.text({content: text});
   },
 
-  commitTextUpdate(
-    textInstance : TextInstance,
-    oldText : string,
-    newText : string
-  ) : void {
-    textInstance.setContent(newText);
-    textInstance.screen.debouncedRender();
+  scheduleDeferredCallback(a) {
+    throw new Error('Unimplemented');
   },
 
   prepareForCommit() {
     // noop
   },
+
   resetAfterCommit() {
     // noop
   },
-  scheduleAnimationCallback() {
-    throw new Error('Unimplemented');
+
+  mutation: {
+    commitMount(
+      instance : Instance,
+      type : string,
+      newProps : Props,
+      internalInstanceHandle : Object
+    ) {
+      throw new Error('commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new');
+      instance.screen.debouncedRender();
+      // noop
+    },
+
+    commitUpdate(
+      instance : Instance,
+      updatePayload : Array<mixed>,
+      type : string,
+      oldProps : Props,
+      newProps : Props,
+      internalInstanceHandle : Object,
+    ) : void {
+      instance._updating = true;
+      update(instance, updatePayload);
+      // update event handler pointers
+      instance.props = newProps;
+      instance._updating = false;
+      instance.screen.debouncedRender();
+    },
+
+    commitTextUpdate(
+      textInstance : TextInstance,
+      oldText : string,
+      newText : string
+    ) : void {
+      textInstance.setContent(newText);
+      textInstance.screen.debouncedRender();
+    },
+
+    appendChild(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance
+    ) : void {
+      parentInstance.append(child);
+    },
+
+    appendChildToContainer(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance
+    ) : void {
+      parentInstance.append(child);
+    },
+
+    insertBefore(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance,
+      beforeChild : Instance | TextInstance
+    ) : void {
+      // pretty sure everything is absolutely positioned so insertBefore ~= append
+      parentInstance.append(child);
+    },
+
+    insertInContainerBefore(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance,
+      beforeChild : Instance | TextInstance
+    ) : void {
+      // pretty sure everything is absolutely positioned so insertBefore ~= append
+      parentInstance.append(child);
+    },
+
+    removeChild(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance
+    ) : void {
+      parentInstance.remove(child);
+      child.off('event', child._eventListener);
+      child.destroy();
+    },
+
+    removeChildFromContainer(
+      parentInstance : Instance | Container,
+      child : Instance | TextInstance
+    ) : void {
+      parentInstance.remove(child);
+      child.off('event', child._eventListener);
+      child.destroy();
+    },
+
+    resetTextContent(instance : Instance) : void {
+      instance.setContent('');
+    },
   },
-  scheduleDeferredCallback(a) {
-    throw new Error('Unimplemented');
-  },
+
   useSyncScheduling: true,
 });
 
@@ -195,6 +230,7 @@ module.exports = {
 
 const roots = new Map();
 
+/*
 if (typeof injectInternals === 'function') {
   injectInternals({
     findFiberByHostInstance: () => null,// BlessedReconciler.getClosestInstanceFromNode,
@@ -202,3 +238,4 @@ if (typeof injectInternals === 'function') {
   });
 }
 
+*/
