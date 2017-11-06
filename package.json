@@ -43,7 +43,7 @@
   "dependencies": {
     "invariant": "^2.2.0",
     "lodash": "^3.x.x",
-    "react-devtools": "^2.0.12",
+    "react-devtools": "^2.5.2",
     "react-motion": "^0.5.2",
     "react-reconciler": "^0.2.0",
     "ws": "^1.1.0",

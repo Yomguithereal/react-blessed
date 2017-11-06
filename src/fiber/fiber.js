@@ -9,6 +9,7 @@ const ReactFiberReconciler : (
   hostConfig: HostConfig<*, *, *, *, *, *, *, *>
 ) => Reconciler<*, *, *> = require('react-reconciler');
 
+const injectIntoDevToolsConfig = require('./devtools');
 const eventListener = require('./events');
 const update = require('../shared/update').default;
 const solveClass = require('../shared/solveClass').default;
@@ -211,6 +212,9 @@ const BlessedReconciler = ReactFiberReconciler({
   useSyncScheduling: true,
 });
 
+console.log('BlessedReconciler', injectIntoDevToolsConfig);
+BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
+
 module.exports = {
   render(element, screen, callback) {
     let root = roots.get(screen);
@@ -229,13 +233,3 @@ module.exports = {
 };
 
 const roots = new Map();
-
-/*
-if (typeof injectInternals === 'function') {
-  injectInternals({
-    findFiberByHostInstance: () => null,// BlessedReconciler.getClosestInstanceFromNode,
-    findHostInstanceByFiber: BlessedReconciler.findHostInstance,
-  });
-}
-
-*/

@@ -7,16 +7,15 @@ defineProperty(global, 'WebSocket', {
 defineProperty(global, 'window', {
   value: global
 });
-
 const {connectToDevTools} = require('react-devtools-core');
 
 connectToDevTools({
   isAppActive() {
     // Don't steal the DevTools from currently active app.
+    console.log('isAppActive', true);
     return true;
   },
   host: 'localhost',
-  // default port? port: ,
+  port: 8097,
   resolveRNStyle: null, // TODO maybe: require('flattenStyle')
 });
-
