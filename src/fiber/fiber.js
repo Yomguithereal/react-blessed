@@ -212,7 +212,6 @@ const BlessedReconciler = ReactFiberReconciler({
   useSyncScheduling: true,
 });
 
-console.log('BlessedReconciler', injectIntoDevToolsConfig);
 BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
 
 module.exports = {
