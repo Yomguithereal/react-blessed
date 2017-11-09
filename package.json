@@ -46,7 +46,6 @@
     "react-devtools": "^2.5.2",
     "react-motion": "^0.5.2",
     "react-reconciler": "0.5.0",
-    "ws": "^1.1.0",
-    "yoga-layout": "^1.2.0"
+    "ws": "^1.1.0"
   }
 }
