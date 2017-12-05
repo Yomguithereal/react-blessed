@@ -16,10 +16,12 @@ const emptyArray = [];
 export default function solveClass(props) {
   let {class: classes, ...rest} = props;
 
-  return merge(
-    {},
-    // Coercing to array & compacting, but only if there is work to do
-    classes ? compact(emptyArray.concat(classes)) : null,
-    rest
-  );
+  const args = [{}];
+
+  if (classes)
+    args.push.apply(args, emptyArray.concat(classes));
+
+  args.push(rest);
+
+  return merge.apply(null, args);
 }

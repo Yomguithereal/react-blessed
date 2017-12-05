@@ -1,5 +1,5 @@
 import assert from 'assert';
-import solveClass from '../../src/solveClass';
+import solveClass from '../../src/shared/solveClass';
 
 describe('solveClass', function() {
 
