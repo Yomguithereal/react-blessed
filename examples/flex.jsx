@@ -37,6 +37,7 @@ class InnerBox extends Component {
 
     return (
       <box label={this.state.hey ? 'First step' : 'Second step'}
+           ref="box"
            left={left}
            width='45%'
            height="70%"
@@ -87,3 +88,4 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 });
 
 const component = render(<App />, screen);
+
