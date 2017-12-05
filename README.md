@@ -33,20 +33,19 @@ npm install react-blessed
 
 ## Demo
 
-For a quick demo of what you could achieve with such a renderer you can clone this repository and check some of the examples:
+For a quick demo of what you could achieve with such a renderer you can clone this repository and check some of the [examples](./examples):
 
 ```bash
 git clone https://github.com/Yomguithereal/react-blessed
 cd react-blessed
 npm install
 
-# Some examples (code is in `examples/`)
+# To see which examples you can run:
 npm run demo
-npm run dashboard
-npm run animation
-```
 
-You may also check out [react-blessed-hot-motion](https://github.com/gaearon/react-blessed-hot-motion) for a demo that uses [React Motion](https://github.com/chenglou/react-motion) for animation, and Webpack with [React Transform Babel plugin](https://github.com/gaearon/babel-plugin-react-transform/) for live editing.
+# Then choose one to run:
+npm run demo animation
+```
 
 ## Usage
 

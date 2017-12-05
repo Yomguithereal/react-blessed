@@ -4,10 +4,8 @@
   "description": "A react renderer for blessed.",
   "main": "./dist/render.js",
   "scripts": {
-    "animation": "babel-node ./examples/animation.jsx",
     "build": "babel ./src --out-dir ./dist",
-    "dashboard": "babel-node ./examples/dashboard.jsx",
-    "demo": "babel-node ./examples/demo.jsx",
+    "demo": "node run.js",
     "prepublish": "npm run build",
     "test": "mocha -R spec --require babel-register ./test/endpoint.js"
   },
