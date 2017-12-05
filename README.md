@@ -2,7 +2,7 @@
 
 A [React](https://facebook.github.io/react/) custom renderer for the [blessed](https://github.com/chjj/blessed) library.
 
-This renderer should currently be considered as experimental, is subject to change and will only work with the React's latest version (`0.14.x`).
+This renderer should currently be considered as experimental, is subject to change and will only work with the React's latest version (`16.x.x`, Fiber).
 
 ![demo](https://raw.githubusercontent.com/Yomguithereal/react-blessed/master/img/demo.gif)
 
@@ -26,8 +26,8 @@ This renderer should currently be considered as experimental, is subject to chan
 You can install `react-blessed` through npm:
 
 ```bash
-# Be sure to install react>=0.14.0 & blessed>=0.1.81 before
-npm install react@0.14.0 blessed
+# Be sure to install react>=16.2.0 & blessed>=0.1.81 before
+npm install react blessed
 npm install react-blessed
 ```
 
