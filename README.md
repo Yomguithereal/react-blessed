@@ -27,7 +27,9 @@ You can install `react-blessed` through npm:
 
 ```bash
 # Be sure to install react>=16.2.0 & blessed>=0.1.81 before
-npm install react blessed
+npm install blessed react
+
+# Then just install `react-blessed`
 npm install react-blessed
 ```
 
