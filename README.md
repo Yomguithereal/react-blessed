@@ -2,7 +2,7 @@
 
 A [React](https://facebook.github.io/react/) custom renderer for the [blessed](https://github.com/chjj/blessed) library.
 
-This renderer should currently be considered as experimental, is subject to change and will only work with the React's latest version (`16.x.x`, Fiber).
+This renderer should currently be considered as experimental, is subject to change and will only work with React's latest version (`16.x.x`, using Fiber).
 
 ![demo](https://raw.githubusercontent.com/Yomguithereal/react-blessed/master/img/demo.gif)
 
