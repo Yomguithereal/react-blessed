@@ -47,7 +47,7 @@ class Demo extends React.Component {
     */
   }
 
-  handleMouseDown = (pos, pressY, event) => {
+  handleMouseDown = (pos, pressY, node, event) => {
     if (this.state.isPressed === false) {
       const {y} = event;
       this.setState({
@@ -57,14 +57,14 @@ class Demo extends React.Component {
         originalPosOfLastPressed: pos,
       });
     } else {
-      this.handleMouseMove({
+      this.handleMouseMove(node, {
         ...event,
         action: 'fake-mousemove',
       });
     }
   };
 
-  handleMouseMove = (event) => {
+  handleMouseMove = (_node, event) => {
     if (event.action !== 'fake-mousemove') {
       return;
     }

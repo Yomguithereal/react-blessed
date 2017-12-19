@@ -25,9 +25,8 @@ const eventListener = (node, event, ...args) => {
   */
 
   if (typeof handler === 'function') {
-    if (event === 'focus' || event === 'blur') {
-      args[0] = node;
-    }
+    args[0] = node;
+
     handler(...args);
   }
 };
