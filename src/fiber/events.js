@@ -25,9 +25,7 @@ const eventListener = (node, event, ...args) => {
   */
 
   if (typeof handler === 'function') {
-    args[0] = node;
-
-    handler(...args);
+    handler(node, ...args);
   }
 };
 
