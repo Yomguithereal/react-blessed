@@ -19,6 +19,7 @@ class Form extends Component {
       <form
         keys
         vi
+        focused
         onSubmit={this.submit}
         onReset={this.cancel}
         left="5%"
