@@ -17,7 +17,7 @@ if (examples.indexOf(example) === -1) {
     example,
     examples.join('\n  * ')
   );
-  process.exit(1);
+  process.exit(0);
 }
 
 require('./examples/' + example);
