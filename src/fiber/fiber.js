@@ -232,9 +232,11 @@ const createBlessedRenderer = function(blessed) {
   }
 }
 
-const blessed = require('blessed');
-
 module.exports = {
-  render: createBlessedRenderer(blessed),
+  render: function render(element, screen, callback) {
+    const blessed = require('blessed');
+    const renderer = createBlessedRenderer(blessed);
+    return renderer(element, screen, callback);
+  },
   createBlessedRenderer: createBlessedRenderer
 };
