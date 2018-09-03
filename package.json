@@ -41,7 +41,7 @@
   "dependencies": {
     "invariant": "^2.2.0",
     "lodash": "^4.x.x",
-    "react-devtools": "^3.0.0",
+    "react-devtools-core": "^3.0.0",
     "react-motion": "^0.5.2",
     "react-reconciler": "0.7.0"
   }
