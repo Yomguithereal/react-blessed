@@ -1,3 +1,2 @@
-require('./devtools');
-module.exports = require('./fiber');
-
+import './devtools';
+export * from './fiber';

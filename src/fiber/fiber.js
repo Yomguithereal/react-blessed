@@ -1,23 +1,12 @@
 /* @flow */
 import type { HostConfig, Reconciler } from 'react-fiber-types';
-
-const {
-  debounce
-} = require('lodash');
-const blessed = require('blessed');
-const ReactFiberReconciler : (
-  hostConfig: HostConfig<*, *, *, *, *, *, *, *>
-) => Reconciler<*, *, *> = require('react-reconciler');
-
-const injectIntoDevToolsConfig = require('./devtools');
-const eventListener = require('./events');
-const update = require('../shared/update').default;
-const solveClass = require('../shared/solveClass').default;
-/*
-const {
-  injectInternals
-} = require('react-dom/lib/ReactFiberDevToolsHook');
-*/
+import blessed from 'blessed'
+import ReactFiberReconciler from 'react-reconciler'
+import eventListener from './events'
+import update from '../shared/update'
+import solveClass from '../shared/solveClass'
+import debounce from 'lodash/debounce'
+import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
 
@@ -29,7 +18,7 @@ type Instance = {
   screen: typeof blessed.Screen,
 };
 
-const BlessedReconciler = ReactFiberReconciler({
+const BlessedReconciler : Reconciler = ReactFiberReconciler({
   getRootHostContext(rootContainerInstance : Container) : HostContext {
     return emptyObject;
   },
@@ -214,21 +203,23 @@ const BlessedReconciler = ReactFiberReconciler({
 
 BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
 
-module.exports = {
-  render(element, screen, callback) {
-    let root = roots.get(screen);
-    if (!root) {
-      root = BlessedReconciler.createContainer(screen);
-      roots.set(screen, root);
-    }
-
-    // render at most every 16ms. Should sync this with the screen refresh rate
-    // probably if possible
-    screen.debouncedRender = debounce(() => screen.render(), 16);
-    BlessedReconciler.updateContainer((element : any), root, null, callback);
-    screen.debouncedRender();
-    return BlessedReconciler.getPublicRootInstance(root);
-  }
-};
-
 const roots = new Map();
+
+const render = function render(element, screen, callback) {
+  let root = roots.get(screen);
+  if (!root) {
+    root = BlessedReconciler.createContainer(screen);
+    roots.set(screen, root);
+  }
+
+  // render at most every 16ms. Should sync this with the screen refresh rate
+  // probably if possible
+  screen.debouncedRender = debounce(() => screen.render(), 16);
+  BlessedReconciler.updateContainer((element : any), root, null, callback);
+  screen.debouncedRender();
+  return BlessedReconciler.getPublicRootInstance(root);
+}
+
+
+export { render }
+export default { render }

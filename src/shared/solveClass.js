@@ -4,7 +4,7 @@
  *
  * Solving a component's classes to apply correct props to an element.
  */
-import {merge, compact} from 'lodash';
+import merge from 'lodash/merge';
 const emptyArray = [];
 
 /**
