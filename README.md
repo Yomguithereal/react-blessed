@@ -16,6 +16,7 @@ This renderer should currently be considered as experimental, is subject to chan
   * [Refs](#refs)
   * [Events](#events)
   * [Classes](#classes)
+  * [Using blessed forks](#using-blessed-forks)
 * [Roadmap](#roadmap)
 * [FAQ](#faq)
 * [Contribution](#contribution)
@@ -234,6 +235,18 @@ class App extends Component {
     );
   }
 }
+```
+
+### Using blessed forks
+
+Because [blessed](https://github.com/chjj/blessed) is not actively maintained in quite a while, you might want to use one of it's forks. To do that, import `createBlessedRenderer` function instead:
+
+```
+import React, {Component} from 'react';
+import blessed from 'neo-blessed';
+import {createBlessedRenderer} from 'react-blessed';
+
+const render = createBlessedRenderer(blessed);
 ```
 
 ## Roadmap
