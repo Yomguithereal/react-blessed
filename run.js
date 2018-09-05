@@ -12,6 +12,7 @@ const examples = [
   'demo',
   'form',
   'framer',
+  'neo-blessed',
   'progressbar',
   'remove',
 ];

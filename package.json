@@ -40,6 +40,7 @@
     "invariant": "^2.2.0",
     "lodash": "^4.x.x",
     "mocha": "^4.0.1",
+    "neo-blessed": "^0.2.0",
     "react": "^16.2.0",
     "react-motion": "^0.5.2",
     "rollup": "^0.65.0",
