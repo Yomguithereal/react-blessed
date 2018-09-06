@@ -1,2 +1,2 @@
-module.exports = require('./fiber');
+export * from './fiber'
 

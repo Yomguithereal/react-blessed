@@ -1,5 +1,8 @@
-
-const {startCase} = require('lodash');
+const startCase = (string) => (
+  string.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match) {
+    return (+match === 0) ? "" : match.toUpperCase();
+  }).replace(/[^A-Za-z0-9 ]+/, "")
+)
 
 const blacklist = [
   'adopt',
@@ -9,7 +12,7 @@ const blacklist = [
   'parsed content',
   'set content',
 ];
-const eventName = event => `on${startCase(event).replace(/ /g, '')}`;
+const eventName = event => `on${startCase(event)}`;
 
 const eventListener = (node, event, ...args) => {
   if (node._updating) return;
@@ -32,5 +35,5 @@ const eventListener = (node, event, ...args) => {
   }
 };
 
-module.exports = eventListener;
+export default eventListener;
 

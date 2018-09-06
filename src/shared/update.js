@@ -4,7 +4,7 @@
  *
  * Applying updates to blessed nodes correctly.
  */
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 const RAW_ATTRIBUTES = new Set([
 
@@ -94,7 +94,7 @@ export default function update(node, options) {
 
     // Updating style
     else if (key === 'style')
-      node.style = _.merge({}, node.style, value);
+      node.style = merge({}, node.style, value);
 
     // Updating items
     else if (key === 'items')
@@ -102,7 +102,7 @@ export default function update(node, options) {
 
     // Border edge case
     else if (key === 'border')
-      node.border = _.merge({}, node.border, value);
+      node.border = merge({}, node.border, value);
 
     // Textarea value
     else if (key === 'value' && node.setValue)

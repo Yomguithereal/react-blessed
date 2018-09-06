@@ -1,22 +1,11 @@
 /* @flow */
 import type { HostConfig, Reconciler } from 'react-fiber-types';
-
-const {
-  debounce
-} = require('lodash');
-const ReactFiberReconciler : (
-  hostConfig: HostConfig<*, *, *, *, *, *, *, *>
-) => Reconciler<*, *, *> = require('react-reconciler');
-
-const injectIntoDevToolsConfig = require('./devtools');
-const eventListener = require('./events');
-const update = require('../shared/update').default;
-const solveClass = require('../shared/solveClass').default;
-/*
-const {
-  injectInternals
-} = require('react-dom/lib/ReactFiberDevToolsHook');
-*/
+import ReactFiberReconciler from 'react-reconciler'
+import eventListener from './events'
+import update from '../shared/update'
+import solveClass from '../shared/solveClass'
+import debounce from 'lodash/debounce'
+import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
 
