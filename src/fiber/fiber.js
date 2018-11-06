@@ -9,7 +9,8 @@ import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
 
-const createBlessedRenderer = function(blessed) {
+const createBlessedRenderer = function(blessed, options) {
+  const { jsxTagMapping } = options || {};
   type Instance = {
     type: string,
     props: Object,
@@ -37,6 +38,12 @@ const createBlessedRenderer = function(blessed) {
       internalInstanceHandle : Object
     ) {
       const {children, ...appliedProps} = solveClass(props);
+      if (
+        jsxTagMapping 
+        && (typeof jsxTagMapping === 'function')
+      )  {
+        type = jsxTagMapping(type) || type;
+      }
       const instance = blessed[type](appliedProps);
       instance.props = props;
       instance._eventListener = (...args) => eventListener(instance, ...args);
@@ -222,9 +229,13 @@ const createBlessedRenderer = function(blessed) {
 }
 
 module.exports = {
-  render: function render(element, screen, callback) {
+  render: function render(element, screen, options, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {}
+    }
     const blessed = require('blessed');
-    const renderer = createBlessedRenderer(blessed);
+    const renderer = createBlessedRenderer(blessed, options);
     return renderer(element, screen, callback);
   },
   createBlessedRenderer: createBlessedRenderer
