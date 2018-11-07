@@ -9,8 +9,7 @@ import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
 
-const createBlessedRenderer = function(blessed, options) {
-  const { jsxTagMapping } = options || {};
+const createBlessedRenderer = function(blessed) {
   type Instance = {
     type: string,
     props: Object,
@@ -38,11 +37,9 @@ const createBlessedRenderer = function(blessed, options) {
       internalInstanceHandle : Object
     ) {
       const {children, ...appliedProps} = solveClass(props);
-      if (
-        jsxTagMapping 
-        && (typeof jsxTagMapping === 'function')
-      )  {
-        type = jsxTagMapping(type) || type;
+      const blessedPrefixRegexp = /^blessed-/;
+      if (blessedPrefixRegexp.test(type)) {
+        type = type.replace(blessedPrefixRegexp, '');
       }
       const instance = blessed[type](appliedProps);
       instance.props = props;
@@ -229,13 +226,9 @@ const createBlessedRenderer = function(blessed, options) {
 }
 
 module.exports = {
-  render: function render(element, screen, options, callback) {
-    if (typeof options === 'function') {
-      callback = options;
-      options = {}
-    }
+  render: function render(element, screen, callback) {
     const blessed = require('blessed');
-    const renderer = createBlessedRenderer(blessed, options);
+    const renderer = createBlessedRenderer(blessed);
     return renderer(element, screen, callback);
   },
   createBlessedRenderer: createBlessedRenderer
