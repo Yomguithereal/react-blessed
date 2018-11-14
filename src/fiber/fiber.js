@@ -37,9 +37,9 @@ const createBlessedRenderer = function(blessed) {
       internalInstanceHandle : Object
     ) {
       const {children, ...appliedProps} = solveClass(props);
-      const blessedPrefixRegexp = /^blessed-/;
-      if (blessedPrefixRegexp.test(type)) {
-        type = type.replace(blessedPrefixRegexp, '');
+      const blessedTypePrefix = 'blessed-';
+      if (type.startsWith(blessedTypePrefix)) {
+        type = type.slice(blessedTypePrefix.length);
       }
       const instance = blessed[type](appliedProps);
       instance.props = props;
