@@ -37,6 +37,10 @@ const createBlessedRenderer = function(blessed) {
       internalInstanceHandle : Object
     ) {
       const {children, ...appliedProps} = solveClass(props);
+      const blessedTypePrefix = 'blessed-';
+      if (type.startsWith(blessedTypePrefix)) {
+        type = type.slice(blessedTypePrefix.length);
+      }
       const instance = blessed[type](appliedProps);
       instance.props = props;
       instance._eventListener = (...args) => eventListener(instance, ...args);
