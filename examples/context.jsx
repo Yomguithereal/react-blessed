@@ -44,8 +44,8 @@ class AppInner extends Component {
         
         {demo}
         
-        <button border={{type: 'line'}} height={3} width={3} top={2} left={4} onPress={a => setDemo(demo + 1)}>+</button>
-        <button border={{type: 'line'}} height={3} width={3} top={2} onPress={a => setDemo(demo - 1)}>-</button>
+        <button mouse border={{type: 'line'}} height={3} width={3} top={2} left={4} onPress={a => setDemo(demo + 1)}>+</button>
+        <button mouse border={{type: 'line'}} height={3} width={3} top={2} onPress={a => setDemo(demo - 1)}>-</button>
       </box>
     );
   }
