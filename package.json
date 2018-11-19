@@ -51,7 +51,7 @@
   },
   "peerDependencies": {
     "blessed": "^0.1.81",
-    "react": "^16.7.0-alpha.2",
+    "react": "^16.6.3",
     "react-devtools-core": "^3.0.0",
     "ws": "^6.0.0"
   },

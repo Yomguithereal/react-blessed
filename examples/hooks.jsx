@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import blessed from 'blessed';
 import { render } from '../src';
 
+// NOTE: hooks require react@next version, but will probly be in 16.7.0
+
 const App = () => {
   const [ demo, setDemo ] = useState(0)
   return (
