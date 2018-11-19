@@ -15,6 +15,7 @@ const examples = [
   'neo-blessed',
   'progressbar',
   'remove',
+  'context',
 ];
 
 if (examples.indexOf(example) === -1) {
