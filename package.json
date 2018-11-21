@@ -41,7 +41,7 @@
     "lodash": "^4.x.x",
     "mocha": "^4.0.1",
     "neo-blessed": "^0.2.0",
-    "react": "^16.2.0",
+    "react": "^16.7.0-alpha.2",
     "react-motion": "^0.5.2",
     "rollup": "^0.65.0",
     "rollup-plugin-babel": "^4.0.2",
@@ -51,11 +51,11 @@
   },
   "peerDependencies": {
     "blessed": "^0.1.81",
-    "react": "^16.2.0",
+    "react": "^16.6.3",
     "react-devtools-core": "^3.0.0",
     "ws": "^6.0.0"
   },
   "dependencies": {
-    "react-reconciler": "0.7.0"
+    "react-reconciler": "^0.18.0-alpha.2"
   }
 }
