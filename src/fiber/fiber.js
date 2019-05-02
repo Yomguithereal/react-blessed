@@ -8,6 +8,7 @@ import debounce from 'lodash/debounce'
 import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
+const runningEffects = [];
 
 const createBlessedRenderer = function(blessed) {
   type Instance = {
@@ -203,6 +204,18 @@ const createBlessedRenderer = function(blessed) {
     resetTextContent(instance : Instance) : void {
       instance.setContent('');
     },
+
+    schedulePassiveEffects(effect) {
+      effect();
+
+      runningEffects.push(effect);
+    },
+
+    cancelPassiveEffects() {
+      runningEffects.forEach(effect => effect.cancel());
+
+      runningEffects.splice(0, runningEffects.length);
+    }
   });
 
   BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);

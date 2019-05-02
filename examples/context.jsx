@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext, useContext } from 'react';
 import blessed from 'blessed';
 import {render} from '../src';
 
@@ -6,7 +6,7 @@ import {render} from '../src';
 // normally these would all be in different places, so the provider's children can grab the context from anywhere
 
 const DemoContext = createContext()
-const { Provider, Consumer } = DemoContext
+const { Provider } = DemoContext
 
 // app-level provider of demo context
 class DemoProvider extends Component {
@@ -30,9 +30,10 @@ class DemoProvider extends Component {
 }
 
 // wrap a component with demo context consumer
-const withDemo = Component => props => (
-  <Consumer>{(context) => (<Component {...props} {...context} />)}</Consumer>
-)
+const withDemo = Component => props => {
+  const context = useContext(DemoContext)
+  return <Component {...props} {...context} />
+}
 
 class AppInner extends Component {
   render() {
