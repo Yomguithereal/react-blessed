@@ -8,7 +8,7 @@ import debounce from 'lodash/debounce'
 import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
-const runningEffects = [];
+let runningEffects = [];
 
 const createBlessedRenderer = function(blessed) {
   type Instance = {
@@ -214,7 +214,7 @@ const createBlessedRenderer = function(blessed) {
     cancelPassiveEffects() {
       runningEffects.forEach(effect => effect.cancel());
 
-      runningEffects.splice(0, runningEffects.length);
+      runningEffects = [];
     }
   });
 
