@@ -8,15 +8,17 @@ const argv = process.argv.slice(2);
 const example = argv[0];
 const examples = [
   'animation',
+  'context',
   'dashboard',
   'demo',
+  'dispatch',
+  'effects',
   'form',
   'framer',
+  'hooks',
   'neo-blessed',
   'progressbar',
   'remove',
-  'context',
-  'hooks',
 ];
 
 if (examples.indexOf(example) === -1) {
