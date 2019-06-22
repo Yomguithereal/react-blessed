@@ -10,7 +10,7 @@ import injectIntoDevToolsConfig from './devtools'
 const emptyObject = {};
 let runningEffects = [];
 
-const createBlessedRenderer = function(blessed) {
+export const createBlessedRenderer = function(blessed) {
   type Instance = {
     type: string,
     props: Object,
@@ -238,11 +238,8 @@ const createBlessedRenderer = function(blessed) {
   }
 }
 
-module.exports = {
-  render: function render(element, screen, callback) {
-    const blessed = require('blessed');
-    const renderer = createBlessedRenderer(blessed);
-    return renderer(element, screen, callback);
-  },
-  createBlessedRenderer: createBlessedRenderer
-};
+export function render(element, screen, callback) {
+  const blessed = require('blessed');
+  const renderer = createBlessedRenderer(blessed);
+  return renderer(element, screen, callback);
+}
