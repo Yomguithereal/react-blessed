@@ -19,6 +19,8 @@ const createBlessedRenderer = function(blessed) {
     screen: typeof blessed.Screen,
   };
 
+  let screenRef = null;
+
   const BlessedReconciler = ReactFiberReconciler({
     supportsMutation: true,
     supportsPersistence: false,
@@ -46,7 +48,7 @@ const createBlessedRenderer = function(blessed) {
       if (type.startsWith(blessedTypePrefix)) {
         type = type.slice(blessedTypePrefix.length);
       }
-      const instance = blessed[type](appliedProps);
+      const instance = blessed[type]({...appliedProps, screen: screenRef});
       instance.props = props;
       instance._eventListener = (...args) => eventListener(instance, ...args);
       instance.on('event', instance._eventListener);
@@ -100,7 +102,7 @@ const createBlessedRenderer = function(blessed) {
       hostContext : HostContext,
       internalInstanceHandle : OpaqueHandle
     ) : TextInstance {
-      return blessed.text({content: text});
+      return blessed.text({content: text, screen: screenRef});
     },
 
     scheduleDeferredCallback(a) {
@@ -223,6 +225,8 @@ const createBlessedRenderer = function(blessed) {
   const roots = new Map();
 
   return function render(element, screen, callback) {
+    screenRef = screen;
+
     let root = roots.get(screen);
     if (!root) {
       root = BlessedReconciler.createContainer(screen);
