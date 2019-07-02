@@ -19,6 +19,7 @@ const examples = [
   'neo-blessed',
   'progressbar',
   'remove',
+  'hotkeys'
 ];
 
 if (examples.indexOf(example) === -1) {

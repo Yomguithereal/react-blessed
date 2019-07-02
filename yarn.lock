@@ -2090,7 +2090,7 @@ prop-types@^15.5.8:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.6.2:
+prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -2122,6 +2122,12 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+"react-hotkeys@git+https://github.com/visigoth/react-hotkeys#0bf84cc4b7cb264c663a349b6b02575a1a577b49":
+  version "2.0.0-pre8"
+  resolved "git+https://github.com/visigoth/react-hotkeys#0bf84cc4b7cb264c663a349b6b02575a1a577b49"
+  dependencies:
+    prop-types "^15.6.1"
 
 react-is@^16.8.1:
   version "16.8.6"
