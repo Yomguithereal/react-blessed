@@ -3,15 +3,15 @@ import SyntheticKeyboardEvent from './SyntheticKeyboardEvent';
 import SyntheticFocusEvent from './SyntheticFocusEvent';
 
 const eventSubscriptionMappings = {};
-const eventDispatchConfigs = {};
-const eventRegistrationNameToConfig = {}
+const eventRegistrationNameToConfig = {};
+const syntheticEventDispatchConfigs = {};
 
 const screenEventTransforms = {
-  [ScreenEventTypes.SCREEN_KEYPRESS]: (dispatchConfig, targetInst, eventTarget, ...args) => {
+  [ScreenEventTypes.SCREEN_KEYPRESS]: (targetInst, eventTarget, ...args) => {
     const [ch, key] = args;
 
-    const eventData = {
-      type: ScreenEventTypes.SCREEN_KEYPRESS,
+    const keyPressEvent = {
+      type: 'keypress', // native event type
       target: targetInst,
       bubbles: true,
       cancelable: true,
@@ -24,52 +24,63 @@ const screenEventTransforms = {
       key: ch,
       charCode: ch.charCodeAt(0)
     };
-    return SyntheticKeyboardEvent.getPooled(
-      dispatchConfig,
-      targetInst,
-      eventData,
-      eventTarget
+
+    const keyDownEvent = Object.assign({}, keyPressEvent);
+    keyDownEvent.type = 'keydown';
+
+    const keyUpEvent = Object.assign({}, keyPressEvent);
+    keyUpEvent.type = 'keyup';
+
+    return [keyDownEvent, keyPressEvent, keyUpEvent].map(eventData => 
+      SyntheticKeyboardEvent.getPooled(
+        syntheticEventDispatchConfigs[eventData.type],
+        targetInst,
+        eventData,
+        eventTarget
+      )
     );
   },
-  [ScreenEventTypes.SCREEN_FOCUS]: (dispatchConfig, targetInst, eventTarget, ...args) => {
+  [ScreenEventTypes.SCREEN_FOCUS]: (targetInst, eventTarget, ...args) => {
     const [old] = args;
     const eventData = {
-      type: ScreenEventTypes.SCREEN_FOCUS,
+      type: 'focus',
       target: targetInst,
       bubbles: false,
       cancelable: false,
 
       relatedTarget: old
     };
-    return SyntheticFocusEvent.getPooled(
-      dispatchConfig,
+    return [SyntheticFocusEvent.getPooled(
+      syntheticEventDispatchConfigs[eventData.type],
       targetInst,
       eventData,
       eventTarget
-    )
+    )];
   },
-  [ScreenEventTypes.SCREEN_BLUR]: (dispatchConfig, targetInst, eventTarget, ...args) => {
+  [ScreenEventTypes.SCREEN_BLUR]: (targetInst, eventTarget, ...args) => {
     const [next] = args;
     const eventData = {
-      type: ScreenEventTypes.SCREEN_BLUR,
+      type: 'blur',
       target: targetInst,
       bubbles: false,
       cancelable: false,
 
       relatedTarget: next
     };
-    return SyntheticFocusEvent.getPooled(
-      dispatchConfig,
+    return [SyntheticFocusEvent.getPooled(
+      syntheticEventDispatchConfigs[eventData.type],
       targetInst,
       eventData,
       eventTarget
-    )
+    )];
   }
 };
 
-// Pairs of react events and screen native events
+// Pairs of react event types and screen native events
 const eventTuples = [
+  ['keyDown', ScreenEventTypes.SCREEN_KEYPRESS],
   ['keyPress', ScreenEventTypes.SCREEN_KEYPRESS],
+  ['keyUp', ScreenEventTypes.SCREEN_KEYPRESS],
   ['focus', ScreenEventTypes.SCREEN_FOCUS],
   ['blur', ScreenEventTypes.SCREEN_BLUR]
 ];
@@ -85,7 +96,7 @@ function addEventConfiguration(eventName, screenEventType) {
     screenEvents: [screenEventType]
   };
   eventSubscriptionMappings[eventName] = config.screenEvents;
-  eventDispatchConfigs[screenEventType] = config;
+  syntheticEventDispatchConfigs[eventName.toLowerCase()] = config;
 
   eventRegistrationNameToConfig[onEvent] = config;
   eventRegistrationNameToConfig[onEvent + 'Capture'] = config;
@@ -109,49 +120,51 @@ function ensureListeningTo(root, screenEventType) {
 }
 
 function dispatchScreenEvent(root, screenEventType, firstArgIsTarget, ...args) {
-  const dispatchConfig = eventDispatchConfigs[screenEventType];
   const targetInst = firstArgIsTarget ? args.shift() : root.screen.focused;
   const eventTransform = screenEventTransforms[screenEventType];
 
   if (!eventTransform) {
     throw new Error('unhandled event: ' + screenEventType);
   }
-  const syntheticEvent = eventTransform(
-    dispatchConfig,
+  const syntheticEvents = eventTransform(
     targetInst,
     targetInst,
     ...args
   );
 
   // Gather list of ancestors that have listeners
-  const captureListeners = [];
-  const bubbleListeners = [];
-  var node = targetInst;
-  do {
-    if (node.props) {
-      if (dispatchConfig.phasedRegistrationNames.captured in node.props) {
-        captureListeners.unshift(node);
+  syntheticEvents.forEach(syntheticEvent => {
+    const dispatchConfig = syntheticEvent.dispatchConfig;
+    const captureListeners = [];
+    const bubbleListeners = [];
+  
+    var node = targetInst;
+    do {
+      if (node.props) {
+        if (dispatchConfig.phasedRegistrationNames.captured in node.props) {
+          captureListeners.unshift(node);
+        }
+        if (dispatchConfig.phasedRegistrationNames.bubbled in node.props) {
+          bubbleListeners.push(node);
+        }
       }
-      if (dispatchConfig.phasedRegistrationNames.bubbled in node.props) {
-        bubbleListeners.push(node);
+      node = node.parent;
+    } while (node != root);
+
+    // Capture phase
+    captureListeners.forEach(element => {
+      if (syntheticEvent.isPropagationStopped()) {
+        return;
       }
-    }
-    node = node.parent;
-  } while (node != root);
+      element.props[dispatchConfig.phasedRegistrationNames.captured].call(element, syntheticEvent);
+    });
 
-  // Capture phase
-  captureListeners.forEach(element => {
-    if (syntheticEvent.isPropagationStopped()) {
-      return;
-    }
-    element.props[dispatchConfig.phasedRegistrationNames.captured].call(element, syntheticEvent);
-  });
-
-  bubbleListeners.forEach(element => {
-    if (syntheticEvent.isPropagationStopped()) {
-      return;
-    }
-    element.props[dispatchConfig.phasedRegistrationNames.bubbled].call(element, syntheticEvent);
+    bubbleListeners.forEach(element => {
+      if (syntheticEvent.isPropagationStopped()) {
+        return;
+      }
+      element.props[dispatchConfig.phasedRegistrationNames.bubbled].call(element, syntheticEvent);
+    });  
   });
 }
 
