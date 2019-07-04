@@ -5,9 +5,6 @@ try {
   defineProperty(global, 'WebSocket', {
     value: require('ws')
   });
-  defineProperty(global, 'window', {
-    value: global
-  });
   const {connectToDevTools} = require('react-devtools-core');
 
   connectToDevTools({
