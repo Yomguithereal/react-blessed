@@ -191,6 +191,9 @@ const createBlessedRenderer = function(blessed) {
     ) : void {
       parentInstance.remove(child);
       child.off('event', child._eventListener);
+      child.forDescendants(function(el) {
+        el.off('event', child._eventListener);
+      });
       child.destroy();
     },
 
@@ -200,6 +203,9 @@ const createBlessedRenderer = function(blessed) {
     ) : void {
       parentInstance.remove(child);
       child.off('event', child._eventListener);
+      child.forDescendants(function(el) {
+        el.off('event', child._eventListener);
+      });
       child.destroy();
     },
 
