@@ -31,7 +31,7 @@ const eventListener = (node, event, ...args) => {
     if (event === 'focus' || event === 'blur') {
       args[0] = node;
     }
-    handler(...args);
+    handler.apply(node, ...args);
   }
 };
 
