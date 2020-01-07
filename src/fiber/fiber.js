@@ -9,6 +9,7 @@ import injectIntoDevToolsConfig from './devtools'
 
 const emptyObject = {};
 let runningEffects = [];
+let BlessedReconciler = null;
 
 const createBlessedRenderer = function(blessed) {
   type Instance = {
@@ -21,7 +22,7 @@ const createBlessedRenderer = function(blessed) {
 
   let screenRef = null;
 
-  const BlessedReconciler = ReactFiberReconciler({
+  BlessedReconciler = ReactFiberReconciler({
     supportsMutation: true,
     supportsPersistence: false,
     useSyncScheduling: true,
@@ -225,8 +226,11 @@ const createBlessedRenderer = function(blessed) {
       runningEffects = [];
     }
   });
-
-  BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
+                                           
+   BlessedReconciler.injectIntoDevTools({
+     bundleType: 1,
+     version: "16.6.1-canary-b3d1a81a9",
+     rendererPackageName: 'react-blessed'});
 
   const roots = new Map();
 
@@ -254,5 +258,6 @@ module.exports = {
     const renderer = createBlessedRenderer(blessed);
     return renderer(element, screen, callback);
   },
-  createBlessedRenderer: createBlessedRenderer
+  createBlessedRenderer: createBlessedRenderer,
+  getBlessedReconciler: () => BlessedReconciler
 };
