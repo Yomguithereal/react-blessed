@@ -21,7 +21,7 @@ const createBlessedRenderer = function(blessed) {
 
   let screenRef = null;
 
-  let BlessedReconciler = ReactFiberReconciler({
+  const BlessedReconciler = ReactFiberReconciler({
     supportsMutation: true,
     supportsPersistence: false,
     useSyncScheduling: true,
@@ -226,10 +226,10 @@ const createBlessedRenderer = function(blessed) {
     }
   });
 
-   BlessedReconciler.injectIntoDevTools({
-     bundleType: 1,
-     version: "16.6.1-canary-b3d1a81a9",
-     rendererPackageName: 'react-blessed'});
+  BlessedReconciler.injectIntoDevTools({
+    bundleType: 1,
+    version: "0.6.2",
+    rendererPackageName: 'react-blessed'});
 
   const roots = new Map();
 

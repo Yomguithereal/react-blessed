@@ -21,6 +21,7 @@ try {
   });
 } catch (err) {
   if (process.env.NODE_ENV !== 'production') {
+    console.warn(err);
     console.warn('WARNING: the `ws` package must be installed to use `react-devtools`.');
   }
 }

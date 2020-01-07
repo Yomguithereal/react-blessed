@@ -5,9 +5,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "scripts": {
-    "build-upstream": "set -e; yarn build; set -x; touch ../scterm/src/main/scterm/force_build.cljs",
     "build": "rollup -c",
-    "watch": "fswatch -o -E --include 'src/.*.js' src/ |xargs -I {} -n1 addts yarn build-upstream",
     "demo": "node run.js",
     "prepublish": "npm run build",
     "test": "mocha -R spec --require babel-register ./test/endpoint.js"
@@ -31,36 +29,34 @@
   "browserslist": "maintained node versions",
   "homepage": "https://github.com/yomguithereal/react-blessed#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.0",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.7.0",
+    "@babel/preset-env": "^7.7.0",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/register": "^7.7.0",
     "blessed": "^0.1.81",
     "invariant": "^2.2.0",
     "lodash": "^4.x.x",
     "mocha": "^4.0.1",
     "neo-blessed": "^0.2.0",
-    "react-devtools-core": "4.x",
     "react-motion": "^0.5.2",
     "rollup": "^0.65.0",
     "rollup-plugin-babel": "^4.0.2",
     "rollup-plugin-commonjs": "^9.1.6",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "ws": "^6.0.0"
+    "ws": "^7.2.1",
+    "react-devtools-core": "^4.4.0"
   },
   "peerDependencies": {
     "blessed": "^0.1.81",
-    "react": "^16.8.0",
-    "ws": "^6.0.0"
+    "react": "^16.8.0"
   },
   "dependencies": {
     "react": "^16.8.0",
-    "react-reconciler": "^0.20.4",
-    "ws": "^7.2.1"
+    "react-reconciler": "^0.20.4"
   }
 }
