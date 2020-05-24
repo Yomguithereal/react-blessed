@@ -2,13 +2,14 @@
   "name": "react-blessed",
   "version": "0.6.2",
   "description": "A react renderer for blessed.",
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
+  "main": "src/index.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsc",
+    "clean": "del '{src,test}/**/*.js'",
     "demo": "node run.js",
+    "format": "prettier '{examples,run,src}/**/*.{ts,tsx}' --write",
     "prepublish": "npm run build",
-    "test": "mocha -R spec --require babel-register ./test/endpoint.js"
+    "test": "mocha -R spec --require @babel/register ./test/endpoint.js"
   },
   "repository": {
     "type": "git",
@@ -29,34 +30,34 @@
   "browserslist": "maintained node versions",
   "homepage": "https://github.com/yomguithereal/react-blessed#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
+    "@babel/core": "^7.9.6",
+    "@babel/register": "^7.9.0",
+    "@types/blessed": "^0.1.17",
+    "@types/lodash": "^4.14.152",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.4",
+    "@types/react": "^16.9.35",
+    "@types/react-motion": "0.0.29",
+    "@types/react-reconciler": "^0.18.0",
     "blessed": "^0.1.81",
+    "del-cli": "^3.0.1",
     "invariant": "^2.2.0",
     "lodash": "^4.x.x",
     "mocha": "^4.0.1",
     "neo-blessed": "^0.2.0",
+    "prettier": "^2.0.5",
     "react-motion": "^0.5.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-commonjs": "^9.1.6",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0"
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
   },
   "peerDependencies": {
     "blessed": "^0.1.81",
-    "react": "^16.8.0",
-    "react-devtools-core": "^3.0.0",
-    "ws": "^6.0.0"
+    "react": "^16.13.1",
+    "react-devtools-core": "^4.7.0",
+    "ws": "^7.3.0"
   },
   "dependencies": {
-    "react": "^16.8.0",
-    "react-reconciler": "^0.20.4"
+    "react": "^16.13.1",
+    "react-reconciler": "^0.25.1"
   }
 }

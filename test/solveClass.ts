@@ -1,28 +1,28 @@
 import assert from 'assert';
-import solveClass from '../../src/shared/solveClass';
+import solveClass from '../src/solveClass';
 
-describe('solveClass', function() {
-
-  it('should merge a single class into props.', function() {
-    assert.deepEqual(
-      solveClass({
-        class: {
-          border: {
-            type: 'line'
-          },
-          style: {
-            border: {
-              fg: 'red'
-            }
-          }
-        },
+describe('solveClass', () => {
+  it('should merge a single class into props.', () => {
+    const solved = solveClass({
+      class: {
         border: {
-          type: 'dashed'
+          type: 'line'
         },
         style: {
-          bg: 'green'
+          border: {
+            fg: 'red'
+          }
         }
-      }),
+      },
+      border: {
+        type: 'dashed'
+      },
+      style: {
+        bg: 'green'
+      }
+    })
+    assert.deepEqual(
+      solved,
       {
         border: {
           type: 'dashed'
