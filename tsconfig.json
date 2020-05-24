@@ -5,6 +5,5 @@
     "strict": true,
     "jsx": "react",
     "esModuleInterop": true
-  },
-  // "exclude": ["examples"]
+  }
 }

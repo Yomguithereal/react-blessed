@@ -177,7 +177,6 @@ export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.
       throw new Error(
         "commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new"
       );
-      // instance.screen.debouncedRender();
     },
 
     commitUpdate(
@@ -193,7 +192,6 @@ export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.
       // update event handler pointers
       instance.props = newProps;
       instance.isUpdating = false;
-      // (screen as any).debouncedRender();
       screen.render();
     },
 
@@ -203,7 +201,6 @@ export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.
       newText: string
     ): void {
       textInstance.element.setContent(newText);
-      // (screen as any).debouncedRender();
       screen.render();
     },
 

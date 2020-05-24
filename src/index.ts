@@ -27,12 +27,7 @@ export const createBlessedRenderer = function (
       root = renderer.createContainer(screen as any, true, false);
       roots.set(screen, root);
     }
-
-    // render at most every 16ms. Should sync this with the screen refresh rate
-    // probably if possible
-    // screen.debouncedRender = debounce(() => screen.render(), 16);
     renderer.updateContainer(element, root, null, callback as any);
-    // screen.debouncedRender();
     setImmediate(() => screen.render());
     return renderer.getPublicRootInstance(root);
   };
