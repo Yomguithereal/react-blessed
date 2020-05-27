@@ -7,9 +7,9 @@
     "build": "tsc",
     "clean": "del '{src,test}/**/*.js'",
     "demo": "node run.js",
-    "format": "prettier '{examples,run,src}/**/*.{ts,tsx}' --write",
+    "format": "prettier '{examples,run,src,test}/**/*.{ts,tsx}' --write",
     "prepublish": "npm run build",
-    "test": "mocha -R spec --require @babel/register ./test/endpoint.js"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -39,14 +39,17 @@
     "@types/react": "^16.9.35",
     "@types/react-motion": "0.0.29",
     "@types/react-reconciler": "^0.18.0",
+    "ava": "^3.8.2",
     "blessed": "^0.1.81",
     "del-cli": "^3.0.1",
     "invariant": "^2.2.0",
     "lodash": "^4.x.x",
     "mocha": "^4.0.1",
     "neo-blessed": "^0.2.0",
+    "node-pty": "^0.9.0",
     "prettier": "^2.0.5",
     "react-motion": "^0.5.2",
+    "through2": "^3.0.1",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3"
   },
@@ -59,5 +62,17 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-reconciler": "^0.25.1"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.test.{ts,tsx}"
+    ],
+    "extensions": [
+      "ts",
+      "tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }

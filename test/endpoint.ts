@@ -1,1 +1,1 @@
-require('./suites/solveClass');
+require("./suites/solveClass");

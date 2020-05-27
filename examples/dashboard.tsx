@@ -106,7 +106,7 @@ class Jobs extends Component {
  * Progress component.
  */
 class Progress extends Component<any, any> {
-  interval: any
+  interval: any;
   constructor(props: any) {
     super(props);
     this.state = { progress: 0, color: "blue" };
@@ -115,8 +115,8 @@ class Progress extends Component<any, any> {
       this.setState({ progress: this.state.progress + 1 });
     }, 50);
   }
-  componentWillUnmount () {
-    clearInterval(this.interval)
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {

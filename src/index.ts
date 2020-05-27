@@ -33,12 +33,16 @@ export const createBlessedRenderer = function (
   };
 };
 
-export const render = function render(
+export const render = async function render(
   element: React.ReactElement,
   screen: blessedLib.Widgets.Screen,
   callback?: null | (() => void)
 ) {
   const blessed = require("blessed");
   const renderer = createBlessedRenderer(blessed, screen);
-  return renderer(element, screen, callback);
+  return new Promise((res) =>
+    renderer(element, screen, () => {
+      typeof callback === "function" ? callback() : res();
+    })
+  );
 };

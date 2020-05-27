@@ -1,146 +1,143 @@
-import assert from 'assert';
-import solveClass from '../src/solveClass';
+import assert from "assert";
+import solveClass from "../src/solveClass";
 
-describe('solveClass', () => {
-  it('should merge a single class into props.', () => {
+describe("solveClass", () => {
+  it("should merge a single class into props.", () => {
     const solved = solveClass({
       class: {
         border: {
-          type: 'line'
+          type: "line",
         },
         style: {
           border: {
-            fg: 'red'
-          }
-        }
+            fg: "red",
+          },
+        },
       },
       border: {
-        type: 'dashed'
+        type: "dashed",
       },
       style: {
-        bg: 'green'
-      }
-    })
-    assert.deepEqual(
-      solved,
-      {
+        bg: "green",
+      },
+    });
+    assert.deepEqual(solved, {
+      border: {
+        type: "dashed",
+      },
+      style: {
         border: {
-          type: 'dashed'
+          fg: "red",
         },
-        style: {
-          border: {
-            fg: 'red'
-          },
-          bg: 'green'
-        }
-      }
-    );
+        bg: "green",
+      },
+    });
 
     assert.deepEqual(
       solveClass({
         class: {
           border: {
-            type: 'line'
+            type: "line",
           },
           style: {
             border: {
-              fg: 'red'
-            }
-          }
+              fg: "red",
+            },
+          },
         },
         style: {
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }),
       {
         border: {
-          type: 'line'
+          type: "line",
         },
         style: {
           border: {
-            fg: 'red'
+            fg: "red",
           },
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }
     );
   });
 
-  it('should be possible to merge several classes into props.', function() {
+  it("should be possible to merge several classes into props.", function () {
     assert.deepEqual(
       solveClass({
         class: [
           {
             style: {
               border: {
-                fg: 'red'
-              }
-            }
+                fg: "red",
+              },
+            },
           },
           {
             border: {
-              type: 'line'
-            }
-          }
+              type: "line",
+            },
+          },
         ],
         border: {
-          type: 'dashed'
+          type: "dashed",
         },
         style: {
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }),
       {
         border: {
-          type: 'dashed'
+          type: "dashed",
         },
         style: {
           border: {
-            fg: 'red'
+            fg: "red",
           },
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }
     );
   });
 
-  it('the given class array should be compacted.', function() {
+  it("the given class array should be compacted.", function () {
     assert.deepEqual(
       solveClass({
         class: [
           {
             style: {
               border: {
-                fg: 'red'
-              }
-            }
+                fg: "red",
+              },
+            },
           },
           {
             border: {
-              type: 'line'
-            }
+              type: "line",
+            },
           },
           false && {
-            fg: 'yellow'
-          }
+            fg: "yellow",
+          },
         ],
         border: {
-          type: 'dashed'
+          type: "dashed",
         },
         style: {
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }),
       {
         border: {
-          type: 'dashed'
+          type: "dashed",
         },
         style: {
           border: {
-            fg: 'red'
+            fg: "red",
           },
-          bg: 'green'
-        }
+          bg: "green",
+        },
       }
     );
   });

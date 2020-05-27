@@ -8,7 +8,6 @@ class Form extends Component<any, any> {
     this.state = {
       name: "",
     };
-
   }
   submit = (data: any) => this.setState((state: any) => ({ name: data }));
   cancel = (_: any) => console.log("Form canceled");

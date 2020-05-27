@@ -49,7 +49,10 @@ const createInstance = (
   return instance;
 };
 
-export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.Widgets.Screen) =>
+export const createReconciler = (
+  blessed: typeof blessedLib,
+  screen: blessedLib.Widgets.Screen
+) =>
   createFiberReconciler<
     Type,
     Props,
@@ -102,6 +105,7 @@ export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.
     },
 
     appendInitialChild(parentInstance, child: Instance): void {
+      debugger // eslint-disable-line
       parentInstance.element.append(child.element);
     },
 
@@ -111,6 +115,7 @@ export const createReconciler = (blessed: typeof blessedLib, screen: blessedLib.
       props: Props,
       rootContainerInstance: Container
     ): boolean {
+      debugger // eslint-disable-line
       const { children, ...appliedProps } = solveClass(props);
       update(instance, appliedProps);
       instance.props = props;

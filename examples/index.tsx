@@ -5,14 +5,14 @@ import { render } from "../src";
 
 const examples = [
   {
-    name: 'animation',
-    component: () => <AnimatedBox />
+    name: "animation",
+    component: () => <AnimatedBox />,
   },
   {
-    name: 'junker',
-    component: () => <box>hiiiii</box>
-  }
-]
+    name: "junker",
+    component: () => <box>hiiiii</box>,
+  },
+];
 
 const listStyle = {
   selected: {
@@ -32,20 +32,19 @@ const listStyle = {
 
 const DemoApp = (props: { screen: Widgets.Screen }) => {
   const { screen } = props;
-  const [demo, setDemo] = React.useState<any>(null)
+  const [demo, setDemo] = React.useState<any>(null);
   const onQuit = () => process.exit(0);
   const onBack = () => {
     // @todo WHY is "esc" triggering closure of the other components
-    debugger
-    if (!demo) return onQuit()
-    setDemo(null)
+    if (!demo) return onQuit();
+    setDemo(null);
   };
   useEffect(() => {
     screen.key(["q"], onQuit);
     screen.key(["escape", "C-c"], onBack);
     screen.key(["tab"], () => screen.focusNext());
   }, []);
-  if (demo) return examples.find(ex => ex.name === demo)?.component!()!
+  if (demo) return examples.find((ex) => ex.name === demo)?.component!()!;
   return (
     <box
       label="demo"
@@ -67,11 +66,11 @@ Press Esc or q to go back a screen, or quit!`}
         width="75%"
         keys
         mouse
-        items={examples.map(ex => ex.name)}
+        items={examples.map((ex) => ex.name)}
         style={listStyle}
         onAttach={(node: any) => node.focus()}
         onSelect={(node: any) => {
-          setDemo(node.value)
+          setDemo(node.value);
         }}
       />
     </box>

@@ -58,10 +58,7 @@ export function hexToRGB(c: any) {
   return ret;
 }
 
-export function rgbToHex(
-  red: number,
-  green: number,
-  blue: number) {
+export function rgbToHex(red: number, green: number, blue: number) {
   let r = red.toString(16);
   let g = green.toString(16);
   let b = blue.toString(16);
@@ -84,7 +81,8 @@ export function mapValueInRange(
   fromLow: number,
   fromHigh: number,
   toLow: number,
-  toHigh: number) {
+  toHigh: number
+) {
   let fromRangeSize = fromHigh - fromLow;
   let toRangeSize = toHigh - toLow;
   let valueScale = (value - fromLow) / fromRangeSize;
@@ -100,7 +98,8 @@ export function interpolateColor(
   end: number,
   low: number,
   high: number,
-  asRGB: number) {
+  asRGB: number
+) {
   let fromLow = low === undefined ? 0 : low;
   let fromHigh = high === undefined ? 1 : high;
   let startColor = hexToRGB(start);

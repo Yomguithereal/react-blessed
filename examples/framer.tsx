@@ -6,10 +6,7 @@ import { render } from "../src";
 
 const range = (n: number) => Array.apply(0, Array(n)).map((_, i) => i);
 
-function reinsert(
-  arr: any,
-  from: any,
-  to: any) {
+function reinsert(arr: any, from: any, to: any) {
   const _arr = arr.slice(0);
   const val = _arr[from];
   _arr.splice(from, 1);
@@ -17,10 +14,7 @@ function reinsert(
   return _arr;
 }
 
-function clamp(
-  n: any,
-  min: any,
-  max: any) {
+function clamp(n: any, min: any, max: any) {
   return Math.max(Math.min(n, max), min);
 }
 
@@ -53,10 +47,7 @@ class Demo extends React.Component {
     */
   }
 
-  handleMouseDown = (
-    pos: any,
-    pressY: any,
-    event: any) => {
+  handleMouseDown = (pos: any, pressY: any, event: any) => {
     process.exit(3);
     if (this.state.isPressed === false) {
       const { y } = event;
