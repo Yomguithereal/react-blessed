@@ -64,6 +64,7 @@
     "react-reconciler": "^0.25.1"
   },
   "ava": {
+    "tap": true,
     "files": [
       "test/**/*.test.{ts,tsx}"
     ],
