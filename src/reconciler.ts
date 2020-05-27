@@ -80,11 +80,7 @@ export const createReconciler = (
       return emptyObject;
     },
     getPublicInstance(instance) {
-      if (instance instanceof blessed.Widgets.TextElement) {
-        // @todo maybe just cast i dont know. strings may be ok
-        throw new Error("no strings allow, bro");
-      }
-      return instance as Instance;
+      return instance;
     },
 
     createInstance(
@@ -105,7 +101,6 @@ export const createReconciler = (
     },
 
     appendInitialChild(parentInstance, child: Instance): void {
-      debugger // eslint-disable-line
       parentInstance.element.append(child.element);
     },
 
@@ -115,7 +110,6 @@ export const createReconciler = (
       props: Props,
       rootContainerInstance: Container
     ): boolean {
-      debugger // eslint-disable-line
       const { children, ...appliedProps } = solveClass(props);
       update(instance, appliedProps);
       instance.props = props;
