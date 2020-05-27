@@ -7,8 +7,8 @@ export const createBlessedRenderer = function (
   blessed: typeof blessedLib,
   screen: blessedLib.Widgets.Screen
 ) {
-  const renderer = createReconciler(blessed, screen);
-  renderer.injectIntoDevTools({
+  const reconciler = createReconciler(blessed, screen);
+  reconciler.injectIntoDevTools({
     bundleType: process.env.NODE_ENV === "development" ? 1 : 0,
     version: pkg.version,
     rendererPackageName: pkg.name,
@@ -24,12 +24,12 @@ export const createBlessedRenderer = function (
 
     let root: OpaqueRoot | undefined = roots.get(screen);
     if (!root) {
-      root = renderer.createContainer(screen as any, true, false);
+      root = reconciler.createContainer(screen as any, true, false);
       roots.set(screen, root);
     }
-    renderer.updateContainer(element, root, null, callback as any);
+    reconciler.updateContainer(element, root, null, callback as any);
     setImmediate(() => screen.render());
-    return renderer.getPublicRootInstance(root);
+    return reconciler.getPublicRootInstance(root);
   };
 };
 

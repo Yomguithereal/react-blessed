@@ -10,7 +10,7 @@ export const getScreen = () =>
     terminal: "xterm",
     useBCE: false,
     warnings: false,
-    width: 100,
-    height: 50,
+    width: 60,
+    height: 30,
     output: createTty({}),
   });

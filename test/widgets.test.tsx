@@ -1,30 +1,66 @@
 import ava, { TestInterface } from "ava";
 import React from "react";
-import { render } from "../src";
 import { getScreen } from "./fixtures/screen";
 import { screenToString } from "./util/screen";
+import { createTestRenderer, settle } from "./fixtures/render";
+import { RootBox } from "./fixtures/components/RootBox";
 
 const test = ava as TestInterface<{}>;
 
 test("<box />", async (t) => {
   const screen = getScreen();
-  await render(
-    <box
-      label="root-box"
-      width="100%"
-      height="100%"
-      border={{ type: "line" }}
-      style={{ border: { fg: "blue" } }}
-    >
+  const renderer = createTestRenderer(screen);
+  renderer.render(
+    <RootBox>
       <box
         label="child-box"
         border={{ type: "line" }}
-        style={{ border: { fg: "blue" } }}>
+        style={{ border: { fg: "blue" } }}
+      >
         best-box
       </box>
-    </box>,
+    </RootBox>,
     screen
   );
-  await new Promise((res) => setTimeout(res, 0));
+  await settle();
+  t.snapshot(screenToString(screen));
+});
+
+test("<list />", async (t) => {
+  const screen = getScreen();
+  const renderer = createTestRenderer(screen);
+  renderer.render(
+    <RootBox>
+      <list
+        label="child-list"
+        border={{ type: "line" }}
+        style={{ border: { fg: "blue" } }}
+        items={["a", "b", "c", "1", "2", "3"]}
+      ></list>
+    </RootBox>,
+    screen
+  );
+  await settle();
+  t.snapshot(screenToString(screen));
+});
+
+test("<list />, long", async (t) => {
+  const screen = getScreen();
+  const renderer = createTestRenderer(screen);
+  renderer.render(
+    <RootBox>
+      <list
+        label="long-list"
+        border={{ type: "line" }}
+        style={{ border: { fg: "blue" } }}
+        items={" "
+          .repeat(30)
+          .split("")
+          .map((_, i) => `${i}`)}
+      ></list>
+    </RootBox>,
+    screen
+  );
+  await settle();
   t.snapshot(screenToString(screen));
 });
