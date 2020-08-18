@@ -11,7 +11,7 @@ class Form extends Component {
       name: '',
     };
 
-    this.submit = data => this.setState(state => ({name: data}));
+    this.submit = (_form, data) => this.setState(state => ({name: data}));
     this.cancel = _ => console.log('Form canceled');
   }
   render() {
