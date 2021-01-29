@@ -8,7 +8,7 @@
     "build": "rollup -c",
     "demo": "node run.js",
     "prepublish": "npm run build",
-    "test": "mocha -R spec --require babel-register ./test/endpoint.js"
+    "test": "mocha -R spec --require @babel/register ./test/endpoint.js"
   },
   "repository": {
     "type": "git",
