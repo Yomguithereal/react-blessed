@@ -11,7 +11,6 @@ const examples = [
   'dispatch',
   'effects',
   'form',
-  'framer',
   'hooks',
   'neo-blessed',
   'progressbar',

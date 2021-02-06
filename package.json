@@ -45,7 +45,6 @@
     "mocha": "^8.2.1",
     "neo-blessed": "^0.2.0",
     "prettier": "^2.2.1",
-    "react-motion": "^0.5.2",
     "rollup": "^2.38.5",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
