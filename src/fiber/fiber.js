@@ -24,7 +24,6 @@ const createBlessedRenderer = function(blessed) {
   const BlessedReconciler = ReactFiberReconciler({
     supportsMutation: true,
     supportsPersistence: false,
-    useSyncScheduling: true,
 
     getRootHostContext(rootContainerInstance : Container) : HostContext {
       return emptyObject;
@@ -90,10 +89,6 @@ const createBlessedRenderer = function(blessed) {
       return false;
     },
 
-    shouldDeprioritizeSubtree(type: string, props: Props): boolean {
-      return !!props.hidden;
-    },
-
     now: Date.now,
 
     createTextInstance(
@@ -103,10 +98,6 @@ const createBlessedRenderer = function(blessed) {
       internalInstanceHandle : OpaqueHandle
     ) : TextInstance {
       return blessed.text({content: text, screen: screenRef});
-    },
-
-    scheduleDeferredCallback(a) {
-      throw new Error('Unimplemented');
     },
 
     prepareForCommit() {
@@ -213,17 +204,11 @@ const createBlessedRenderer = function(blessed) {
       instance.setContent('');
     },
 
-    schedulePassiveEffects(effect) {
-      effect();
-
-      runningEffects.push(effect);
+    clearContainer(
+      container: Container
+    ): void {
+      container.render()
     },
-
-    cancelPassiveEffects() {
-      runningEffects.forEach(effect => effect.cancel());
-
-      runningEffects = [];
-    }
   });
 
   BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
