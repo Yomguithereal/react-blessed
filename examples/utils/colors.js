@@ -51,7 +51,7 @@ export function hexToRGB(c) {
   const ret = {
     r: parseInt(parts[0], 16),
     g: parseInt(parts[1], 16),
-    b: parseInt(parts[2], 16),
+    b: parseInt(parts[2], 16)
   };
 
   colorCache[color] = ret;
@@ -80,7 +80,7 @@ export function mapValueInRange(value, fromLow, fromHigh, toLow, toHigh) {
   let fromRangeSize = fromHigh - fromLow;
   let toRangeSize = toHigh - toLow;
   let valueScale = (value - fromLow) / fromRangeSize;
-  return toLow + (valueScale * toRangeSize);
+  return toLow + valueScale * toRangeSize;
 }
 
 // Interpolate two hex colors in a 0 - 1 range or optionally provide a

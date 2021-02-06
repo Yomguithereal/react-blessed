@@ -18,8 +18,7 @@ export default function solveClass(props) {
 
   const args = [{}];
 
-  if (classes)
-    args.push.apply(args, emptyArray.concat(classes));
+  if (classes) args.push.apply(args, emptyArray.concat(classes));
 
   args.push(rest);
 

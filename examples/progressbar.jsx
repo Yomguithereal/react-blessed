@@ -13,10 +13,8 @@ class ProgressBox extends Component {
 
     setInterval(() => {
       const {position, toRight} = this.state,
-            newDirection = (position === (toRight ? 90 : 0)) ?
-              !toRight :
-              toRight,
-            newPosition = newDirection ? position + 1 : position - 1;
+        newDirection = position === (toRight ? 90 : 0) ? !toRight : toRight,
+        newPosition = newDirection ? position + 1 : position - 1;
 
       this.setState({
         position: newPosition,
@@ -34,8 +32,7 @@ class ProgressBox extends Component {
         width="10%"
         height="20%"
         border={{type: 'line'}}
-        style={{bg: 'cyan', border: {fg: 'blue'}}}
-      >
+        style={{bg: 'cyan', border: {fg: 'blue'}}}>
         <progressbar
           orientation="horizontal"
           filled={this.state.position}
@@ -58,9 +55,8 @@ const screen = blessed.screen({
   title: 'react-blessed box animation'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 
-render(<ProgressBox />, screen, (inst) => console.log('Rendered ProgressBox!'));
-
+render(<ProgressBox />, screen, inst => console.log('Rendered ProgressBox!'));

@@ -1,22 +1,22 @@
 /* @flow */
-import type { HostConfig, Reconciler } from 'react-fiber-types';
-import ReactFiberReconciler from 'react-reconciler'
-import eventListener from './events'
-import update from '../shared/update'
-import solveClass from '../shared/solveClass'
-import debounce from 'lodash/debounce'
-import injectIntoDevToolsConfig from './devtools'
+import type {HostConfig, Reconciler} from 'react-fiber-types';
+import ReactFiberReconciler from 'react-reconciler';
+import eventListener from './events';
+import update from '../shared/update';
+import solveClass from '../shared/solveClass';
+import debounce from 'lodash/debounce';
+import injectIntoDevToolsConfig from './devtools';
 
 const emptyObject = {};
 let runningEffects = [];
 
-const createBlessedRenderer = function(blessed) {
+const createBlessedRenderer = function (blessed) {
   type Instance = {
     type: string,
     props: Object,
     _eventListener: Function,
     _updating: boolean,
-    screen: typeof blessed.Screen,
+    screen: typeof blessed.Screen
   };
 
   let screenRef = null;
@@ -25,10 +25,13 @@ const createBlessedRenderer = function(blessed) {
     supportsMutation: true,
     supportsPersistence: false,
 
-    getRootHostContext(rootContainerInstance : Container) : HostContext {
+    getRootHostContext(rootContainerInstance: Container): HostContext {
       return emptyObject;
     },
-    getChildHostContext(parentHostContext : HostContext, type: string) : HostContext {
+    getChildHostContext(
+      parentHostContext: HostContext,
+      type: string
+    ): HostContext {
       return emptyObject;
     },
     getPublicInstance(instance) {
@@ -36,11 +39,11 @@ const createBlessedRenderer = function(blessed) {
     },
 
     createInstance(
-      type : string,
-      props : Props,
-      rootContainerInstance : Container,
-      hostContext : HostContext,
-      internalInstanceHandle : Object
+      type: string,
+      props: Props,
+      rootContainerInstance: Container,
+      hostContext: HostContext,
+      internalInstanceHandle: Object
     ) {
       const {children, ...appliedProps} = solveClass(props);
       const blessedTypePrefix = 'blessed-';
@@ -56,18 +59,18 @@ const createBlessedRenderer = function(blessed) {
     },
 
     appendInitialChild(
-      parentInstance : Instance,
-      child : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance,
+      child: Instance | TextInstance
+    ): void {
       parentInstance.append(child);
     },
 
     finalizeInitialChildren(
-      instance : Instance,
-      type : string,
-      props : Props,
-      rootContainerInstance : Container
-    ) : boolean {
+      instance: Instance,
+      type: string,
+      props: Props,
+      rootContainerInstance: Container
+    ): boolean {
       const {children, ...appliedProps} = solveClass(props);
       update(instance, appliedProps);
       instance.props = props;
@@ -75,28 +78,28 @@ const createBlessedRenderer = function(blessed) {
     },
 
     prepareUpdate(
-      instance : Instance,
-      type : string,
-      oldProps : Props,
-      newProps : Props,
-      rootContainerInstance : Container,
-      hostContext : HostContext
-    ) : null | Array<mixed> {
+      instance: Instance,
+      type: string,
+      oldProps: Props,
+      newProps: Props,
+      rootContainerInstance: Container,
+      hostContext: HostContext
+    ): null | Array<mixed> {
       return solveClass(newProps);
     },
 
-    shouldSetTextContent(props : Props) : boolean {
+    shouldSetTextContent(props: Props): boolean {
       return false;
     },
 
     now: Date.now,
 
     createTextInstance(
-      text : string,
-      rootContainerInstance : Container,
-      hostContext : HostContext,
-      internalInstanceHandle : OpaqueHandle
-    ) : TextInstance {
+      text: string,
+      rootContainerInstance: Container,
+      hostContext: HostContext,
+      internalInstanceHandle: OpaqueHandle
+    ): TextInstance {
       return blessed.text({content: text, screen: screenRef});
     },
 
@@ -109,24 +112,26 @@ const createBlessedRenderer = function(blessed) {
     },
 
     commitMount(
-      instance : Instance,
-      type : string,
-      newProps : Props,
-      internalInstanceHandle : Object
+      instance: Instance,
+      type: string,
+      newProps: Props,
+      internalInstanceHandle: Object
     ) {
-      throw new Error('commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new');
+      throw new Error(
+        'commitMount not implemented. Please post a reproducible use case that calls this method at https://github.com/Yomguithereal/react-blessed/issues/new'
+      );
       instance.screen.debouncedRender();
       // noop
     },
 
     commitUpdate(
-      instance : Instance,
-      updatePayload : Array<mixed>,
-      type : string,
-      oldProps : Props,
-      newProps : Props,
-      internalInstanceHandle : Object,
-    ) : void {
+      instance: Instance,
+      updatePayload: Array<mixed>,
+      type: string,
+      oldProps: Props,
+      newProps: Props,
+      internalInstanceHandle: Object
+    ): void {
       instance._updating = true;
       update(instance, updatePayload);
       // update event handler pointers
@@ -136,79 +141,77 @@ const createBlessedRenderer = function(blessed) {
     },
 
     commitTextUpdate(
-      textInstance : TextInstance,
-      oldText : string,
-      newText : string
-    ) : void {
+      textInstance: TextInstance,
+      oldText: string,
+      newText: string
+    ): void {
       textInstance.setContent(newText);
       textInstance.screen.debouncedRender();
     },
 
     appendChild(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance
+    ): void {
       parentInstance.append(child);
     },
 
     appendChildToContainer(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance
+    ): void {
       parentInstance.append(child);
     },
 
     insertBefore(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance,
-      beforeChild : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance,
+      beforeChild: Instance | TextInstance
+    ): void {
       // pretty sure everything is absolutely positioned so insertBefore ~= append
       parentInstance.append(child);
     },
 
     insertInContainerBefore(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance,
-      beforeChild : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance,
+      beforeChild: Instance | TextInstance
+    ): void {
       // pretty sure everything is absolutely positioned so insertBefore ~= append
       parentInstance.append(child);
     },
 
     removeChild(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance
+    ): void {
       parentInstance.remove(child);
       child.off('event', child._eventListener);
-      child.forDescendants(function(el) {
+      child.forDescendants(function (el) {
         el.off('event', child._eventListener);
       });
       child.destroy();
     },
 
     removeChildFromContainer(
-      parentInstance : Instance | Container,
-      child : Instance | TextInstance
-    ) : void {
+      parentInstance: Instance | Container,
+      child: Instance | TextInstance
+    ): void {
       parentInstance.remove(child);
       child.off('event', child._eventListener);
-      child.forDescendants(function(el) {
+      child.forDescendants(function (el) {
         el.off('event', child._eventListener);
       });
       child.destroy();
     },
 
-    resetTextContent(instance : Instance) : void {
+    resetTextContent(instance: Instance): void {
       instance.setContent('');
     },
 
-    clearContainer(
-      container: Container
-    ): void {
-      container.render()
-    },
+    clearContainer(container: Container): void {
+      container.render();
+    }
   });
 
   BlessedReconciler.injectIntoDevTools(injectIntoDevToolsConfig);
@@ -227,11 +230,11 @@ const createBlessedRenderer = function(blessed) {
     // render at most every 16ms. Should sync this with the screen refresh rate
     // probably if possible
     screen.debouncedRender = debounce(() => screen.render(), 16);
-    BlessedReconciler.updateContainer((element : any), root, null, callback);
+    BlessedReconciler.updateContainer((element: any), root, null, callback);
     screen.debouncedRender();
     return BlessedReconciler.getPublicRootInstance(root);
-  }
-}
+  };
+};
 
 module.exports = {
   render: function render(element, screen, callback) {

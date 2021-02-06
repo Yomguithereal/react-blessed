@@ -7,9 +7,10 @@ const render = createBlessedRenderer(blessed);
 class App extends Component {
   render() {
     return (
-      <box label="react-blessed demo"
-           border={{type: 'line'}}
-           style={{border: {fg: 'cyan'}}}>
+      <box
+        label="react-blessed demo"
+        border={{type: 'line'}}
+        style={{border: {fg: 'cyan'}}}>
         This example uses neo-blessed fork of blessed library.
       </box>
     );
@@ -22,7 +23,7 @@ const screen = blessed.screen({
   title: 'react-blessed demo app'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

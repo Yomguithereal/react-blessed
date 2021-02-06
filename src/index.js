@@ -1,2 +1,1 @@
-export * from './fiber'
-
+export * from './fiber';

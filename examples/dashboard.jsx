@@ -42,11 +42,12 @@ class Dashboard extends Component {
 class Log extends Component {
   render() {
     return (
-      <box label="Log"
-           class={stylesheet.bordered}
-           width="60%"
-           height="70%"
-           draggable={true}>
+      <box
+        label="Log"
+        class={stylesheet.bordered}
+        width="60%"
+        height="70%"
+        draggable={true}>
         {'Hello'}, {0}, {'World'}
       </box>
     );
@@ -59,10 +60,7 @@ class Log extends Component {
 class Request extends Component {
   render() {
     return (
-      <box label="Request"
-           class={stylesheet.bordered}
-           top="70%"
-           width="30%">
+      <box label="Request" class={stylesheet.bordered} top="70%" width="30%">
         {0}
       </box>
     );
@@ -74,11 +72,15 @@ class Request extends Component {
  */
 class Response extends Component {
   render() {
-    return <box label="Response"
-                class={stylesheet.bordered}
-                top="70%"
-                left="30%"
-                width="30%" />;
+    return (
+      <box
+        label="Response"
+        class={stylesheet.bordered}
+        top="70%"
+        left="30%"
+        width="30%"
+      />
+    );
   }
 }
 
@@ -87,11 +89,15 @@ class Response extends Component {
  */
 class Jobs extends Component {
   render() {
-    return <box label="Jobs"
-                class={stylesheet.bordered}
-                left="60%"
-                width="40%"
-                height="60%" />;
+    return (
+      <box
+        label="Jobs"
+        class={stylesheet.bordered}
+        left="60%"
+        width="40%"
+        height="60%"
+      />
+    );
   }
 }
 
@@ -105,8 +111,7 @@ class Progress extends Component {
     this.state = {progress: 0, color: 'blue'};
 
     const interval = setInterval(() => {
-      if (this.state.progress >= 100)
-        return clearInterval(interval);
+      if (this.state.progress >= 100) return clearInterval(interval);
 
       this.setState({progress: this.state.progress + 1});
     }, 50);
@@ -114,17 +119,21 @@ class Progress extends Component {
 
   render() {
     const {progress} = this.state,
-          label = `Progress - ${progress}%`;
+      label = `Progress - ${progress}%`;
 
-    return <progressbar label={label}
-                        onComplete={() => this.setState({color: 'green'})}
-                        class={stylesheet.bordered}
-                        filled={progress}
-                        top="60%"
-                        left="60%"
-                        width="40%"
-                        height="10%"
-                        style={{bar: {bg: this.state.color}}} />;
+    return (
+      <progressbar
+        label={label}
+        onComplete={() => this.setState({color: 'green'})}
+        class={stylesheet.bordered}
+        filled={progress}
+        top="60%"
+        left="60%"
+        width="40%"
+        height="10%"
+        style={{bar: {bg: this.state.color}}}
+      />
+    );
   }
 }
 
@@ -134,12 +143,13 @@ class Progress extends Component {
 class Stats extends Component {
   render() {
     return (
-      <box label="Stats"
-           class={stylesheet.bordered}
-           top="70%"
-           left="60%"
-           width="40%"
-           height="31%">
+      <box
+        label="Stats"
+        class={stylesheet.bordered}
+        top="70%"
+        left="60%"
+        width="40%"
+        height="31%">
         Some stats
       </box>
     );
@@ -155,7 +165,7 @@ const screen = blessed.screen({
   title: 'react-blessed dashboard'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

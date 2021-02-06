@@ -26,8 +26,8 @@ const styles = {
     border: {fg: 'red'},
     bg: '#000000',
     align: 'center',
-    valign: 'middle',
-  },
+    valign: 'middle'
+  }
 };
 
 var lastY = null;
@@ -37,7 +37,7 @@ class Demo extends React.Component {
     mouseY: 0,
     isPressed: false,
     originalPosOfLastPressed: 0,
-    order: range(itemsCount),
+    order: range(itemsCount)
   };
 
   componentDidMount() {
@@ -54,17 +54,17 @@ class Demo extends React.Component {
         topDeltaY: y - pressY,
         mouseY: pressY,
         isPressed: true,
-        originalPosOfLastPressed: pos,
+        originalPosOfLastPressed: pos
       });
     } else {
       this.handleMouseMove({
         ...event,
-        action: 'fake-mousemove',
+        action: 'fake-mousemove'
       });
     }
   };
 
-  handleMouseMove = (event) => {
+  handleMouseMove = event => {
     if (event.action !== 'fake-mousemove') {
       return;
     }
@@ -78,8 +78,12 @@ class Demo extends React.Component {
       const currentRow = clamp(Math.round(mouseY / 100), 0, itemsCount - 1);
       let newOrder = order;
 
-      if (currentRow !== order.indexOf(originalPosOfLastPressed)){
-        newOrder = reinsert(order, order.indexOf(originalPosOfLastPressed), currentRow);
+      if (currentRow !== order.indexOf(originalPosOfLastPressed)) {
+        newOrder = reinsert(
+          order,
+          order.indexOf(originalPosOfLastPressed),
+          currentRow
+        );
       }
 
       this.setState({mouseY: mouseY, order: newOrder});
@@ -96,31 +100,28 @@ class Demo extends React.Component {
     return (
       <box
         style={{
-          bg: '#555555',
-        }}
-      >
-        <box
-          top={0}
-          right={0}
-          width={10}
-          height={1}
-        >{order.map(i => i + 1).join(', ')}</box>
+          bg: '#555555'
+        }}>
+        <box top={0} right={0} width={10} height={1}>
+          {order.map(i => i + 1).join(', ')}
+        </box>
 
         {range(itemsCount).map(i => {
-          const style = originalPosOfLastPressed === i && isPressed
-            ? {
-                scale: spring(1.1, springConfig),
-                color: 3,
-                y: mouseY,
-              }
-            : {
-                scale: spring(1, springConfig),
-                color: 0,
-                y: spring(order.indexOf(i) * 5, springConfig),
-              };
+          const style =
+            originalPosOfLastPressed === i && isPressed
+              ? {
+                  scale: spring(1.1, springConfig),
+                  color: 3,
+                  y: mouseY
+                }
+              : {
+                  scale: spring(1, springConfig),
+                  color: 0,
+                  y: spring(order.indexOf(i) * 5, springConfig)
+                };
           return (
             <Motion style={style} key={i}>
-              {({scale, shadow, y}) =>
+              {({scale, shadow, y}) => (
                 <box
                   onMousedown={this.handleMouseDown.bind(null, i, y)}
                   onMouse={this.handleMouseMove}
@@ -131,17 +132,15 @@ class Demo extends React.Component {
                   width={scale * width}
                   border={{type: 'line'}}
                   shadow={shadow > 0.2}
-                  style={styles.item}
-                >
-                  {i === 2 &&
-                    <box
-                      top={0}
-                      right={0}
-                      width={10}
-                      height={1}
-                    >{String(i) + ': ' + String(y)}</box>}
+                  style={styles.item}>
+                  {i === 2 && (
+                    <box top={0} right={0} width={10} height={1}>
+                      {String(i) + ': ' + String(y)}
+                    </box>
+                  )}
                   {String(order.indexOf(i) + 1)}
-              </box>}
+                </box>
+              )}
             </Motion>
           );
         })}
@@ -156,7 +155,7 @@ const screen = blessed.screen({
   title: 'react-blessed demo app'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

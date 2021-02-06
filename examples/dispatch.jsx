@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React, {useReducer} from 'react';
 import blessed from 'blessed';
-import { render } from '../src';
+import {render} from '../src';
 
 const initialState = {count: 0};
 
@@ -18,17 +18,34 @@ function reducer(state, action) {
 const App = () => {
   const [demo, dispatch] = useReducer(reducer, initialState);
   return (
-    <box label="react-blessed hooks demo"
-         border={{type: 'line'}}
-         style={{border: {fg: 'cyan'}}}>
-      
+    <box
+      label="react-blessed hooks demo"
+      border={{type: 'line'}}
+      style={{border: {fg: 'cyan'}}}>
       {demo.count}
-      
-      <button mouse border={{type: 'line'}} height={3} width={3} top={2} left={4} onPress={a => dispatch({type: 'increment'})}>+</button>
-      <button mouse border={{type: 'line'}} height={3} width={3} top={2} onPress={a => dispatch({type: 'decrement'})}>-</button>
+
+      <button
+        mouse
+        border={{type: 'line'}}
+        height={3}
+        width={3}
+        top={2}
+        left={4}
+        onPress={a => dispatch({type: 'increment'})}>
+        +
+      </button>
+      <button
+        mouse
+        border={{type: 'line'}}
+        height={3}
+        width={3}
+        top={2}
+        onPress={a => dispatch({type: 'decrement'})}>
+        -
+      </button>
     </box>
   );
-}
+};
 
 const screen = blessed.screen({
   autoPadding: true,
@@ -36,7 +53,7 @@ const screen = blessed.screen({
   title: 'react-blessed hooks demo'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

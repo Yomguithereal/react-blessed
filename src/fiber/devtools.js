@@ -17,10 +17,12 @@ try {
     },
     host: 'localhost',
     port: 8097,
-    resolveRNStyle: null, // TODO maybe: require('flattenStyle')
+    resolveRNStyle: null // TODO maybe: require('flattenStyle')
   });
 } catch (err) {
   if (process.env.NODE_ENV !== 'production') {
-    console.warn('WARNING: the `ws` package must be installed to use `react-devtools`.');
+    console.warn(
+      'WARNING: the `ws` package must be installed to use `react-devtools`.'
+    );
   }
 }

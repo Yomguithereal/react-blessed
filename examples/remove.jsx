@@ -23,8 +23,7 @@ class RemovesChild extends Component {
         width="80%"
         height="80%"
         border={{type: 'line'}}
-        style={{bg: 'cyan', border: {fg: 'blue'}}}
-      >
+        style={{bg: 'cyan', border: {fg: 'blue'}}}>
         {renderChild && (
           <box
             top="center"
@@ -47,9 +46,8 @@ const screen = blessed.screen({
   title: 'react-blessed box animation'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 
-render(<RemovesChild />, screen, (inst) => console.log('Rendered RemovesChild!'));
-
+render(<RemovesChild />, screen, inst => console.log('Rendered RemovesChild!'));

@@ -7,7 +7,6 @@
 import merge from 'lodash/merge';
 
 const RAW_ATTRIBUTES = new Set([
-
   // Alignment, Orientation & Presentation
   'align',
   'valign',
@@ -63,11 +62,10 @@ const RAW_ATTRIBUTES = new Set([
  * @param {object}      options - Props of the component without children.
  */
 export default function update(node, options) {
-
   // TODO: enforce some kind of shallow equality?
   // TODO: handle position
 
-  const selectQue = []
+  const selectQue = [];
 
   for (let key in options) {
     let value = options[key];
@@ -75,53 +73,33 @@ export default function update(node, options) {
     if (key === 'selected' && node.select)
       selectQue.push({
         node,
-        value: (typeof value === 'string' ? +value : value)
-      })
-    
+        value: typeof value === 'string' ? +value : value
+      });
     // Setting label
-    else if (key === 'label')
-      node.setLabel(value);
-
+    else if (key === 'label') node.setLabel(value);
     // Removing hoverText
-    else if (key === 'hoverText' && !value) node.removeHover()
-
+    else if (key === 'hoverText' && !value) node.removeHover();
     // Setting hoverText
-    else if (key === 'hoverText' && value) node.setHover(value)
-
+    else if (key === 'hoverText' && value) node.setHover(value);
     // Setting content
-    else if (key === 'content')
-      node.setContent(value);
-
+    else if (key === 'content') node.setContent(value);
     // Updating style
-    else if (key === 'style')
-      node.style = merge({}, node.style, value);
-
+    else if (key === 'style') node.style = merge({}, node.style, value);
     // Updating items
-    else if (key === 'items')
-      node.setItems(value);
-
+    else if (key === 'items') node.setItems(value);
     // Border edge case
-    else if (key === 'border')
-      node.border = merge({}, node.border, value);
-
+    else if (key === 'border') node.border = merge({}, node.border, value);
     // Textarea value
-    else if (key === 'value' && node.setValue)
-      node.setValue(value);
-
+    else if (key === 'value' && node.setValue) node.setValue(value);
     // Progress bar
-    else if (key === 'filled' && node.filled !== value)
-      node.setProgress(value);
-
+    else if (key === 'filled' && node.filled !== value) node.setProgress(value);
     // Table / ListTable rows / data
     else if ((key === 'rows' || key === 'data') && node.setData)
       node.setData(value);
-
-    else if (key === 'focused' && value && !node[key]) node.focus()
-
+    else if (key === 'focused' && value && !node[key]) node.focus();
     // Raw attributes
-    else if (RAW_ATTRIBUTES.has(key))
-      node[key] = value;
+    else if (RAW_ATTRIBUTES.has(key)) node[key] = value;
   }
 
-  selectQue.forEach(({node, value}) => node.select(value))
+  selectQue.forEach(({node, value}) => node.select(value));
 }

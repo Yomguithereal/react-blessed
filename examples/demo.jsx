@@ -5,9 +5,10 @@ import {render} from '../src';
 class App extends Component {
   render() {
     return (
-      <box label="react-blessed demo"
-           border={{type: 'line'}}
-           style={{border: {fg: 'cyan'}}}>
+      <box
+        label="react-blessed demo"
+        border={{type: 'line'}}
+        style={{border: {fg: 'cyan'}}}>
         <InnerBox position="left" />
         <InnerBox position="right" />
         <ProgressBar />
@@ -36,13 +37,14 @@ class InnerBox extends Component {
     const left = position === 'left' ? '2%' : '53%';
 
     return (
-      <box label={this.state.hey ? 'First step' : 'Second step'}
-           left={left}
-           width='45%'
-           height="70%"
-           top="10%"
-           border={{type: 'line'}}
-           style={{border: {fg: 'green'}}}>
+      <box
+        label={this.state.hey ? 'First step' : 'Second step'}
+        left={left}
+        width="45%"
+        height="70%"
+        top="10%"
+        border={{type: 'line'}}
+        style={{border: {fg: 'green'}}}>
         {this.state.hey ? 'Hey...' : 'Ho...'}
       </box>
     );
@@ -56,23 +58,26 @@ class ProgressBar extends Component {
     this.state = {completion: 0};
 
     const interval = setInterval(() => {
-      if (this.state.completion >= 100)
-        return clearInterval(interval);
+      if (this.state.completion >= 100) return clearInterval(interval);
 
       this.setState({completion: this.state.completion + 10});
     }, 1000);
   }
 
   render() {
-    return <progressbar orientation="horizontal"
-                        filled={this.state.completion}
-                        top="80%"
-                        left="center"
-                        height="15%"
-                        width="80%"
-                        label="progress"
-                        border={{type: 'line'}}
-                        style={{border: {fg: 'red'}, bar: {bg: 'red'}}} />
+    return (
+      <progressbar
+        orientation="horizontal"
+        filled={this.state.completion}
+        top="80%"
+        left="center"
+        height="15%"
+        width="80%"
+        label="progress"
+        border={{type: 'line'}}
+        style={{border: {fg: 'red'}, bar: {bg: 'red'}}}
+      />
+    );
   }
 }
 
@@ -82,7 +87,7 @@ const screen = blessed.screen({
   title: 'react-blessed demo app'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

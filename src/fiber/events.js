@@ -1,8 +1,9 @@
-const startCase = (string) => (
-  string.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match) {
-    return (+match === 0) ? "" : match.toUpperCase();
-  }).replace(/[^A-Za-z0-9 ]+/, "")
-)
+const startCase = string =>
+  string
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match) {
+      return +match === 0 ? '' : match.toUpperCase();
+    })
+    .replace(/[^A-Za-z0-9 ]+/, '');
 
 const blacklist = [
   'adopt',
@@ -10,7 +11,7 @@ const blacklist = [
   'destroy',
   'reparent',
   'parsed content',
-  'set content',
+  'set content'
 ];
 const eventName = event => `on${startCase(event)}`;
 
@@ -36,4 +37,3 @@ const eventListener = (node, event, ...args) => {
 };
 
 export default eventListener;
-

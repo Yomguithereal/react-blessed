@@ -9,8 +9,8 @@ const screen = blessed.screen({
   title: 'react-blessed box animation'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 
-render(<AnimatedBox />, screen, (inst) => console.log('Rendered AnimatedBox!'));
+render(<AnimatedBox />, screen, inst => console.log('Rendered AnimatedBox!'));

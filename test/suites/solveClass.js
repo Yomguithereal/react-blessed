@@ -1,9 +1,8 @@
 import assert from 'assert';
 import solveClass from '../../src/shared/solveClass';
 
-describe('solveClass', function() {
-
-  it('should merge a single class into props.', function() {
+describe('solveClass', function () {
+  it('should merge a single class into props.', function () {
     assert.deepEqual(
       solveClass({
         class: {
@@ -66,7 +65,7 @@ describe('solveClass', function() {
     );
   });
 
-  it('should be possible to merge several classes into props.', function() {
+  it('should be possible to merge several classes into props.', function () {
     assert.deepEqual(
       solveClass({
         class: [
@@ -104,7 +103,7 @@ describe('solveClass', function() {
     );
   });
 
-  it('the given class array should be compacted.', function() {
+  it('the given class array should be compacted.', function () {
     assert.deepEqual(
       solveClass({
         class: [

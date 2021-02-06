@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import blessed from 'blessed';
-import { render } from '../src';
+import {render} from '../src';
 
-const WillUnmount = (props) => {
+const WillUnmount = props => {
   useEffect(() => {
     // On unmount, we set the top level count to -5
     return () => props.setCount(-5);
@@ -27,14 +27,15 @@ const App = () => {
     setCount(4);
   }, []);
 
-  return <box
-    label="react-blessed effects demo"
-    border={{type: 'line'}}
-    style={{border: {fg: 'cyan'}}}
-  >
-    {count}
-    {count > 5 && <WillUnmount setCount={setCount} />}
-  </box>;
+  return (
+    <box
+      label="react-blessed effects demo"
+      border={{type: 'line'}}
+      style={{border: {fg: 'cyan'}}}>
+      {count}
+      {count > 5 && <WillUnmount setCount={setCount} />}
+    </box>
+  );
 };
 
 const screen = blessed.screen({
@@ -43,7 +44,7 @@ const screen = blessed.screen({
   title: 'react-blessed effects demo'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 

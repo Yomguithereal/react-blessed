@@ -8,7 +8,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      name: '',
+      name: ''
     };
 
     this.submit = data => this.setState(state => ({name: data}));
@@ -27,9 +27,10 @@ class Form extends Component {
         width="90%"
         height="90%"
         border={{type: 'line'}}
-        style={{bg: 'cyan', border: {fg: 'blue'}}}
-      >
-        <box width={6} height={3}>Name: </box>
+        style={{bg: 'cyan', border: {fg: 'blue'}}}>
+        <box width={6} height={3}>
+          Name:{' '}
+        </box>
         <textbox
           onSubmit={this.submit}
           left={6}
@@ -53,10 +54,8 @@ const screen = blessed.screen({
   title: 'react-blessed form example'
 });
 
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['escape', 'q', 'C-c'], function (ch, key) {
   return process.exit(0);
 });
 
-render(<Form />, screen, (inst) => console.log('Rendered Form!'));
-
-
+render(<Form />, screen, inst => console.log('Rendered Form!'));
