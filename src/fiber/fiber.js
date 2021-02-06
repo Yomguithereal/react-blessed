@@ -104,7 +104,8 @@ const createBlessedRenderer = function (blessed) {
     },
 
     prepareForCommit() {
-      // noop
+      // noop but must return `null` to avoid issues related to node removal
+      return null;
     },
 
     resetAfterCommit() {
