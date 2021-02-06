@@ -1,6 +1,11 @@
 /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
 
+module.exports = {
+  version: require('react').version
+};
+
 try {
+  require.resolve('react-devtools-core');
   const defineProperty = Object.defineProperty;
   defineProperty(global, 'WebSocket', {
     value: require('ws')
@@ -20,9 +25,5 @@ try {
     resolveRNStyle: null // TODO maybe: require('flattenStyle')
   });
 } catch (err) {
-  if (process.env.NODE_ENV !== 'production') {
-    console.warn(
-      'WARNING: the `ws` package must be installed to use `react-devtools`.'
-    );
-  }
+  // no devtools installed...
 }
