@@ -52,7 +52,7 @@
   },
   "peerDependencies": {
     "blessed": "^0.1.81",
-    "react": "^16.8.0",
+    "react": "^17.0.1",
     "react-devtools-core": "^3.0.0",
     "ws": "^6.0.0"
   },
