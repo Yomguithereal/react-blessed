@@ -2,7 +2,7 @@
 
 A [React](https://facebook.github.io/react/) custom renderer for the [blessed](https://github.com/chjj/blessed) library.
 
-This renderer should currently be considered as experimental, is subject to change and will only work with React's latest version (`16.x.x`, using Fiber).
+This renderer should currently be considered as experimental, is subject to change and will only work with React's latest version (`17.x.x`, using Fiber).
 
 ![demo](https://raw.githubusercontent.com/Yomguithereal/react-blessed/master/img/demo.gif)
 
@@ -17,6 +17,7 @@ This renderer should currently be considered as experimental, is subject to chan
   * [Events](#events)
   * [Classes](#classes)
   * [Using blessed forks](#using-blessed-forks)
+  * [Using the devtools](#using-the-devtools)
 * [Roadmap](#roadmap)
 * [FAQ](#faq)
 * [Contribution](#contribution)
@@ -27,7 +28,7 @@ This renderer should currently be considered as experimental, is subject to chan
 You can install `react-blessed` through npm:
 
 ```bash
-# Be sure to install react>=16.2.0 & blessed>=0.1.81 before
+# Be sure to install react>=17.0.0 & blessed>=0.1.81 before
 npm install blessed react
 
 # Then just install `react-blessed`
@@ -249,6 +250,10 @@ import {createBlessedRenderer} from 'react-blessed';
 const render = createBlessedRenderer(blessed);
 ```
 
+### Using the devtools
+
+`react-blessed` can be used along with React's own devtools for convenience. To do so, just install [`react-devtools`](https://www.npmjs.com/package/react-devtools) in your project and all should work out of the box when running the Electron app, as soon as a `react-blessed` program is running on one of your shells.
+
 ## Roadmap
 
 * Full support (meaning every tags and options should be handled by the renderer).
@@ -257,7 +262,7 @@ const render = createBlessedRenderer(blessed);
 ## Faq
 
  * `<list/>` : To enable interactions, add `mouse={ true }` and/or `keys={ true }`
- 
+
 ## Contribution
 
 Contributions are obviously welcome.
