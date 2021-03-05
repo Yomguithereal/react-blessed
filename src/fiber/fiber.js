@@ -222,10 +222,15 @@ const createBlessedRenderer = function (blessed) {
   return function render(element, screen, callback) {
     screenRef = screen;
 
+    // TODO: doesn't this leak? Shouldn't we use some weak map?
     let root = roots.get(screen);
     if (!root) {
       root = BlessedReconciler.createContainer(screen);
       roots.set(screen, root);
+
+      screen.once('destroy', () => {
+        BlessedReconciler.updateContainer(null, root, null);
+      });
     }
 
     // render at most every 16ms. Should sync this with the screen refresh rate

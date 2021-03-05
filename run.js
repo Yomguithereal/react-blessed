@@ -14,7 +14,8 @@ const examples = [
   'hooks',
   'neo-blessed',
   'progressbar',
-  'remove'
+  'remove',
+  'teardown'
 ];
 
 if (examples.indexOf(example) === -1) {
