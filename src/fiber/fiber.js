@@ -230,6 +230,7 @@ const createBlessedRenderer = function (blessed) {
 
       screen.once('destroy', () => {
         BlessedReconciler.updateContainer(null, root, null);
+        roots.delete(screen);
       });
     }
 
