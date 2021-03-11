@@ -5,9 +5,11 @@
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run clean && rollup -c",
+    "clean": "rimraf dist",
     "demo": "node run.js",
     "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "prettier": "prettier --write './**/*.js' './**/*.jsx'",
     "test": "mocha -R spec --require @babel/register ./test/endpoint.js"
   },
@@ -46,6 +48,7 @@
     "neo-blessed": "^0.2.0",
     "prettier": "^2.2.1",
     "react-devtools-core": "4.10.1",
+    "rimraf": "^3.0.2",
     "rollup": "^2.38.5",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
