@@ -1,6 +1,6 @@
 {
   "name": "react-blessed",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "A react renderer for blessed.",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
@@ -47,6 +47,7 @@
     "mocha": "^8.2.1",
     "neo-blessed": "^0.2.0",
     "prettier": "^2.2.1",
+    "react": "^17.0.1",
     "react-devtools-core": "4.10.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.38.5",
@@ -68,7 +69,6 @@
     }
   },
   "dependencies": {
-    "react": "^17.0.1",
     "react-reconciler": "^0.26.1"
   },
   "prettier": "@yomguithereal/prettier-config"
